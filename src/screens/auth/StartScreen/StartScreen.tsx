@@ -1,8 +1,4 @@
-import {
-  View,
-  Image,
-  ImageBackground,
-} from "react-native"
+import { View, Image, ImageBackground } from "react-native"
 import Swiper from "react-native-swiper"
 // Styles
 import { styles } from "./StartScreen.styles"
