@@ -34,7 +34,7 @@ const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
 
       <View style={styles.topicsList}>
         {Topics.map((item) => (
-          <TouchableOpacity style={styles.topicsItem}>
+          <TouchableOpacity key={item} style={styles.topicsItem}>
             <Image
               style={styles.topicImage}
               source={require("../../../../assets/images/start-login.png")}

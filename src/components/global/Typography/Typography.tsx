@@ -30,6 +30,7 @@ const Typography = (props: TypographyAttributes) => {
         ...parseStyle,
         textAlign,
         color: palette[color],
+        alignItems: "center",
         textDecorationLine: textDecorationLine,
       }}
     >

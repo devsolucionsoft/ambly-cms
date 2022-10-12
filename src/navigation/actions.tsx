@@ -1,11 +1,17 @@
 import { NavigationContainerRef } from "@react-navigation/core"
 import React, { createRef } from "react"
-import { AuthStackParamList } from "../navigation/types"
+import {
+  AppStackParamList,
+  AuthStackParamList,
+  UserStackParamList,
+} from "../navigation/types"
 
-export const navigationRef: React.RefObject<NavigationContainerRef> =
-  createRef()
+export const navigationRef: React.RefObject<
+  NavigationContainerRef<AppStackParamList>
+> = createRef()
 
-export const navigate = (name: any, params?: any) =>
-  navigationRef.current?.navigate(name, params)
+export const navigateAuth = (name: any, params?: any) =>
+  navigationRef.current?.navigate("User", { screen: "Home" })
 
-export const goBack = () => navigationRef.current?.goBack()
+export const navigateUser = (screen: keyof UserStackParamList) =>
+  navigationRef.current?.navigate("User", { screen })

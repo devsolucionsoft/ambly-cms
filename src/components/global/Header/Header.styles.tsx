@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   icon: {
-    width: 120,
+    width: 100,
   },
   action: {
     width: 40,

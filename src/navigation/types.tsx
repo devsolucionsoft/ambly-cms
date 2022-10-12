@@ -1,5 +1,6 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { DrawerNavigationProp } from "@react-navigation/drawer"
+
 import { RouteProp, ParamListBase } from "@react-navigation/native"
 
 export interface StackNavigationProps<
@@ -10,9 +11,12 @@ export interface StackNavigationProps<
   route: RouteProp<ParamList, RouteName>
 }
 
-export type AppStackParamList = {
-  Auth: { screen: undefined }
-  User: { screen: undefined }
+export interface DrawerkNavigationProps<
+  ParamList extends ParamListBase,
+  RouteName extends keyof ParamList = string
+> {
+  navigation: DrawerNavigationProp<ParamList, RouteName>
+  route: RouteProp<ParamList, RouteName>
 }
 
 export type AuthStackParamList = {
@@ -27,4 +31,12 @@ export type AuthStackParamList = {
 export type UserStackParamList = {
   Home: undefined
   ManyCourses: undefined
+  ChooseCourses: undefined
+  CheckIn: undefined
 }
+
+export type AppStackParamList = {
+  Auth: { screen: keyof AuthStackParamList }
+  User: { screen: keyof UserStackParamList }
+}
+

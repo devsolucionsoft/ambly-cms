@@ -13,6 +13,16 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: palette["grayText"],
   },
+  container2: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 15,
+    paddingVertical: 10,
+    backgroundColor: palette["ligth"],
+    borderRadius: 30
+  },
   input: {
     fontSize: 18,
     color: palette["grayText"],

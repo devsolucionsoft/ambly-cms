@@ -37,7 +37,7 @@ const Check = (props: CheckAttributes) => {
           name="check"
           size={size * 0.8}
           color={palette[colorIcon]}
-          style={{ fontWeight: "bold" }}
+          style={{ fontWeight: "900" }}
         />
       )}
     </TouchableOpacity>

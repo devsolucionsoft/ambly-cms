@@ -9,17 +9,18 @@ import { Icon } from ".."
 
 interface InputAuthProps {
   icon?: iconsTypes
+  variant?: "variant2"
 }
 
 type InputAuthAttributes = InputAuthProps & TextInputProps
 
 const InputAuth = (props: InputAuthAttributes) => {
-  const { style, icon } = props
+  const { style, icon, variant } = props
 
   const parseStyle = typeof style === "object" ? style : {}
 
   return (
-    <View style={styles.container}>
+    <View style={variant == "variant2" ? styles.container2 : styles.container}>
       {icon && <Icon color="ligth" size={25} icon={icon} />}
 
       <TextInput

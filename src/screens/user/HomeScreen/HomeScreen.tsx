@@ -8,21 +8,28 @@ import {
 import { styles } from "./HomeScreen.styles"
 // Types
 import {
-  StackNavigationProps,
+  DrawerkNavigationProps,
   UserStackParamList,
 } from "../../../navigation/types"
+import { navigateUser } from "../../../navigation/actions";
 // UI Components
 import { Typography, Header, Divider } from "../../../components/global"
 import {
   SliderCourses,
   FavoriteTopics,
   ContinueClasses,
+  ButtonAction
 } from "../../../components/user"
 
 const HomeScreen = ({
   navigation,
   route,
-}: StackNavigationProps<UserStackParamList, "Home">) => {
+}: DrawerkNavigationProps<UserStackParamList, "Home">) => {
+
+  setTimeout(() => {
+    navigateUser("ManyCourses")
+  }, 500);
+
   return (
     <ImageBackground
       resizeMode="cover"
@@ -74,11 +81,7 @@ const HomeScreen = ({
         </View>
       </ScrollView>
 
-      <TouchableOpacity style={styles.buttonStart}>
-        <Typography variant="heading2" textAlign="center" color="ligth">
-          INICIA TU CLASE
-        </Typography>
-      </TouchableOpacity>
+      <ButtonAction text="INICIA TU CLASE" onPress={() => navigation.navigate("ManyCourses")} />
     </ImageBackground>
   )
 }

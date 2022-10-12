@@ -6,7 +6,7 @@
 import React from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-//import { createDrawerNavigator } from "@react-navigation/drawer"
+import { createDrawerNavigator } from "@react-navigation/drawer"
 import { navigationRef } from "./actions"
 // Store
 import { useAppSelector } from "../store"
@@ -18,9 +18,9 @@ import {
 } from "./types"
 // Screens
 import { StartScreen, IngressScreen, LoginScreen } from "../screens/auth"
-import { HomeScreen, ManyCourses } from "../screens/user"
+import { HomeScreen, ManyCourses, ChooseCourses, CheckIn } from "../screens/user"
 // Drawer
-import { DrawerNatigation } from "../components/user";
+import { DrawerNatigation } from "../components/user"
 
 export default function Navigation() {
   return (
@@ -78,10 +78,13 @@ const AuthNavigator = () => {
   )
 }
 
-const UserStack = createNativeStackNavigator<UserStackParamList>()
+const UserStack = createDrawerNavigator<UserStackParamList>()
 const UserNavigator = () => {
   return (
-    <UserStack.Navigator initialRouteName="Home" drawerContent={DrawerNatigation}>
+    <UserStack.Navigator
+      initialRouteName="Home"
+      drawerContent={DrawerNatigation}
+    >
       <UserStack.Screen
         name="Home"
         component={HomeScreen}
@@ -90,6 +93,16 @@ const UserNavigator = () => {
       <UserStack.Screen
         name="ManyCourses"
         component={ManyCourses}
+        options={{ headerShown: false }}
+      />
+      <UserStack.Screen
+        name="ChooseCourses"
+        component={ChooseCourses}
+        options={{ headerShown: false }}
+      />
+      <UserStack.Screen
+        name="CheckIn"
+        component={CheckIn}
         options={{ headerShown: false }}
       />
     </UserStack.Navigator>

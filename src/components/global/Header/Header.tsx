@@ -1,6 +1,6 @@
 import React from "react"
 import { View, ViewProps, TouchableOpacity, Image } from "react-native"
-import { goBack } from "../../../navigation/actions"
+import { useNavigation } from "@react-navigation/native"
 // Theme
 import AntDesign from "@expo/vector-icons/AntDesign"
 import { palette } from "../../../utils/theme"
@@ -14,7 +14,7 @@ interface HeaderProps {
   title?: string
   returnAction?: boolean
   action?: Function
-  variant?: "user"
+  variant?: "user" | "information"
 }
 
 type HeaderAttributes = HeaderProps & ViewProps
@@ -22,8 +22,10 @@ type HeaderAttributes = HeaderProps & ViewProps
 const Header = (props: HeaderAttributes) => {
   const { icon, title, returnAction, action, variant } = props
 
+  const navigationHook = useNavigation()
+
   const handleAction = () => {
-    returnAction && goBack()
+    returnAction && navigationHook.goBack()
     action && action()
   }
 
@@ -51,9 +53,14 @@ const Header = (props: HeaderAttributes) => {
       </View>
       <View style={styles.action}>
         {variant == "user" && (
-          <View style={styles.user}>
+          <TouchableOpacity style={styles.user}>
             <AntDesign name="user" size={25} color={palette["ligth"]} />
-          </View>
+          </TouchableOpacity>
+        )}
+        {variant == "information" && (
+          <TouchableOpacity style={styles.user}>
+            <AntDesign name="questioncircleo" size={22} color={palette["ligth"]} />
+          </TouchableOpacity>
         )}
       </View>
     </View>
