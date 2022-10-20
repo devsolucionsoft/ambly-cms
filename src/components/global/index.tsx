@@ -7,4 +7,13 @@ import Input from "./Input"
 import ModalForgotPassword from "./ModalForgotPassword"
 import Divider from "./Divider"
 
-export { Typography, Button, Header, Icon, Check, Input, ModalForgotPassword, Divider }
+export {
+  Typography,
+  Button,
+  Header,
+  Icon,
+  Check,
+  Input,
+  ModalForgotPassword,
+  Divider,
+}

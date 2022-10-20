@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native"
 import { palette } from "../../../utils/theme"
+import { StatusBar } from "react-native"
+
 
 export const styles = StyleSheet.create({
   main: {
@@ -10,23 +12,32 @@ export const styles = StyleSheet.create({
   swiper: {
     flex: 1,
   },
+  swiperTop: {
+    flexDirection: "row",
+    marginBottom: 20,
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
   swiperItemPopular: {
     flex: 1, 
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
-    width: "80%",
-    backgroundColor: palette["ligth"],
-    borderRadius: 30,
-    overflow: "hidden"
+    width: "100%",
+    overflow: "hidden",
+    position: "relative"
   },
   swiperImagePopular: {
     flex: 1,
+    height: 200,
     justifyContent: "center",
   },
   swiperItemPopularContent: {
-    width: "85%",
-    paddingTop: 15,
-    paddingBottom: 8
+    width: "100%",
+    paddingTop: 60,
+    paddingBottom: 20,
+    paddingHorizontal: 30,
+    position: "absolute",
+    alignItems: "flex-start"
   },
   swiperItemNew: {
     flex: 1, 

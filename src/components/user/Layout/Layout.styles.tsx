@@ -1,9 +1,11 @@
 import { StyleSheet } from "react-native"
+// Theme
 import { palette } from "../../../utils/theme"
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: palette["dark"]
   },
   content: {
     paddingVertical: 20,
@@ -16,12 +18,4 @@ export const styles = StyleSheet.create({
     height: "100%",
     zIndex: 0
   },
-  buttonStart: {
-    backgroundColor: palette["redPrimary"],
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 35,
-    marginHorizontal: 35,
-    marginVertical: 15
-  }
 })

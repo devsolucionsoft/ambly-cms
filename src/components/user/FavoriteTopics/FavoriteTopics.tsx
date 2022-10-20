@@ -19,17 +19,16 @@ const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
 
   return (
     <View style={{ ...parseStyle, ...styles.main }}>
+      <Typography
+        variant="heading3"
+        color="ligth"
+        textAlign="center"
+        style={{ fontWeight: "bold", marginBottom: 20 }}
+      >
+        Personaliza tu experiencia      
+      </Typography>
       <Typography variant="p" color="ligth" textAlign="center">
-        Escoge tu{" "}
-        <Typography
-          variant="p"
-          color="ligth"
-          textAlign="center"
-          style={{ fontWeight: "bold" }}
-        >
-          TEMA FAVORITO
-        </Typography>{" "}
-        y encuentra el curso que mas te guste
+        Escoge tu TEMA FAVORITO y encuentra el curso que mas te guste
       </Typography>
 
       <View style={styles.topicsList}>
@@ -39,7 +38,14 @@ const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
               style={styles.topicImage}
               source={require("../../../../assets/images/start-login.png")}
             />
-            <Typography variant="p2" textAlign="left" color="ligth">Arte</Typography>
+            <Typography
+              variant="p"
+              textAlign="left"
+              color="ligth"
+              style={{ fontWeight: "bold" }}
+            >
+              Arte
+            </Typography>
           </TouchableOpacity>
         ))}
       </View>

@@ -8,20 +8,24 @@ export type paletteTypes =
   | "redPrimary"
   | "yellowPrimary"
   | "yellowSecondary"
+  | "blueText"
 
 export type paletteGradientTypes = "gradientGray"
 
 export const palette = {
   ligth: "#FFFFFF",
   black: "#000000",
-  dark: "#2B2B2B",
+  dark: "#181818",
   grayText: "#B3B3B3",
   graySecondary: "#2B2B2B",
   redPrimary: "#DB3740",
   yellowPrimary: "#FBBC02",
-  yellowSecondary: "#F8E84B"
+  yellowSecondary: "#F8E84B",
+  blueText: "#8FDDFE",
 }
 
 export const paletteGradient = {
-  gradientGray: ["#161616", "#4A4A4A"],
+  gradientGray: ["#000000", "#4A4A4A"],
+  gradientOpacity: ["#181818", "transparent"],
+  gradientOpacity2: ["#101010d4", "transparent"],
 }

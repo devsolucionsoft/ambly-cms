@@ -1,9 +1,6 @@
 import { useState } from "react"
 import {
-  View,
-  ScrollView,
-  ImageBackground,
-  TouchableOpacity,
+  View
 } from "react-native"
 // Styles compomponent
 import { styles } from "./ChooseCourses.styles"
@@ -13,8 +10,8 @@ import {
   UserStackParamList,
 } from "../../../navigation/types"
 // UI Components
-import { Header, Typography, Check } from "../../../components/global"
-import { ButtonAction } from "../../../components/user"
+import { Typography, Check } from "../../../components/global"
+import { Layout, ButtonAction } from "../../../components/user"
 import { palette } from "../../../utils/theme"
 import { Feather } from "@expo/vector-icons"
 
@@ -40,59 +37,56 @@ const ChooseCoursesScreen = ({
   }
 
   return (
-    <ImageBackground
-      resizeMode="cover"
-      style={styles.container}
-      source={require("../../../../assets/images/background-screen.png")}
+    <Layout
+      spaceTop
+      headerProps={{ returnAction: true, icon: true, variant: "information" }}
     >
-      <Header returnAction icon variant="information" />
+      <View style={styles.content}>
+        <Typography
+          variant="heading3"
+          textAlign="center"
+          color="ligth"
+          style={{ marginBottom: 10 }}
+        >
+          Escoge tus cursos
+        </Typography>
+        <Typography variant="p2" textAlign="center" color="ligth">
+          <Feather
+            name="check"
+            size={18}
+            color={palette["ligth"]}
+            style={{ fontWeight: "900" }}
+          />{" "}
+          2x1: Compra 1 escoge 2
+        </Typography>
 
-      <ScrollView>
-        <View style={styles.content}>
-          <Typography
-            variant="heading3"
-            textAlign="center"
-            color="ligth"
-            style={{ marginBottom: 10 }}
-          >
-            Escoge tus cursos
-          </Typography>
-          <Typography variant="p2" textAlign="center" color="ligth">
-            <Feather
-              name="check"
-              size={18}
-              color={palette["ligth"]}
-              style={{ fontWeight: "900" }}
-            />{" "}
-            2x1: Compra 1 escoge 2
-          </Typography>
-
-          <View style={styles.listCourses}>
-            {courses.map((item, index) => (
-              <View style={styles.itemCourses}>
-                <Typography
-                  variant="p2"
-                  textAlign="left"
-                  color="black"
-                  style={{ fontWeight: "bold" }}
-                >
-                  Escige tus cursos
-                </Typography>
-                <Check
-                  check={item.active}
-                  color="redPrimary"
-                  colorIcon="ligth"
-                  size={25}
-                  onChange={() => handlePress(index)}
-                />
-              </View>
-            ))}
-          </View>
+        <View style={styles.listCourses}>
+          {courses.map((item, index) => (
+            <View style={styles.itemCourses}>
+              <Typography
+                variant="p2"
+                textAlign="left"
+                color="black"
+                style={{ fontWeight: "bold" }}
+              >
+                Escige tus cursos
+              </Typography>
+              <Check
+                check={item.active}
+                color="redPrimary"
+                colorIcon="ligth"
+                size={25}
+                onChange={() => handlePress(index)}
+              />
+            </View>
+          ))}
         </View>
-      </ScrollView>
-
-      <ButtonAction text="PAGAR AHORA" onPress={() => navigation.navigate("CheckIn")} />
-    </ImageBackground>
+      </View>
+      <ButtonAction
+        text="PAGAR AHORA"
+        onPress={() => navigation.navigate("CheckIn")}
+      />
+    </Layout>
   )
 }
 

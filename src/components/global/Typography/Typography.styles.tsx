@@ -21,4 +21,7 @@ export const styles = StyleSheet.create({
   p3: {
     fontSize: 14,
   },
+  p4: {
+    fontSize: 12,
+  },
 })

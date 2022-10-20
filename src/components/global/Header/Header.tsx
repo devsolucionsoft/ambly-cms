@@ -1,43 +1,66 @@
 import React from "react"
 import { View, ViewProps, TouchableOpacity, Image } from "react-native"
 import { useNavigation } from "@react-navigation/native"
+import { LinearGradient } from "expo-linear-gradient"
 // Theme
 import AntDesign from "@expo/vector-icons/AntDesign"
-import { palette } from "../../../utils/theme"
+import { SimpleLineIcons } from "@expo/vector-icons"
+import { palette, paletteGradient } from "../../../utils/theme"
+import { navigationBack } from "../../../navigation/actions";
 // Styles
 import { styles } from "./Header.styles"
 // Components
 import { Typography } from ".."
 
-interface HeaderProps {
+export interface HeaderProps {
   icon?: boolean
   title?: string
   returnAction?: boolean
   action?: Function
   variant?: "user" | "information"
+  fixed?: boolean
 }
 
-type HeaderAttributes = HeaderProps & ViewProps
+const Header = (props: HeaderProps) => {
+  const { icon, title, returnAction, action, variant, fixed } = props
 
-const Header = (props: HeaderAttributes) => {
-  const { icon, title, returnAction, action, variant } = props
-
-  const navigationHook = useNavigation()
+  const navigationHook = useNavigation<any>()
 
   const handleAction = () => {
-    returnAction && navigationHook.goBack()
+    returnAction && navigationBack()
     action && action()
   }
 
   return (
-    <View {...props} style={styles.main}>
+    <LinearGradient
+      colors={paletteGradient.gradientOpacity}
+      {...props}
+      style={{
+        ...styles.main,
+        ...() =>
+          fixed
+            ? {
+                position: "fixed",
+                top: 0,
+              }
+            : {},
+      }}
+    >
+      {variant == "user" && (
+        <TouchableOpacity
+          onPress={() => navigationHook.openDrawer()}
+          style={styles.iconMenu}
+        >
+          <SimpleLineIcons name="menu" size={25} color={palette["ligth"]} />
+        </TouchableOpacity>
+      )}
       {variant !== "user" && (
         <TouchableOpacity onPress={handleAction} style={styles.iconReturn}>
           <AntDesign name="left" color={palette["ligth"]} size={25} />
         </TouchableOpacity>
       )}
 
-      <View>
+      <View style={{ alignItems: "center" }}>
         {icon && (
           <Image
             resizeMode="contain"
@@ -46,7 +69,12 @@ const Header = (props: HeaderAttributes) => {
           />
         )}
         {title && (
-          <Typography variant="heading3" color="ligth" textAlign="right">
+          <Typography
+            variant="p"
+            color="ligth"
+            textAlign="center"
+            style={{ width: "100%", fontWeight: "600" }}
+          >
             {title}
           </Typography>
         )}
@@ -59,11 +87,15 @@ const Header = (props: HeaderAttributes) => {
         )}
         {variant == "information" && (
           <TouchableOpacity style={styles.user}>
-            <AntDesign name="questioncircleo" size={22} color={palette["ligth"]} />
+            <AntDesign
+              name="questioncircleo"
+              size={22}
+              color={palette["ligth"]}
+            />
           </TouchableOpacity>
         )}
       </View>
-    </View>
+    </LinearGradient>
   )
 }
 

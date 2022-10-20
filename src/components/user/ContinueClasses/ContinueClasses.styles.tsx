@@ -13,26 +13,34 @@ export const styles = StyleSheet.create({
     marginBottom: 20
   },
   swiper: {
-    height: 170,
+    height: 165,
   },
   swiperItem: {
     flex: 1, 
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "90%",
-    overflow: "hidden",
-    backgroundColor: palette["yellowSecondary"],
-    padding: 18,
-    borderRadius: 30
-  },
-  itemTop: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: palette["black"],
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+
+  },
+  swiperContent: {
+    width: "70%",
+    paddingLeft: 15
   },
   swiperImage: {
-    width: 70,
-    height: 70,
-    borderRadius: 20,
-    marginRight: 20
+    width: "30%",
+    borderRadius: 15,
+    height: "95%",
+    overflow: "hidden"
+  },
+  swiperTop: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 5,
+    
   }
 })

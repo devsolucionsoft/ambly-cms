@@ -1,27 +1,62 @@
 import React, { useRef } from "react"
-import { View, ViewProps, Image, ImageBackground, TouchableOpacity } from "react-native"
+import {
+  View,
+  ViewProps,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native"
 import Swiper from "react-native-swiper"
+import { LinearGradient } from "expo-linear-gradient"
+import { navigateUser } from "../../../navigation/actions"
 // Styles
 import { styles } from "./SliderCourses.styles"
+import { paletteGradient } from "../../../utils/theme"
 // COmponents
 import { Typography, Button } from "../../global"
 
 interface SliderCoursesProps {
   variant?: "popular" | "new" | "next"
+  header?: boolean
+  title?: string
 }
 
 type SliderCoursesAttributes = SliderCoursesProps & ViewProps
 
 const SliderCourses = (props: SliderCoursesAttributes) => {
-  const { style, variant } = props
+  const { style, variant, header, title } = props
 
   const parseStyle = typeof style === "object" ? style : {}
   const items: Array<any> = [1, 2, 3]
 
   const videoPlayer = useRef<any>()
 
+  const getHeigth = () => {
+    if (variant === "next") return 600
+    if (variant === "new") return 350
+    if (variant === "popular") return 230
+  }
+
   return (
-    <View style={{...styles.main, height: variant === "next" ? 230 : 350}}>
+    <View style={{ ...parseStyle, ...styles.main, height: getHeigth() }}>
+      {header && (
+        <View style={styles.swiperTop}>
+          <Typography variant="heading2" textAlign="left" color="ligth">
+            {title}
+          </Typography>
+          <TouchableOpacity style={{ justifyContent: "center", marginTop: 5 }}>
+            <Typography
+              variant="p3"
+              textAlign="left"
+              color="redPrimary"
+              style={{ fontWeight: "bold" }}
+            >
+              Ver todos
+            </Typography>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <Swiper
         loop={false}
         loadMinimalSize={2}
@@ -29,23 +64,28 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
         showsPagination={false}
       >
         {items.map((item) => {
-          if (variant === "popular") {
+          if (variant === "next") {
             return (
               <View key={item} style={styles.swiperItemPopular}>
                 <Image
                   style={styles.swiperImagePopular}
                   source={require("../../../../assets/images/start-login.png")}
                 />
-                <View style={styles.swiperItemPopularContent}>
+                <LinearGradient
+                  start={{ x: 0.5, y: 0.8 }}
+                  end={{ x: 0.5, y: 0 }}
+                  colors={paletteGradient.gradientOpacity}
+                  style={styles.swiperItemPopularContent}
+                >
                   <Typography
-                    variant="p2"
-                    color="dark"
+                    variant="heading"
+                    color="ligth"
                     textAlign="left"
                     style={{ fontWeight: "bold" }}
                   >
                     Confianza en si mismo
                   </Typography>
-                  <Typography variant="p2" color="grayText" textAlign="left">
+                  <Typography variant="p2" color="ligth" textAlign="left">
                     Jorge Enrique Avello
                   </Typography>
                   <Button
@@ -53,9 +93,10 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
                     variant="sm"
                     color="redPrimary"
                     colorText="ligth"
-                    style={{ marginTop: 15 }}
+                    style={{ marginTop: 15, paddingHorizontal: 60 }}
+                    onPress={() => navigateUser("CourseDetail")}
                   />
-                </View>
+                </LinearGradient>
               </View>
             )
           }
@@ -89,7 +130,7 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
             )
           }
 
-          if (variant === "next") {
+          if (variant === "popular") {
             return (
               <TouchableOpacity key={item} style={styles.swiperItemNext}>
                 <ImageBackground

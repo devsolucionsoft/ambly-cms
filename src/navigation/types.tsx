@@ -33,10 +33,12 @@ export type UserStackParamList = {
   ManyCourses: undefined
   ChooseCourses: undefined
   CheckIn: undefined
+  CourseDetail: undefined
+  MyCourses: undefined
+  ModuleDetail: undefined
 }
 
 export type AppStackParamList = {
   Auth: { screen: keyof AuthStackParamList }
   User: { screen: keyof UserStackParamList }
 }
-

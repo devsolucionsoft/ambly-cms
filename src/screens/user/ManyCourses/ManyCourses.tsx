@@ -1,8 +1,6 @@
 import { useState } from "react"
 import {
   View,
-  ScrollView,
-  ImageBackground,
   TouchableOpacity,
 } from "react-native"
 // Styles compomponent
@@ -13,8 +11,8 @@ import {
   UserStackParamList,
 } from "../../../navigation/types"
 // UI Components
-import { Header, Typography } from "../../../components/global"
-import { ButtonAction } from "../../../components/user"
+import { Typography } from "../../../components/global"
+import { Layout, ButtonAction } from "../../../components/user"
 
 const ManyCoursesScreen = ({
   navigation,
@@ -41,45 +39,43 @@ const ManyCoursesScreen = ({
   }
 
   return (
-    <ImageBackground
-      resizeMode="cover"
-      style={styles.container}
-      source={require("../../../../assets/images/background-screen.png")}
+    <Layout
+      spaceTop
+      headerProps={{ returnAction: true, icon: true, variant: "information" }}
     >
-      <Header returnAction icon variant="information"  />
+      <View style={styles.content}>
+        <Typography variant="heading3" textAlign="center" color="ligth">
+          ¿A cuantos cursos quieres acceder?
+        </Typography>
 
-      <ScrollView>
-        <View style={styles.content}>
-          <Typography variant="heading3" textAlign="center" color="ligth">
-            ¿A cuantos cursos quieres acceder?
-          </Typography>
-
-          <View style={styles.listCourses}>
-            {courses.map((item, index) => (
-              <TouchableOpacity
-                style={
-                  item.active
-                    ? { ...styles.itemCourses, ...styles.itemCoursesActive }
-                    : styles.itemCourses
-                }
-                onPress={() => handlePress(index)}
+        <View style={styles.listCourses}>
+          {courses.map((item, index) => (
+            <TouchableOpacity
+              style={
+                item.active
+                  ? { ...styles.itemCourses, ...styles.itemCoursesActive }
+                  : styles.itemCourses
+              }
+              onPress={() => handlePress(index)}
+            >
+              <Typography
+                variant="p2"
+                textAlign="left"
+                color="black"
+                style={{ fontWeight: "bold" }}
               >
-                <Typography
-                  variant="p2"
-                  textAlign="left"
-                  color="black"
-                  style={{ fontWeight: "bold" }}
-                >
-                  {item.text}
-                </Typography>
-              </TouchableOpacity>
-            ))}
-          </View>
+                {item.text}
+              </Typography>
+            </TouchableOpacity>
+          ))}
         </View>
-      </ScrollView>
+      </View>
 
-      <ButtonAction text="ELEGIR CURSOS" onPress={() => navigation.navigate("ChooseCourses")} />
-    </ImageBackground>
+      <ButtonAction
+        text="ELEGIR CURSOS"
+        onPress={() => navigation.navigate("ChooseCourses")}
+      />
+    </Layout>
   )
 }
 

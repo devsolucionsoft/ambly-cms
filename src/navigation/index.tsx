@@ -18,7 +18,15 @@ import {
 } from "./types"
 // Screens
 import { StartScreen, IngressScreen, LoginScreen } from "../screens/auth"
-import { HomeScreen, ManyCourses, ChooseCourses, CheckIn } from "../screens/user"
+import {
+  HomeScreen,
+  ManyCourses,
+  ChooseCourses,
+  CheckIn,
+  CourseDetail,
+  MyCourses,
+  ModuleDetail,
+} from "../screens/user"
 // Drawer
 import { DrawerNatigation } from "../components/user"
 
@@ -37,16 +45,16 @@ const AppNavigator = () => {
 
   return (
     <AppStack.Navigator initialRouteName="Auth">
-      {!auth.session ? (
+      {auth.session ? (
         <AppStack.Screen
-          name="Auth"
-          component={AuthNavigator}
+          name="User"
+          component={UserNavigator}
           options={{ headerShown: false }}
         />
       ) : (
         <AppStack.Screen
-          name="User"
-          component={UserNavigator}
+          name="Auth"
+          component={AuthNavigator}
           options={{ headerShown: false }}
         />
       )}
@@ -103,6 +111,21 @@ const UserNavigator = () => {
       <UserStack.Screen
         name="CheckIn"
         component={CheckIn}
+        options={{ headerShown: false }}
+      />
+      <UserStack.Screen
+        name="CourseDetail"
+        component={CourseDetail}
+        options={{ headerShown: false }}
+      />
+      <UserStack.Screen
+        name="MyCourses"
+        component={MyCourses}
+        options={{ headerShown: false }}
+      />
+      <UserStack.Screen
+        name="ModuleDetail"
+        component={ModuleDetail}
         options={{ headerShown: false }}
       />
     </UserStack.Navigator>
