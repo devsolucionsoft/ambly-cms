@@ -71,7 +71,7 @@ const ChooseCoursesScreen = ({
                 color="black"
                 style={{ fontWeight: "bold" }}
               >
-                Escige tus cursos
+                Nombre de curso {index+1}
               </Typography>
               <Check
                 check={item.active}

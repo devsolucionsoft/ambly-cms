@@ -7,7 +7,7 @@ import { styles } from "./FavoriteTopics.styles"
 // COmponents
 import { Typography } from "../../global"
 
-const Topics = [1, 2, 3, 4, 5, 6]
+const Topics = [1, 2, 3, 4]
 
 interface FavoriteTopicsProps {}
 type FavoriteTopicsAttributes = FavoriteTopicsProps & ViewProps
@@ -36,13 +36,12 @@ const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
           <TouchableOpacity key={item} style={styles.topicsItem}>
             <Image
               style={styles.topicImage}
-              source={require("../../../../assets/images/start-login.png")}
+              source={require("../../../../assets/images/tema.png")}
             />
             <Typography
               variant="p"
               textAlign="left"
               color="ligth"
-              style={{ fontWeight: "bold" }}
             >
               Arte
             </Typography>

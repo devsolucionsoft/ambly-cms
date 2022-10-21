@@ -37,24 +37,10 @@ const DrawerNatigation = ({state, navigation, descriptors}:DrawerContentComponen
           />
           <Button
             variant="lg"
-            text="Mis cursos"
+            text="Escoger cursos"
             color="redPrimary"
             colorText="ligth"
             onPress={() => navigation.navigate("ManyCourses")}
-          />
-          <Button
-            variant="lg"
-            text="Escoge cursos"
-            color="redPrimary"
-            colorText="ligth"
-            onPress={() => navigation.navigate("ChooseCourses")}
-          />
-          <Button
-            variant="lg"
-            text="CheckIn"
-            color="redPrimary"
-            colorText="ligth"
-            onPress={() => navigation.navigate("CheckIn")}
           />
         </View>
       </SafeAreaView>

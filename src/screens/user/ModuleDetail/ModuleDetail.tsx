@@ -1,13 +1,11 @@
 import { useState, useRef } from "react"
-import { View, ImageBackground, TouchableOpacity } from "react-native"
-import { LinearGradient } from "expo-linear-gradient"
-import { Video, AVPlaybackStatus } from "expo-av"
+import { View, TouchableOpacity } from "react-native"
+import { Video } from "expo-av"
 import { Octicons } from "@expo/vector-icons"
 import { MaterialIcons } from "@expo/vector-icons"
-
 // Styles compomponent
 import { styles } from "./ModuleDetail.styles"
-import { palette, paletteGradient } from "../../../utils/theme"
+import { palette } from "../../../utils/theme"
 // Types
 import {
   StackNavigationProps,
@@ -69,7 +67,6 @@ const ModuleDetailScreen = ({
 
   return (
     <Layout
-      spaceTop
       headerProps={{
         returnAction: true,
         variant: "information",
@@ -80,7 +77,7 @@ const ModuleDetailScreen = ({
         ref={video}
         style={styles.video}
         source={{
-          uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
+          uri: "https://joy.videvo.net/videvo_files/video/free/video0455/large_watermarked/_import_6091143fc4c4b6.26692621_preview.mp4",
         }}
         positionMillis={10000}
         resizeMode="cover"
@@ -91,13 +88,13 @@ const ModuleDetailScreen = ({
 
       {/* Content modules */}
       <View style={styles.content}>
-        <View style={{flexDirection: "row", marginBottom: 20}}>
+        <View style={{ flexDirection: "row", marginBottom: 20 }}>
           <View style={styles.beagle}>
             <Typography
               color="ligth"
               variant="p3"
               textAlign="left"
-              style={{ fontWeight: "bold"}}
+              style={{ fontWeight: "bold" }}
             >
               Modulo 2
             </Typography>
@@ -127,7 +124,7 @@ const ModuleDetailScreen = ({
           colorText="ligth"
           variant="md"
           text="Continuar estudiando"
-          style={{marginBottom: 30}}
+          style={{ marginBottom: 30 }}
         />
 
         <Typography

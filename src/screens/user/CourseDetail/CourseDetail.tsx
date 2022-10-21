@@ -1,4 +1,9 @@
-import { View, Image } from "react-native"
+import { useState, useRef } from "react"
+import { View, Image, ImageBackground } from "react-native"
+import { FontAwesome5 } from "@expo/vector-icons"
+import { LinearGradient } from "expo-linear-gradient"
+import { Video } from "expo-av"
+
 // Styles compomponent
 import { styles } from "./CourseDetail.styles"
 // Types
@@ -9,7 +14,7 @@ import {
 // UI Components
 import { Typography, Divider } from "../../../components/global"
 import { Layout, AccordionItem, ButtonAction } from "../../../components/user"
-import { palette } from "../../../utils/theme"
+import { palette, paletteGradient } from "../../../utils/theme"
 import { AntDesign } from "@expo/vector-icons"
 
 const CourseDetailScreen = ({
@@ -53,84 +58,92 @@ const CourseDetailScreen = ({
     },
   ]
 
+  const video = useRef(null)
+  const [status, setStatus] = useState({})
+
   return (
     <Layout
       headerProps={{
         returnAction: true,
         variant: "information",
+        title: "Profesores",
       }}
       buttonAction={{
         text: "Iniciar curso",
-        onPress: () => navigation.navigate("ModuleDetail")
+        onPress: () => navigation.navigate("ModuleDetail"),
       }}
     >
-      <Image
+      <ImageBackground
         style={styles.image}
         source={require("../../../../assets/images/mariana.jpg")}
-      />
-      <View style={styles.content}>
-        {/* Content top */}
-        <Typography
-          variant="heading"
-          textAlign="center"
-          color="ligth"
-          style={{ marginBottom: 10 }}
+      >
+        <LinearGradient
+          start={{ x: 0.5, y: 0.8 }}
+          end={{ x: 0.5, y: 0 }}
+          colors={paletteGradient.gradientOpacity}
+          style={styles.imageContent}
         >
-          Mariana Pajon
-        </Typography>
-        <Divider
-          color="blueText"
-          width={30}
-          boder={2}
-          marginTop={5}
-          marginBottom={6}
-        />
-        <Typography
-          variant="heading3"
-          textAlign="center"
-          color="ligth"
-          style={{ marginBottom: 10 }}
-        >
-          Fuerza mental
-        </Typography>
-
-        {/* Content price */}
-        <View style={styles.contentPrice}>
           <Typography
-            variant="p2"
-            textAlign="center"
-            color="grayText"
+            variant="headingLg"
+            textAlign="left"
+            color="ligth"
             style={{ marginBottom: 10 }}
           >
-            <AntDesign
-              name="clockcircleo"
-              size={15}
-              color={palette["blueText"]}
-            />{" "}
-            7 modulos
+            Fuerza mental
           </Typography>
-          <Typography
-            variant="p"
-            textAlign="center"
-            color="blueText"
-            style={{ fontWeight: "bold", marginBottom: 10 }}
-          >
-            $ 43.000
-          </Typography>
-        </View>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <FontAwesome5 name="user-alt" size={18} color={palette["ligth"]} />
+            <Typography
+              variant="p"
+              color="ligth"
+              textAlign="left"
+              style={{ marginLeft: 10 }}
+            >
+              Jorge Enrique Avello
+            </Typography>
+          </View>
+        </LinearGradient>
+      </ImageBackground>
+      <View style={styles.content}>
+        {/* Content top */}
+
+        {/* Content price */}
+        <View style={styles.contentPrice}></View>
 
         {/* Content description */}
         <Typography
           variant="p2"
-          textAlign="center"
+          textAlign="left"
           color="grayText"
-          style={{ width: "90%", marginLeft: "5%" }}
+          style={{ marginBottom: 20 }}
         >
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s, when an unknown printer took a galley of type and
           scrambled it to make a type specimen book.
         </Typography>
+
+        <Typography
+          variant="heading2"
+          textAlign="left"
+          color="ligth"
+          style={{ marginBottom: 30 }}
+        >
+          Por solo $43.000
+        </Typography>
+
+        <Video
+          ref={video}
+          style={styles.video}
+          source={{
+            uri: "https://joy.videvo.net/videvo_files/video/free/video0455/large_watermarked/_import_6091143fc4c4b6.26692621_preview.mp4",
+          }}
+          positionMillis={10000}
+          resizeMode="cover"
+          useNativeControls
+          isLooping
+          onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+        />
 
         {/* Content price */}
         <View style={styles.caracteristics}>

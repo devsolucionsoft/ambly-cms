@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 20,
-
+    marginBottom: 15
   },
   swiperContent: {
     width: "70%",

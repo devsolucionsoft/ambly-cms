@@ -16,8 +16,8 @@ export const styles = StyleSheet.create({
   moduleList: {},
   video: {
     width: "100%",
-    height: 200,
-    marginTop: 15
+    height: 250,
+    marginTop: 0
   },
   downloadable: {
     backgroundColor: palette["graySecondary"],

@@ -1,7 +1,9 @@
 import { StyleSheet } from "react-native"
 
 export const styles = StyleSheet.create({
-  main: {},
+  main: {
+    marginBottom: 30
+  },
   topicsList: {
     display: "flex",
     flexDirection: "row",
@@ -13,7 +15,7 @@ export const styles = StyleSheet.create({
   topicsItem: {
     alignItems: "center",
     width: "48%",
-    marginBottom: 30,
+    marginBottom: 25,
   },
   topicImage: {
     width: 120,

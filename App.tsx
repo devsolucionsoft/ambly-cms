@@ -1,5 +1,5 @@
 import "react-native-gesture-handler"
-import { StatusBar } from "expo-status-bar"
+import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from "react-native-safe-area-context"
 
 import useCachedResources from "./src/hooks/useCachedResources"
@@ -18,7 +18,7 @@ export default function App() {
       <Provider store={store}>
         <SafeAreaProvider>
           <Navigation />
-          <StatusBar style="light" />
+          <StatusBar />
         </SafeAreaProvider>
       </Provider>
     )

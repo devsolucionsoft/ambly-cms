@@ -5,7 +5,7 @@ import { styles } from "./Typography.styles"
 // Theme
 import { palette, paletteTypes } from "../../../utils/theme"
 
-type variantTypes = "heading" | "heading2" | "heading3" | "p" | "p2" | "p3" | "p4"
+type variantTypes = "headingLg" | "heading" | "heading2" | "heading3" | "p" | "p2" | "p3" | "p4"
 
 interface TypographyProps {
   variant: variantTypes

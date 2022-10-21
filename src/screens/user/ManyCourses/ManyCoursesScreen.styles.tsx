@@ -6,7 +6,8 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingVertical: 20,
+    paddingVertical: 0,
+    paddingBottom: 20,
     paddingHorizontal: 30
   },
   listCourses: {

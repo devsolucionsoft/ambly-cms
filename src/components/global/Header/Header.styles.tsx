@@ -1,8 +1,6 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet, Platform } from "react-native"
 // Theme
 import { palette } from "../../../utils/theme"
-import { StatusBar } from "react-native"
-
 
 export const styles = StyleSheet.create({
   main: {
@@ -11,7 +9,8 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    paddingVertical: (StatusBar.currentHeight ?? 0) + 10,
+    paddingVertical: 15,
+    paddingTop: Platform.OS === 'ios' ? 40 : 10,
     paddingHorizontal: 30,
     position: "relative",
     zIndex: 10,

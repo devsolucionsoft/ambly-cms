@@ -1,6 +1,10 @@
 import { StyleSheet, StyleProp } from "react-native"
 
 export const styles = StyleSheet.create({
+  headingLg: {
+    fontSize: 45,
+    fontWeight: "bold",
+  },
   heading: {
     fontSize: 34,
     fontWeight: "bold",
