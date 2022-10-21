@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
   },
   content: {
     paddingVertical: 20,
-    paddingHorizontal: 30
+    paddingBottom: 100,
+    paddingHorizontal: 25
   },
   viewAbsolute: {
     position: "absolute",

@@ -92,6 +92,7 @@ const UserNavigator = () => {
     <UserStack.Navigator
       initialRouteName="Home"
       drawerContent={DrawerNatigation}
+      backBehavior="history"
     >
       <UserStack.Screen
         name="Home"

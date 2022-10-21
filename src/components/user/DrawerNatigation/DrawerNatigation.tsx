@@ -13,12 +13,12 @@ import { navigateUser } from "../../../navigation/actions"
 import { styles } from "./DrawerNatigation.styles"
 // Components
 import { Button, Header } from "../../global"
-import { DrawerNavigationOptions } from '@react-navigation/drawer'
+import { DrawerContentComponentProps } from '@react-navigation/drawer'
 
-const DrawerNatigation = (navigation:any) => {
+const DrawerNatigation = ({state, navigation, descriptors}:DrawerContentComponentProps) => {
   return (
     <View style={styles.main}>
-      <Header action={() => navigation.navigation.closeDrawer()} title="Menú" />
+      <Header action={() => navigation.closeDrawer()} title="Menú" />
       <SafeAreaView style={styles.content}>
         <View>
           <Button
@@ -26,35 +26,35 @@ const DrawerNatigation = (navigation:any) => {
             text="Home"
             color="redPrimary"
             colorText="ligth"
-            onPress={() => navigation.navigation.navigate("Home")}
+            onPress={() => navigation.navigate("home")}
           />
           <Button
             variant="lg"
             text="Mis cursos"
             color="redPrimary"
             colorText="ligth"
-            onPress={() => navigation.navigation.navigate("MyCourses")}
+            onPress={() => navigation.navigate("MyCourses")}
           />
           <Button
             variant="lg"
             text="Mis cursos"
             color="redPrimary"
             colorText="ligth"
-            onPress={() => navigation.navigation.navigate("ManyCourses")}
+            onPress={() => navigation.navigate("ManyCourses")}
           />
           <Button
             variant="lg"
             text="Escoge cursos"
             color="redPrimary"
             colorText="ligth"
-            onPress={() => navigation.navigation.navigate("ChooseCourses")}
+            onPress={() => navigation.navigate("ChooseCourses")}
           />
           <Button
             variant="lg"
             text="CheckIn"
             color="redPrimary"
             colorText="ligth"
-            onPress={() => navigation.navigation.navigate("CheckIn")}
+            onPress={() => navigation.navigate("CheckIn")}
           />
         </View>
       </SafeAreaView>

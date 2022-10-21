@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
   },
   content: {
     paddingVertical: 20,
+    paddingBottom: 200,
     paddingHorizontal: 30,
   },
   listCourses: {

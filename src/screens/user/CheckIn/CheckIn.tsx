@@ -1,8 +1,5 @@
 import { useState } from "react"
-import {
-  View,
-  Image,
-} from "react-native"
+import { View, Image } from "react-native"
 // Styles compomponent
 import { styles } from "./CheckIn.styles"
 // Types
@@ -29,6 +26,10 @@ const ChooseCoursesScreen = ({
     <Layout
       spaceTop
       headerProps={{ returnAction: true, icon: true, variant: "information" }}
+      buttonAction={{
+        text: "Pagar",
+        onPress: () => false,
+      }}
     >
       <View style={styles.content}>
         <Typography variant="heading3" textAlign="center" color="ligth">
@@ -97,12 +98,7 @@ const ChooseCoursesScreen = ({
           <Input placeholder="Cedula" variant="variant2" />
           <Input placeholder="E - mail" variant="variant2" />
         </View>
-      <ButtonAction
-        text="PAGAR AHORA"
-        onPress={() => navigation.goBack()}
-        />
       </View>
-
     </Layout>
   )
 }

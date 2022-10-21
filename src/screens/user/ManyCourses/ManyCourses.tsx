@@ -1,8 +1,5 @@
 import { useState } from "react"
-import {
-  View,
-  TouchableOpacity,
-} from "react-native"
+import { View, TouchableOpacity } from "react-native"
 // Styles compomponent
 import { styles } from "./ManyCoursesScreen.styles"
 // Types
@@ -42,6 +39,10 @@ const ManyCoursesScreen = ({
     <Layout
       spaceTop
       headerProps={{ returnAction: true, icon: true, variant: "information" }}
+      buttonAction={{
+        text: "Elegir cursos",
+        onPress: () => navigation.navigate("ChooseCourses"),
+      }}
     >
       <View style={styles.content}>
         <Typography variant="heading3" textAlign="center" color="ligth">
@@ -70,11 +71,6 @@ const ManyCoursesScreen = ({
           ))}
         </View>
       </View>
-
-      <ButtonAction
-        text="ELEGIR CURSOS"
-        onPress={() => navigation.navigate("ChooseCourses")}
-      />
     </Layout>
   )
 }

@@ -1,7 +1,5 @@
 import { useState } from "react"
-import {
-  View
-} from "react-native"
+import { View } from "react-native"
 // Styles compomponent
 import { styles } from "./ChooseCourses.styles"
 // Types
@@ -40,6 +38,10 @@ const ChooseCoursesScreen = ({
     <Layout
       spaceTop
       headerProps={{ returnAction: true, icon: true, variant: "information" }}
+      buttonAction={{
+        text: "Pagar ahora",
+        onPress: () => navigation.navigate("CheckIn"),
+      }}
     >
       <View style={styles.content}>
         <Typography
@@ -82,10 +84,6 @@ const ChooseCoursesScreen = ({
           ))}
         </View>
       </View>
-      <ButtonAction
-        text="PAGAR AHORA"
-        onPress={() => navigation.navigate("CheckIn")}
-      />
     </Layout>
   )
 }

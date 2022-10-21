@@ -35,7 +35,7 @@ const MyCoursesScreen = ({
       <View style={styles.content}>
         <View style={styles.listCourses}>
           {courses.map((item, index) => (
-            <TouchableOpacity style={styles.itemCourse}>
+            <TouchableOpacity style={styles.itemCourse} onPress={() => navigation.navigate("CourseDetail")}>
               <ImageBackground
                 style={styles.itemCourseImage}
                 source={require("../../../../assets/images/course.png")}
@@ -63,6 +63,7 @@ const MyCoursesScreen = ({
                     colorText="ligth"
                     text="Continuar"
                     variant="sm"
+                    onPress={() => navigation.navigate("ModuleDetail")}
                   />
                 </LinearGradient>
               </ImageBackground>

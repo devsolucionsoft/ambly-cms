@@ -8,7 +8,7 @@ import {
 } from "../../../navigation/types"
 // UI Components
 import { Typography, Divider } from "../../../components/global"
-import { Layout, AccordionItem } from "../../../components/user"
+import { Layout, AccordionItem, ButtonAction } from "../../../components/user"
 import { palette } from "../../../utils/theme"
 import { AntDesign } from "@expo/vector-icons"
 
@@ -58,6 +58,10 @@ const CourseDetailScreen = ({
       headerProps={{
         returnAction: true,
         variant: "information",
+      }}
+      buttonAction={{
+        text: "Iniciar curso",
+        onPress: () => navigation.navigate("ModuleDetail")
       }}
     >
       <Image
