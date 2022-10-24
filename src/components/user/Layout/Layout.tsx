@@ -12,6 +12,7 @@ interface LayoutProps {
   headerProps: HeaderProps
   spaceTop?: boolean
   buttonAction?: ButtonActionAttributes
+  navCourse?: JSX.Element
 }
 
 type TemplateAttributes = LayoutProps & ViewProps
@@ -19,7 +20,7 @@ type TemplateAttributes = LayoutProps & ViewProps
 const ThemeContext = createContext({})
 
 const Layout = (props: TemplateAttributes) => {
-  const { headerProps, children, spaceTop, buttonAction } = props
+  const { headerProps, children, spaceTop, buttonAction, navCourse } = props
 
   return (
     <ThemeContext.Provider
@@ -37,6 +38,7 @@ const Layout = (props: TemplateAttributes) => {
           {buttonAction && (
             <ButtonAction {...buttonAction} text={buttonAction.text} />
           )}
+          {navCourse && navCourse}
         </View>
       </View>
     </ThemeContext.Provider>

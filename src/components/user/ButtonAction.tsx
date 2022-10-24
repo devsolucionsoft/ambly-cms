@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 40,
     width: "80%",
-    borderRadius: 35,
+    borderRadius: 20,
     marginHorizontal: "10%",
     marginVertical: 15,
   },

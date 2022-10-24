@@ -1,6 +1,7 @@
 import { useState, useRef } from "react"
+import * as ScreenOrientation from "expo-screen-orientation"
 import { View, TouchableOpacity } from "react-native"
-import { Video } from "expo-av"
+import { Video, ResizeMode } from "expo-av"
 import { Octicons } from "@expo/vector-icons"
 import { MaterialIcons } from "@expo/vector-icons"
 // Styles compomponent
@@ -64,6 +65,19 @@ const ModuleDetailScreen = ({
 
   const video = useRef(null)
   const [status, setStatus] = useState({})
+  const [orientationLock, setOrientationLock] = useState<"PORTRAIT" | "LANDSCAPE_RIGHT">("PORTRAIT")
+
+  const changeScreenOrientation = async (status:any) => {
+    if (status.fullscreenUpdate === 1) {
+      setOrientationLock("LANDSCAPE_RIGHT")
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
+    }
+    if (status.fullscreenUpdate === 2) {
+      setOrientationLock("PORTRAIT")
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    }
+  }
+  
 
   return (
     <Layout
@@ -79,10 +93,10 @@ const ModuleDetailScreen = ({
         source={{
           uri: "https://joy.videvo.net/videvo_files/video/free/video0455/large_watermarked/_import_6091143fc4c4b6.26692621_preview.mp4",
         }}
-        positionMillis={10000}
-        resizeMode="cover"
+        isLooping={false}
         useNativeControls
-        isLooping
+        resizeMode={orientationLock === "PORTRAIT" ? ResizeMode.COVER : ResizeMode.CONTAIN}
+        onFullscreenUpdate={(status) => changeScreenOrientation(status)}
         onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
 

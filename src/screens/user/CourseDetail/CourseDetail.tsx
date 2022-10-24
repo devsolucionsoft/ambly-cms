@@ -3,7 +3,6 @@ import { View, Image, ImageBackground } from "react-native"
 import { FontAwesome5 } from "@expo/vector-icons"
 import { LinearGradient } from "expo-linear-gradient"
 import { Video } from "expo-av"
-
 // Styles compomponent
 import { styles } from "./CourseDetail.styles"
 // Types
@@ -12,10 +11,9 @@ import {
   UserStackParamList,
 } from "../../../navigation/types"
 // UI Components
-import { Typography, Divider } from "../../../components/global"
-import { Layout, AccordionItem, ButtonAction } from "../../../components/user"
+import { Typography, Button } from "../../../components/global"
+import { Layout, AccordionItem, NavCourse } from "../../../components/user"
 import { palette, paletteGradient } from "../../../utils/theme"
-import { AntDesign } from "@expo/vector-icons"
 
 const CourseDetailScreen = ({
   navigation,
@@ -61,6 +59,7 @@ const CourseDetailScreen = ({
   const video = useRef(null)
   const [status, setStatus] = useState({})
 
+
   return (
     <Layout
       headerProps={{
@@ -68,10 +67,7 @@ const CourseDetailScreen = ({
         variant: "information",
         title: "Profesores",
       }}
-      buttonAction={{
-        text: "Iniciar curso",
-        onPress: () => navigation.navigate("ModuleDetail"),
-      }}
+      navCourse={<NavCourse page={route.name}  />}
     >
       <ImageBackground
         style={styles.image}
@@ -105,11 +101,6 @@ const CourseDetailScreen = ({
         </LinearGradient>
       </ImageBackground>
       <View style={styles.content}>
-        {/* Content top */}
-
-        {/* Content price */}
-        <View style={styles.contentPrice}></View>
-
         {/* Content description */}
         <Typography
           variant="p2"
@@ -131,6 +122,14 @@ const CourseDetailScreen = ({
         >
           Por solo $43.000
         </Typography>
+
+        <Button
+          color="redPrimary"
+          colorText="ligth"
+          variant="sm"
+          text="Iniciar curso"
+          onPress={() => navigation.navigate("ModuleDetail")}
+        />
 
         <Video
           ref={video}

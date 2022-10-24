@@ -5,6 +5,7 @@ import DrawerNatigation from "./DrawerNatigation"
 import ButtonAction from "./ButtonAction"
 import AccordionItem from "./AccordionItem"
 import Layout from "./Layout"
+import NavCourse from "./NavCourse"
 
 export {
   SliderCourses,
@@ -13,5 +14,6 @@ export {
   DrawerNatigation,
   ButtonAction,
   AccordionItem,
-  Layout
+  Layout,
+  NavCourse
 }
