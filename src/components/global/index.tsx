@@ -6,6 +6,7 @@ import Check from "./Check"
 import Input from "./Input"
 import ModalForgotPassword from "./ModalForgotPassword"
 import Divider from "./Divider"
+import Alert from "./Alert"
 
 export {
   Typography,
@@ -16,4 +17,5 @@ export {
   Input,
   ModalForgotPassword,
   Divider,
+  Alert,
 }

@@ -25,12 +25,19 @@ import { ModalDataComplete } from "../../../components/auth"
 // Store
 import { useAppDispatch } from "../../../store"
 import { createSession } from "../../../store/Auth/actions"
-
+// Hooks
+import useValidateForm, {
+  InputValidationI,
+  IErrorInputs,
+} from "../../../hooks/useValidateForm"
+// Api
+import { AuthApi } from "../../../api"
+import { log } from "react-native-reanimated"
 const StartScreen = ({
   navigation,
   route,
 }: StackNavigationProps<AuthStackParamList, "Login">) => {
-  const dispatch = useAppDispatch()
+  const AuthApiModel = new AuthApi()
 
   const { action } = route.params
   const login = action === "login"
@@ -41,10 +48,58 @@ const StartScreen = ({
 
   const handleCheck = () => seCheck(!check)
 
-  const handleLogin = () => {
-    setTimeout(() => {
-      dispatch(createSession({}))
-    }, 400)
+  const defaultInputs = {
+    email: "",
+    password: "",
+  }
+  // States inputs
+  const [stateInputs, setStateInputs] = useState(defaultInputs)
+  // Use Hook Validation
+  const defaultValidation: Array<InputValidationI> = [
+    { required: "text", email: true },
+    { required: "number", minLengt: 6 },
+  ]
+  const { validationInputs, getValidation } = useValidateForm({
+    defaultInputs,
+    defaultValidation,
+  })
+  const [errorInputs, setErrorInputs] = useState<IErrorInputs>(validationInputs)
+  // Inputs keyup
+  const handleKeyUp = (value: string, name: string): void => {
+    setStateInputs({
+      ...stateInputs,
+      [name]: value,
+    })
+    setErrorInputs(validationInputs)
+  }
+
+  const handleLogin = async () => {
+    console.log("handleLogin................");
+    
+    const { errors, validation } = getValidation(stateInputs)
+    if (validation) {
+      const response = await AuthApiModel.UserLogin(stateInputs)
+      console.log(response);
+      
+    } else {
+      setErrorInputs({
+        ...errorInputs,
+        ...errors,
+      })
+    }
+  }
+
+  // Submit forms
+  const handleRegistry = () => {
+    const { errors, validation } = getValidation(stateInputs)
+    if (validation) {
+      setModalDataComplete(true)
+    } else {
+      setErrorInputs({
+        ...errorInputs,
+        ...errors,
+      })
+    }
   }
 
   return (
@@ -57,20 +112,33 @@ const StartScreen = ({
       <ModalDataComplete
         modalVisible={modalDataComplete}
         setModalVisible={(value: boolean) => setModalDataComplete(value)}
+        data={stateInputs}
       />
       <ModalForgotPassword
         modalVisible={modalForgotPassword}
         setModalVisible={(value: boolean) => setModalForgotPassword(value)}
       />
-
       <Header
         returnAction
         title={login ? "Accede a tu cuenta" : "Crea una cuenta"}
       />
-
       <SafeAreaView style={styles.content}>
-        <Input placeholder="E - Mail" icon="Mail" />
-        <Input placeholder="Contraseña" icon="Password" />
+        <Input
+          placeholder="E - Mail"
+          icon="Mail"
+          value={stateInputs.email}
+          error={errorInputs.email.error}
+          message={errorInputs.email.message}
+          onChange={(event) => handleKeyUp(event.nativeEvent.text, "email")}
+        />
+        <Input
+          placeholder="Contraseña"
+          icon="Password"
+          value={stateInputs.password}
+          error={errorInputs.password.error}
+          message={errorInputs.password.message}
+          onChange={(event) => handleKeyUp(event.nativeEvent.text, "password")}
+        />
 
         {login ? (
           <TouchableOpacity
@@ -117,11 +185,11 @@ const StartScreen = ({
 
         <Button
           variant="lg"
-          text="Continuar"
+          text={login ? "Iniciar" : "Continuar"}
           color="redPrimary"
           colorText="ligth"
           style={{ marginTop: 60 }}
-          onPress={() => (login ? handleLogin() : setModalDataComplete(true))}
+          onPress={() => (login ? handleLogin() : handleRegistry())}
         />
       </SafeAreaView>
     </ImageBackground>

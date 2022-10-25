@@ -6,6 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "extra": {
+      "api_url": "http://45.79.166.128:7034"
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

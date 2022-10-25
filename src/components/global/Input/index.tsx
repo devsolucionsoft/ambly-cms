@@ -1,1 +1,1 @@
-export { default } from "./InputAuth"
+export { default } from "./Input"

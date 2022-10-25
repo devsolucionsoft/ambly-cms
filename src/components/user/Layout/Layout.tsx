@@ -3,10 +3,12 @@ import { View, ViewProps, ScrollView } from "react-native"
 // Styles
 import { styles } from "./Layout.styles"
 // Components
-import { Header } from "../../global"
+import { Header, Alert } from "../../global"
 import { ButtonAction } from "../../user"
 import { ButtonActionAttributes } from "../../user/ButtonAction"
 import { HeaderProps } from "../../global/Header/Header"
+// Store
+import { useAppSelector } from "../../../store"
 
 interface LayoutProps {
   headerProps: HeaderProps
@@ -22,12 +24,11 @@ const ThemeContext = createContext({})
 const Layout = (props: TemplateAttributes) => {
   const { headerProps, children, spaceTop, buttonAction, navCourse } = props
 
+
+  
+
   return (
-    <ThemeContext.Provider
-      value={{
-        screen: "",
-      }}
-    >
+    <ThemeContext.Provider value={{}}>
       <View style={styles.container}>
         <Header {...headerProps} />
 
@@ -40,6 +41,8 @@ const Layout = (props: TemplateAttributes) => {
           )}
           {navCourse && navCourse}
         </View>
+
+        
       </View>
     </ThemeContext.Provider>
   )
