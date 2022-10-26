@@ -25,6 +25,7 @@ import { ModalDataComplete } from "../../../components/auth"
 // Store
 import { useAppDispatch } from "../../../store"
 import { createSession } from "../../../store/Auth/actions"
+import { openAlert } from "../../../store/Alert/actions"
 // Hooks
 import useValidateForm, {
   InputValidationI,
@@ -32,12 +33,12 @@ import useValidateForm, {
 } from "../../../hooks/useValidateForm"
 // Api
 import { AuthApi } from "../../../api"
-import { log } from "react-native-reanimated"
 const StartScreen = ({
   navigation,
   route,
 }: StackNavigationProps<AuthStackParamList, "Login">) => {
   const AuthApiModel = new AuthApi()
+  const dispatch = useAppDispatch()
 
   const { action } = route.params
   const login = action === "login"
@@ -74,13 +75,30 @@ const StartScreen = ({
   }
 
   const handleLogin = async () => {
-    console.log("handleLogin................");
-    
     const { errors, validation } = getValidation(stateInputs)
+    
     if (validation) {
       const response = await AuthApiModel.UserLogin(stateInputs)
-      console.log(response);
-      
+
+      switch (response.status) {
+        case 200:
+          dispatch(
+            createSession({
+              email: stateInputs.email,
+              token: response.data.token,
+            })
+          )
+          break
+        default:
+          dispatch(
+            openAlert({
+              title: "Cuenta no encontrada",
+              text: "Revisa tu email o tu contraseña",
+              icon: "error",
+            })
+          )
+          break
+      }
     } else {
       setErrorInputs({
         ...errorInputs,

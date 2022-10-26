@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { View, TouchableOpacity, ImageBackground } from "react-native"
 // Styles compomponent
 import { styles } from "./SIngress.styles"
@@ -8,11 +9,27 @@ import {
 } from "../../../navigation/types"
 // UI Components
 import { Typography, Button, Header } from "../../../components/global"
+import * as Google from "expo-auth-session/providers/google"
+import * as WebBrowser from "expo-web-browser"
+
+WebBrowser.maybeCompleteAuthSession()
 
 const IngressScreen = ({
   navigation,
   route,
 }: StackNavigationProps<AuthStackParamList, "Ingress">) => {
+  const loginGoogle = () => {}
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: "777613007408-tvgraov3kd8k5jjfpksip9c6bqlce9tm.apps.googleusercontent.com",
+  })
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { authentication } = response
+    }
+  }, [response])
+
   return (
     <ImageBackground
       resizeMode="cover"
@@ -31,19 +48,17 @@ const IngressScreen = ({
         </Typography>
 
         <View style={{ ...styles.containButtons, marginTop: 50 }}>
-          <Button color="ligth" colorText="dark" variant="md" text="Google" />
           <Button
             color="ligth"
             colorText="dark"
             variant="md"
-            text="Facebook"
+            text="Google"
+            onPress={() => {
+              promptAsync()
+            }}
           />
-          <Button
-            color="ligth"
-            colorText="dark"
-            variant="md"
-            text="Apple ID"
-          />
+          <Button color="ligth" colorText="dark" variant="md" text="Facebook" />
+          <Button color="ligth" colorText="dark" variant="md" text="Apple ID" />
         </View>
 
         <Typography variant="heading2" textAlign="center" color="ligth">
