@@ -17,7 +17,7 @@ import {
   Header,
   Button,
   Typography,
-  Check,
+  CheckLabel,
   Input,
   ModalForgotPassword,
 } from "../../../components/global"
@@ -25,7 +25,7 @@ import { ModalDataComplete } from "../../../components/auth"
 // Store
 import { useAppDispatch } from "../../../store"
 import { createSession } from "../../../store/Auth/actions"
-import { openAlert } from "../../../store/Alert/actions"
+import { openAlert, openAlertType } from "../../../store/Alert/actions"
 // Hooks
 import useValidateForm, {
   InputValidationI,
@@ -44,14 +44,14 @@ const StartScreen = ({
   const login = action === "login"
 
   const [check, seCheck] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [modalDataComplete, setModalDataComplete] = useState(false)
   const [modalForgotPassword, setModalForgotPassword] = useState(false)
-
-  const handleCheck = () => seCheck(!check)
 
   const defaultInputs = {
     email: "",
     password: "",
+    check: login,
   }
   // States inputs
   const [stateInputs, setStateInputs] = useState(defaultInputs)
@@ -59,6 +59,7 @@ const StartScreen = ({
   const defaultValidation: Array<InputValidationI> = [
     { required: "text", email: true },
     { required: "number", minLengt: 6 },
+    { required: "boolean" },
   ]
   const { validationInputs, getValidation } = useValidateForm({
     defaultInputs,
@@ -66,7 +67,7 @@ const StartScreen = ({
   })
   const [errorInputs, setErrorInputs] = useState<IErrorInputs>(validationInputs)
   // Inputs keyup
-  const handleKeyUp = (value: string, name: string): void => {
+  const handleKeyUp = (value: string | boolean, name: string): void => {
     setStateInputs({
       ...stateInputs,
       [name]: value,
@@ -76,8 +77,9 @@ const StartScreen = ({
 
   const handleLogin = async () => {
     const { errors, validation } = getValidation(stateInputs)
-    
+
     if (validation) {
+      setLoading(true)
       const response = await AuthApiModel.UserLogin(stateInputs)
 
       switch (response.status) {
@@ -99,6 +101,7 @@ const StartScreen = ({
           )
           break
       }
+      setLoading(false)
     } else {
       setErrorInputs({
         ...errorInputs,
@@ -120,6 +123,12 @@ const StartScreen = ({
     }
   }
 
+  const forgotPasswordResponse = (response: openAlertType) => {
+    setTimeout(() => {
+      dispatch(openAlert(response))
+    }, 400)
+  }
+
   return (
     <ImageBackground
       resizeMode="cover"
@@ -135,6 +144,7 @@ const StartScreen = ({
       <ModalForgotPassword
         modalVisible={modalForgotPassword}
         setModalVisible={(value: boolean) => setModalForgotPassword(value)}
+        ForgotPasswordResponse={forgotPasswordResponse}
       />
       <Header
         returnAction
@@ -144,6 +154,7 @@ const StartScreen = ({
         <Input
           placeholder="E - Mail"
           icon="Mail"
+          autoCapitalize="none"
           value={stateInputs.email}
           error={errorInputs.email.error}
           message={errorInputs.email.message}
@@ -173,32 +184,16 @@ const StartScreen = ({
             </Typography>
           </TouchableOpacity>
         ) : (
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 20,
-            }}
-          >
-            <Check
-              size={22}
-              color="ligth"
-              colorIcon="black"
-              check={check}
-              onChange={handleCheck}
-            />
-            <TouchableOpacity style={{ width: "70%", marginLeft: 20 }}>
-              <Typography
-                variant="p2"
-                color="ligth"
-                textAlign="left"
-                textDecorationLine="underline"
-              >
-                Al continuar acepto terminos y condiciones
-              </Typography>
-            </TouchableOpacity>
-          </View>
+          <CheckLabel
+            size={25}
+            color="ligth"
+            colorIcon="black"
+            label="Al continuar acepto terminos y condiciones"
+            check={stateInputs.check}
+            error={errorInputs.check.error}
+            message={errorInputs.check.message}
+            onChange={() => handleKeyUp(!stateInputs.check, "check")}
+          />
         )}
 
         <Button
@@ -207,6 +202,7 @@ const StartScreen = ({
           color="redPrimary"
           colorText="ligth"
           style={{ marginTop: 60 }}
+          loading={loading}
           onPress={() => (login ? handleLogin() : handleRegistry())}
         />
       </SafeAreaView>

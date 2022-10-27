@@ -3,6 +3,7 @@ import Button from "./Button"
 import Header from "./Header"
 import Icon from "./Icon"
 import Check from "./Check"
+import CheckLabel from "./CheckLabel"
 import Input from "./Input"
 import ModalForgotPassword from "./ModalForgotPassword"
 import Divider from "./Divider"
@@ -18,4 +19,5 @@ export {
   ModalForgotPassword,
   Divider,
   Alert,
+  CheckLabel
 }

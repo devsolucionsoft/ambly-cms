@@ -1,11 +1,12 @@
 import { CLOSE_ALERT, OPEN_ALERT } from "../actionTypes"
 
-export const openAlert = (payload: {
-    title: string
-    text: string
-    icon?: "check" | "error"
-  }
-) => {
+export interface openAlertType {
+  title: string
+  text: string
+  icon?: "check" | "error"
+}
+
+export const openAlert = (payload: openAlertType) => {
   return {
     type: OPEN_ALERT,
     data: payload,

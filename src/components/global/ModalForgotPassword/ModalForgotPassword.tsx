@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Modal,
   ViewProps,
@@ -14,24 +14,48 @@ import AntDesign from "@expo/vector-icons/AntDesign"
 import { styles } from "./ModalForgotPassword.styles"
 // COmponents
 import { Input, Button, Typography } from "../"
+// Api
+import { AuthApi } from "../../../api"
 
 interface ModalForgotPasswordProps {
   modalVisible: boolean
   setModalVisible: Function
+  ForgotPasswordResponse: Function
 }
 
 type ModalForgotPasswordAttributes = ModalForgotPasswordProps & ViewProps
 
 const ModalForgotPassword = (props: ModalForgotPasswordAttributes) => {
-  const { modalVisible, setModalVisible } = props
+  const { modalVisible, setModalVisible, ForgotPasswordResponse } = props
+  const [email, setEmail] = useState("")
+
+  const handleForgotPassword = async () => {
+    const AuthApiModel = new AuthApi()
+    const response = await AuthApiModel.ForgotPassword(email)
+
+    switch (response.status) {
+      case 201:
+        setModalVisible(false)
+        ForgotPasswordResponse({
+          title: "Registro exitoso",
+          text: "Ya puedes iniciar session en nuestra app",
+          icon: "check",
+        })
+        break
+      default:
+        setModalVisible(false)
+        ForgotPasswordResponse({
+          title: "Algo ha salido mal",
+          text: "Intentalo mas tarde",
+          icon: "error",
+        })
+        break
+    }
+  }
 
   return (
     <Modal animationType="fade" transparent={true} visible={modalVisible}>
-      <View
-        //resizeMode="cover"
-        style={styles.modalOverlay}
-        //source={require("../../../../assets/images/background-screen.png")}
-      />
+      <View style={styles.modalOverlay} />
       <View style={styles.modalView}>
         <TouchableOpacity
           style={styles.closeIcon}
@@ -54,7 +78,13 @@ const ModalForgotPassword = (props: ModalForgotPasswordAttributes) => {
             >
               ¿Olvidaste tu contraseña?
             </Typography>
-            <Input placeholder="Ingresa tu E - Mail" icon="Mail" />
+
+            <Input
+              placeholder="Ingresa tu E - Mail"
+              icon="Mail"
+              value={email}
+              onChange={(event) => setEmail(event.nativeEvent.text)}
+            />
 
             <Button
               variant="md"
@@ -62,6 +92,7 @@ const ModalForgotPassword = (props: ModalForgotPasswordAttributes) => {
               color="redPrimary"
               colorText="ligth"
               style={{ marginTop: 20 }}
+              onPress={handleForgotPassword}
             />
           </SafeAreaView>
         </LinearGradient>

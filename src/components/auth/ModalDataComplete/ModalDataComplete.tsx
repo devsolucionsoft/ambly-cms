@@ -5,7 +5,6 @@ import {
   ImageBackground,
   SafeAreaView,
   ScrollView,
-  StatusBar,
 } from "react-native"
 // Styles
 import { styles } from "./ModalDataComplete.styles"
@@ -38,6 +37,8 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
   const dispatch = useAppDispatch()
 
   const { modalVisible, setModalVisible, data } = props
+
+  const [loading, setLoading] = useState(false)
 
   const defaultInputs = {
     username: "",
@@ -74,13 +75,11 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
     const { errors, validation } = getValidation(stateInputs)
 
     if (validation) {
-      const response:any = await AuthApiModel.UserRegister({
+      setLoading(true)
+      const response: any = await AuthApiModel.UserRegister({
         ...data,
         ...stateInputs,
       })
-
-      console.log(response);
-      
 
       switch (response.status) {
         case 201:
@@ -92,10 +91,10 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
             })
           )
           break
-
         default:
           break
       }
+      setLoading(false)
     } else {
       setErrorInputs({
         ...errorInputs,
@@ -105,11 +104,7 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
   }
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-    >
+    <Modal animationType="slide" transparent={true} visible={modalVisible}>
       <ImageBackground
         resizeMode="cover"
         style={styles.modalView}
@@ -169,6 +164,7 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
               text="Continuar"
               color="redPrimary"
               colorText="ligth"
+              loading={loading}
               style={{ marginTop: 40, marginBottom: 80 }}
               onPress={handleRegistry}
             />

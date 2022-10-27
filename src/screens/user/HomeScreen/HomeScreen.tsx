@@ -21,7 +21,6 @@ const HomeScreen = ({
   route,
 }: DrawerkNavigationProps<UserStackParamList, "Home">) => {
 
-
   return (
     <Layout headerProps={{ icon: true, variant: "user" }}>
       {/* Popular courses */}

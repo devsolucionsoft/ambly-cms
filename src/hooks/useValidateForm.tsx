@@ -1,5 +1,5 @@
 export interface InputValidationI {
-  required?: "text" | "number"
+  required?: "text" | "number" | "boolean"
   email?: boolean
   minLengt?: number
 }

@@ -10,10 +10,11 @@ import { Provider } from "react-redux"
 import { Alert } from "./src/components/global"
 // Store
 import { useAppSelector } from "./src/store"
+import { useFonts } from "expo-font"
 
 const LayoutApp = () => {
   const alertState = useAppSelector((store) => store.Alert)
-  
+
   return (
     <SafeAreaProvider>
       <Navigation />
@@ -29,9 +30,11 @@ const LayoutApp = () => {
 }
 
 export default function App() {
-  const isLoadingComplete = useCachedResources()
+  const [fontsLoaded] = useFonts({
+    poppins: require("./assets/fonts/Poppins/Poppins-Regular.ttf"),
+  })
 
-  if (!isLoadingComplete) {
+  if (!fontsLoaded) {
     return null
   } else {
     return (

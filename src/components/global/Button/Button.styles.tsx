@@ -4,6 +4,7 @@ export const styles = StyleSheet.create({
   lg: {
     width: "100%",
     paddingVertical: 15,
+    paddingBottom: 12,
     paddingHorizontal: 25,
     borderRadius: 20,
     marginVertical: 10,
@@ -11,6 +12,7 @@ export const styles = StyleSheet.create({
   md: {
     width: "100%",
     paddingVertical: 13,
+    paddingBottom: 10,
     paddingHorizontal: 20,
     borderRadius: 18,
     marginVertical: 10,
@@ -18,6 +20,7 @@ export const styles = StyleSheet.create({
   sm: {
     width: "100%",
     paddingVertical: 10,
+    paddingBottom: 7,
     paddingHorizontal: 18,
     borderRadius: 15,
     marginVertical: 10,

@@ -14,7 +14,7 @@ export default function useCachedResources() {
 
         // Load fonts
         await Font.loadAsync({
-          "Nunito-Regular": require("../../assets/fonts/Nunito/static/Nunito-Regular.ttf"),
+          "poppins-regular": require("../../assets/fonts/Nunito/Poppins-Regular.ttf"),
         })
       } catch (e) {
         // We might want to provide this error information to an error reporting service

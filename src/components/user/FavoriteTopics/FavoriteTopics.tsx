@@ -1,11 +1,11 @@
-import React from "react"
+import { useEffect, useState } from "react"
 import { View, ViewProps, Image, TouchableOpacity } from "react-native"
-// Theme
-import { palette, paletteTypes } from "../../../utils/theme"
 // Styles
 import { styles } from "./FavoriteTopics.styles"
 // COmponents
 import { Typography } from "../../global"
+// Api
+import { UserApi } from "../../../api"
 
 const Topics = [1, 2, 3, 4]
 
@@ -14,8 +14,18 @@ type FavoriteTopicsAttributes = FavoriteTopicsProps & ViewProps
 
 const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
   const { style } = props
-
   const parseStyle = typeof style === "object" ? style : {}
+
+  const UserApiModel = new UserApi()
+
+  const [topics, setTopics] = useState([])
+
+  useEffect(() => {
+    ;(async () => {
+      const response = await UserApiModel.GetCategories()
+      response.status === 200 && setTopics(response.data)
+    })()
+  }, [])
 
   return (
     <View style={{ ...parseStyle, ...styles.main }}>
@@ -25,25 +35,21 @@ const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
         textAlign="center"
         style={{ fontWeight: "bold", marginBottom: 20 }}
       >
-        Personaliza tu experiencia      
+        Personaliza tu experiencia
       </Typography>
       <Typography variant="p" color="ligth" textAlign="center">
         Escoge tu TEMA FAVORITO y encuentra el curso que mas te guste
       </Typography>
 
       <View style={styles.topicsList}>
-        {Topics.map((item) => (
-          <TouchableOpacity key={item} style={styles.topicsItem}>
+        {topics.map((item: any) => (
+          <TouchableOpacity key={item.createdAt} style={styles.topicsItem}>
             <Image
               style={styles.topicImage}
               source={require("../../../../assets/images/tema.png")}
             />
-            <Typography
-              variant="p"
-              textAlign="left"
-              color="ligth"
-            >
-              Arte
+            <Typography variant="p" textAlign="left" color="ligth">
+              {item.name}
             </Typography>
           </TouchableOpacity>
         ))}

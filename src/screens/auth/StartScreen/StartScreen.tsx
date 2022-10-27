@@ -1,4 +1,5 @@
-import { View, Image, ImageBackground } from "react-native"
+import { useEffect, useState } from "react"
+import { View, ImageBackground } from "react-native"
 import Swiper from "react-native-swiper"
 // Styles
 import { styles } from "./StartScreen.styles"
@@ -9,12 +10,22 @@ import {
 } from "../../../../src/navigation/types"
 // Components
 import { Typography, Button } from "../../../components/global"
+// Api
+import { ConfigApi } from "../../../api"
 
 const StartScreen = ({
   navigation,
   route,
 }: StackNavigationProps<AuthStackParamList, "Start">) => {
-  const items: Array<any> = [1, 2, 3]
+  const [splash, setSplash] = useState([])
+  const ConfigApiModel = new ConfigApi()
+
+  useEffect(() => {
+    ;(async () => {
+      const response = await ConfigApiModel.Splash()
+      response.status == 200 && setSplash(response.data)
+    })()
+  }, [])
 
   const renderPagination = (current: number, total: number) => {
     return (
@@ -38,18 +49,18 @@ const StartScreen = ({
     <View style={styles.container}>
       <View style={styles.swiper}>
         <Swiper renderPagination={renderPagination} loop={false}>
-          {items.map((item) => (
-            <View key={item} style={styles.swiperItem}>
+          {splash.map((item: any) => (
+            <View key={item.createdAt} style={styles.swiperItem}>
               <ImageBackground
                 style={styles.image}
                 source={require("../../../../assets/images/start-login.png")}
               />
               <View style={styles.swiperContent}>
                 <Typography variant="heading" textAlign="center" color="ligth">
-                  Explore your new skill today
+                  {item.title}
                 </Typography>
                 <Typography variant="p" textAlign="center" color="ligth">
-                  Manage your every penny and transaction easily with Walo App
+                  {item.description}
                 </Typography>
               </View>
             </View>

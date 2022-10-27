@@ -1,4 +1,4 @@
-import React, { createContext } from "react"
+import React, { createContext, useEffect } from "react"
 import { View, ViewProps, ScrollView } from "react-native"
 // Styles
 import { styles } from "./Layout.styles"
@@ -9,6 +9,7 @@ import { ButtonActionAttributes } from "../../user/ButtonAction"
 import { HeaderProps } from "../../global/Header/Header"
 // Store
 import { useAppSelector } from "../../../store"
+
 
 interface LayoutProps {
   headerProps: HeaderProps
@@ -23,9 +24,6 @@ const ThemeContext = createContext({})
 
 const Layout = (props: TemplateAttributes) => {
   const { headerProps, children, spaceTop, buttonAction, navCourse } = props
-
-
-  
 
   return (
     <ThemeContext.Provider value={{}}>
