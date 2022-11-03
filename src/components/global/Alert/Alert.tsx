@@ -23,12 +23,14 @@ interface AlertPasswordProps {
   title?: string
   text?: string
   icon?: "check" | "error"
+  actionText?: string
+  action?: any
 }
 
 type AlertPasswordAttributes = AlertPasswordProps & ViewProps
 
 const AlertPassword = (props: AlertPasswordAttributes) => {
-  const { modalVisible, title, text, icon } = props
+  const { modalVisible, title, text, icon, actionText, action } = props
   const dispatch = useAppDispatch()
 
   return (
@@ -80,6 +82,20 @@ const AlertPassword = (props: AlertPasswordAttributes) => {
             >
               {text}
             </Typography>
+
+            {actionText && (
+              <Button
+                color="redPrimary"
+                colorText="ligth"
+                text={actionText}
+                variant="md"
+                style={{ marginTop: 20 }}
+                onPress={() => {
+                  dispatch(closeAlert())
+                  action()
+                }}
+              />
+            )}
           </SafeAreaView>
         </LinearGradient>
       </View>

@@ -1,8 +1,7 @@
-import { useState, useRef } from "react"
 import { View, Image, ImageBackground } from "react-native"
 import { FontAwesome5 } from "@expo/vector-icons"
 import { LinearGradient } from "expo-linear-gradient"
-import { Video } from "expo-av"
+
 // Styles compomponent
 import { styles } from "./CourseDetail.styles"
 // Types
@@ -56,8 +55,7 @@ const CourseDetailScreen = ({
     },
   ]
 
-  const video = useRef(null)
-  const [status, setStatus] = useState({})
+
 
 
   return (
@@ -67,7 +65,7 @@ const CourseDetailScreen = ({
         variant: "information",
         title: "Profesores",
       }}
-      navCourse={<NavCourse page={route.name}  />}
+     // navCourse={<NavCourse page={route.name}  />}
     >
       <ImageBackground
         style={styles.image}
@@ -131,18 +129,7 @@ const CourseDetailScreen = ({
           onPress={() => navigation.navigate("ModuleDetail")}
         />
 
-        <Video
-          ref={video}
-          style={styles.video}
-          source={{
-            uri: "https://joy.videvo.net/videvo_files/video/free/video0455/large_watermarked/_import_6091143fc4c4b6.26692621_preview.mp4",
-          }}
-          positionMillis={10000}
-          resizeMode="cover"
-          useNativeControls
-          isLooping
-          onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-        />
+        
 
         {/* Content price */}
         <View style={styles.caracteristics}>

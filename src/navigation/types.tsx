@@ -26,6 +26,7 @@ export type AuthStackParamList = {
     action: "login" | "registry"
   }
   Registry: undefined
+  Terms: undefined
 }
 
 export type UserStackParamList = {

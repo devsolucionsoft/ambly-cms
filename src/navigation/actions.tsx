@@ -11,7 +11,7 @@ export const navigationRef: React.RefObject<
 > = createRef()
 
 export const navigateAuth = (screen: keyof AuthStackParamList) =>
-  navigationRef.current?.navigate("Auth", { screen: screen })
+  navigationRef.current?.navigate("Auth", { screen })
 
 export const navigateUser = (screen: keyof UserStackParamList) =>
   navigationRef.current?.navigate("User", { screen })

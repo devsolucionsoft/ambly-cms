@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Modal,
   ViewProps,
@@ -20,10 +20,13 @@ import { AuthApi } from "../../../api"
 // Store
 import { useAppDispatch } from "../../../store"
 import { openAlert } from "../../../store/Alert/actions"
+import { createSession } from "../../../store/Auth/actions"
 
 interface ModalDataCompleteProps {
   modalVisible: boolean
   setModalVisible: Function
+  action?: any
+  typeLogin?: "google" | "facebook" | "email" | ""
   data: {
     email: string
     password: string
@@ -36,8 +39,9 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
   const AuthApiModel = new AuthApi()
   const dispatch = useAppDispatch()
 
-  const { modalVisible, setModalVisible, data } = props
+  const { modalVisible, setModalVisible, data, action, typeLogin } = props
 
+  console.log(typeLogin)
   const [loading, setLoading] = useState(false)
 
   const defaultInputs = {
@@ -74,27 +78,48 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
   const handleRegistry = async () => {
     const { errors, validation } = getValidation(stateInputs)
 
+    const dataRegistry = {
+      ...data,
+      ...stateInputs,
+    }
+
+    let response: any
+
     if (validation) {
       setLoading(true)
-      const response: any = await AuthApiModel.UserRegister({
-        ...data,
-        ...stateInputs,
-      })
-
+      switch (typeLogin) {
+        case "google":
+          response = await AuthApiModel.UserRegistryGoogle(dataRegistry)
+          break
+        default:
+          response = await AuthApiModel.UserRegister(dataRegistry)
+          break
+      }
+      
       switch (response.status) {
         case 201:
-          dispatch(
-            openAlert({
-              title: "Registro exitoso",
-              text: "Ya puedes iniciar session en nuestra app",
-              icon: "check",
-            })
-          )
+          response.data.token
+            ? dispatch(
+                createSession({
+                  email: dataRegistry.email,
+                  token: response.data.token,
+                })
+              )
+            : dispatch(
+                openAlert({
+                  title: "Registro exitoso",
+                  text: "Ya puedes iniciar session en nuestra app",
+                  icon: "check",
+                  actionText: "Ir Login",
+                  action: action,
+                })
+              )
           break
         default:
           break
       }
       setLoading(false)
+      
     } else {
       setErrorInputs({
         ...errorInputs,

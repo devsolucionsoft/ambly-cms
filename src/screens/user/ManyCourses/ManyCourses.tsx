@@ -16,11 +16,10 @@ const ManyCoursesScreen = ({
   route,
 }: StackNavigationProps<UserStackParamList, "ManyCourses">) => {
   const [courses, setCourses] = useState([
-    { text: "2x1: Compra 1 escoge 2", active: false },
     { text: "3x2: Compra 2 escoge 3", active: false },
-    { text: "Cuerso 1", active: false },
-    { text: "Cuerso 2", active: false },
-    { text: "Cuerso 3", active: false },
+    { text: "Curso 1", active: false },
+    { text: "Curso 2", active: false },
+    { text: "Curso 3", active: false },
   ])
 
   const handlePress = (value: number) => {

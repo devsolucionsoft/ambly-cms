@@ -44,16 +44,52 @@ export class AuthApi {
     }
   }
 
-  async UserRegister(data: userRegistryType) {
+  async UserLoginGoogle(email?: string) {
     try {
-      return await axios.post(`${url}/users`, {
-        ...data,
+      return await axios.post(`${url}/social/google`, {
+        email_google: email,
+      })
+    } catch (error: any) {
+      return error.response
+    }
+  }
+
+  async UserRegistryGoogle(data: userRegistryType) {
+    try {
+      return await axios.post(`${url}/social/google`, {
+        username: data.username,
+        password: "0000000",
+        email_google: data.email,
+        city: data.city,
+        country: data.country,
+        gender: data.gender,
+        phone: data.phone,
         role: "user",
         dateTime: "1970-01-01T00:00:00.000Z",
       })
     } catch (error: any) {
       return error.response
     }
+  }
+
+  async UserRegister(data: userRegistryType) {
+    console.log(data);
+    
+   /* try {
+      return await axios.post(`${url}/users`, {
+        username: data.username,
+        password: data.password,
+        email: data.email,
+        city: data.city,
+        country: data.country,
+        gender: data.gender,
+        phone: data.phone,
+        role: "user",
+        dateTime: "1970-01-01T00:00:00.000Z",
+      })
+    } catch (error: any) {
+      return error.response
+    }*/
   }
 }
 

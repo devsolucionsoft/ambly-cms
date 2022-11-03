@@ -23,16 +23,28 @@ interface CheckProps {
   label: string
   error: boolean
   message: string
+  actionLabel?: any 
 }
 
 type CheckAttributes = CheckProps & ViewProps
 
 const CheckLabel = (props: CheckAttributes) => {
-  const { style, size, color, colorIcon, check, onChange, label, error, message } = props
+  const {
+    style,
+    size,
+    color,
+    colorIcon,
+    check,
+    onChange,
+    label,
+    error,
+    message,
+    actionLabel
+  } = props
   const parseStyle = typeof style === "object" ? style : {}
 
   return (
-    <View style={{alignItems: "center"}}>
+    <View style={{ alignItems: "center" }}>
       <View
         style={{
           flexDirection: "row",
@@ -60,14 +72,16 @@ const CheckLabel = (props: CheckAttributes) => {
             />
           )}
         </TouchableOpacity>
-        <Typography
-          variant="p2"
-          color="ligth"
-          textAlign="left"
-          style={{ marginLeft: 20 }}
-        >
-          {label}
-        </Typography>
+        <TouchableOpacity onPress={actionLabel}>
+          <Typography
+            variant="p2"
+            color="ligth"
+            textAlign="left"
+            style={{ marginLeft: 20 }}
+          >
+            {label}
+          </Typography>
+        </TouchableOpacity>
       </View>
       {error && (
         <Typography variant="p3" color="redPrimary" textAlign="left">

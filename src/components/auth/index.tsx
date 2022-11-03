@@ -1,3 +1,4 @@
 import ModalDataComplete from "./ModalDataComplete"
+import LoyoutAuth from "./LoyoutAuth"
 
-export { ModalDataComplete }
+export { ModalDataComplete, LoyoutAuth }

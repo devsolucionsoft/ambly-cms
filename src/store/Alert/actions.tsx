@@ -4,6 +4,8 @@ export interface openAlertType {
   title: string
   text: string
   icon?: "check" | "error"
+  actionText?: string
+  action?: any
 }
 
 export const openAlert = (payload: openAlertType) => {

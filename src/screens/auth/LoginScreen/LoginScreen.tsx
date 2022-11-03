@@ -1,6 +1,5 @@
 import { useState } from "react"
 import {
-  View,
   SafeAreaView,
   TouchableOpacity,
   ImageBackground,
@@ -21,7 +20,7 @@ import {
   Input,
   ModalForgotPassword,
 } from "../../../components/global"
-import { ModalDataComplete } from "../../../components/auth"
+import { ModalDataComplete, LoyoutAuth } from "../../../components/auth"
 // Store
 import { useAppDispatch } from "../../../store"
 import { createSession } from "../../../store/Auth/actions"
@@ -33,6 +32,7 @@ import useValidateForm, {
 } from "../../../hooks/useValidateForm"
 // Api
 import { AuthApi } from "../../../api"
+
 const StartScreen = ({
   navigation,
   route,
@@ -41,7 +41,7 @@ const StartScreen = ({
   const dispatch = useAppDispatch()
 
   const { action } = route.params
-  const login = action === "login"
+  const login = !(action === "registry")
 
   const [check, seCheck] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -94,9 +94,9 @@ const StartScreen = ({
         default:
           dispatch(
             openAlert({
-              title: "Cuenta no encontrada",
+              title: "No pudimos iniciar sesíon",
               text: "Revisa tu email o tu contraseña",
-              icon: "error",
+              icon: "error"
             })
           )
           break
@@ -130,16 +130,15 @@ const StartScreen = ({
   }
 
   return (
-    <ImageBackground
-      resizeMode="cover"
-      style={styles.container}
-      source={require("../../../../assets/images/background-screen.png")}
-    >
+    <LoyoutAuth>
       {/* Modals */}
       <ModalDataComplete
         modalVisible={modalDataComplete}
         setModalVisible={(value: boolean) => setModalDataComplete(value)}
         data={stateInputs}
+        action={() => navigation.navigate("Login", {
+          action: "login",
+        })}
       />
       <ModalForgotPassword
         modalVisible={modalForgotPassword}
@@ -163,6 +162,7 @@ const StartScreen = ({
         <Input
           placeholder="Contraseña"
           icon="Password"
+          secureTextEntry
           value={stateInputs.password}
           error={errorInputs.password.error}
           message={errorInputs.password.message}
@@ -193,6 +193,7 @@ const StartScreen = ({
             error={errorInputs.check.error}
             message={errorInputs.check.message}
             onChange={() => handleKeyUp(!stateInputs.check, "check")}
+            actionLabel={() => navigation.navigate("Terms")}
           />
         )}
 
@@ -206,7 +207,7 @@ const StartScreen = ({
           onPress={() => (login ? handleLogin() : handleRegistry())}
         />
       </SafeAreaView>
-    </ImageBackground>
+    </LoyoutAuth>
   )
 }
 

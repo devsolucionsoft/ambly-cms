@@ -1,7 +1,5 @@
 import { useState, useRef } from "react"
-import * as ScreenOrientation from "expo-screen-orientation"
 import { View, TouchableOpacity } from "react-native"
-import { Video, ResizeMode } from "expo-av"
 import { Octicons } from "@expo/vector-icons"
 import { MaterialIcons } from "@expo/vector-icons"
 // Styles compomponent
@@ -14,7 +12,7 @@ import {
 } from "../../../navigation/types"
 // UI Components
 import { Typography, Button } from "../../../components/global"
-import { Layout, AccordionItem } from "../../../components/user"
+import { Layout, AccordionItem, VideoItem } from "../../../components/user"
 
 const modules = [
   {
@@ -63,22 +61,6 @@ const ModuleDetailScreen = ({
     { text: "Cuerso 3", active: false },
   ])
 
-  const video = useRef(null)
-  const [status, setStatus] = useState({})
-  const [orientationLock, setOrientationLock] = useState<"PORTRAIT" | "LANDSCAPE_RIGHT">("PORTRAIT")
-
-  const changeScreenOrientation = async (status:any) => {
-    if (status.fullscreenUpdate === 1) {
-      setOrientationLock("LANDSCAPE_RIGHT")
-      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
-    }
-    if (status.fullscreenUpdate === 2) {
-      setOrientationLock("PORTRAIT")
-      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    }
-  }
-  
-
   return (
     <Layout
       headerProps={{
@@ -87,18 +69,7 @@ const ModuleDetailScreen = ({
         title: "Nombre del modulo",
       }}
     >
-      <Video
-        ref={video}
-        style={styles.video}
-        source={{
-          uri: "https://joy.videvo.net/videvo_files/video/free/video0455/large_watermarked/_import_6091143fc4c4b6.26692621_preview.mp4",
-        }}
-        isLooping={false}
-        useNativeControls
-        resizeMode={orientationLock === "PORTRAIT" ? ResizeMode.COVER : ResizeMode.CONTAIN}
-        onFullscreenUpdate={(status) => changeScreenOrientation(status)}
-        onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-      />
+      <VideoItem style={styles.video} />
 
       {/* Content modules */}
       <View style={styles.content}>
@@ -133,13 +104,24 @@ const ModuleDetailScreen = ({
           básicos que todo un chef en casa debe conocer.
         </Typography>
 
-        <Button
-          color="redPrimary"
-          colorText="ligth"
-          variant="md"
-          text="Continuar estudiando"
-          style={{ marginBottom: 30 }}
-        />
+        <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
+          <Button
+            color="redPrimary"
+            colorText="ligth"
+            variant="sm"
+            text="Anterior"
+            style={{ marginBottom: 30, width: 150}}
+            iconLeft
+          />
+          <Button
+            color="redPrimary"
+            colorText="ligth"
+            variant="sm"
+            text="Siguiente"
+            style={{ marginBottom: 30, width: 150}}
+            iconRight
+          />
+        </View>
 
         <Typography
           color="ligth"

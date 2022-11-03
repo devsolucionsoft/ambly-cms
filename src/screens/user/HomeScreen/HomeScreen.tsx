@@ -29,8 +29,8 @@ const HomeScreen = ({
 
       {/* Popular courses */}
       <View style={styles.content}>
-        <SliderCourses variant="new" header title="Nuevos cursos" />
-        <SliderCourses variant="popular" header title="Cursos populares" />
+        <SliderCourses variant="new" header title="Cursos populares" />
+        <SliderCourses variant="popular" header title="Trailers" />
         <FavoriteTopics />
 
         <ContinueClasses />

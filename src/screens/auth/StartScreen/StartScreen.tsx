@@ -10,6 +10,7 @@ import {
 } from "../../../../src/navigation/types"
 // Components
 import { Typography, Button } from "../../../components/global"
+import { LoyoutAuth } from "../../../components/auth"
 // Api
 import { ConfigApi } from "../../../api"
 
@@ -46,7 +47,7 @@ const StartScreen = ({
   }
 
   return (
-    <View style={styles.container}>
+    <LoyoutAuth style={styles.container}>
       <View style={styles.swiper}>
         <Swiper renderPagination={renderPagination} loop={false}>
           {splash.map((item: any) => (
@@ -79,7 +80,7 @@ const StartScreen = ({
           />
         </View>
       </View>
-    </View>
+    </LoyoutAuth>
   )
 }
 

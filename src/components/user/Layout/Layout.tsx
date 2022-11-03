@@ -39,8 +39,6 @@ const Layout = (props: TemplateAttributes) => {
           )}
           {navCourse && navCourse}
         </View>
-
-        
       </View>
     </ThemeContext.Provider>
   )

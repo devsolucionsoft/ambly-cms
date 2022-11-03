@@ -17,7 +17,7 @@ import {
   UserStackParamList,
 } from "./types"
 // Screens
-import { StartScreen, IngressScreen, LoginScreen } from "../screens/auth"
+import { StartScreen, IngressScreen, LoginScreen, TermsScreen } from "../screens/auth"
 import {
   HomeScreen,
   ManyCourses,
@@ -29,6 +29,8 @@ import {
 } from "../screens/user"
 // Drawer
 import { DrawerNatigation } from "../components/user"
+// components
+import { Alert } from "../components/global"
 
 export default function Navigation() {
   return (
@@ -45,7 +47,7 @@ const AppNavigator = () => {
 
   return (
     <AppStack.Navigator initialRouteName="Auth">
-      {auth.session ? (
+      {!auth.session ? (
         <AppStack.Screen
           name="User"
           component={UserNavigator}
@@ -65,6 +67,7 @@ const AppNavigator = () => {
 const AuthStack = createNativeStackNavigator<AuthStackParamList>()
 
 const AuthNavigator = () => {
+  const alertState = useAppSelector((store) => store.Alert)
   return (
     <AuthStack.Navigator initialRouteName="Start">
       <AuthStack.Screen
@@ -82,9 +85,15 @@ const AuthNavigator = () => {
         component={LoginScreen}
         options={{ headerShown: false }}
       />
+      <AuthStack.Screen
+        name="Terms"
+        component={TermsScreen}
+        options={{ headerShown: false }}
+      />
     </AuthStack.Navigator>
   )
 }
+
 
 const UserStack = createDrawerNavigator<UserStackParamList>()
 const UserNavigator = () => {
