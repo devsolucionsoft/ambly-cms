@@ -73,9 +73,9 @@ export class AuthApi {
   }
 
   async UserRegister(data: userRegistryType) {
-    console.log(data);
-    
-   /* try {
+    console.log(data)
+
+    try {
       return await axios.post(`${url}/users`, {
         username: data.username,
         password: data.password,
@@ -89,7 +89,7 @@ export class AuthApi {
       })
     } catch (error: any) {
       return error.response
-    }*/
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { View, ViewProps, Image, TouchableOpacity } from "react-native"
 // Styles
-import { styles } from "./FavoriteTopics.styles"
+import { styles } from "./Tutors.styles"
 // COmponents
 import { Typography } from "../../global"
 // Api
@@ -9,19 +9,16 @@ import { UserApi } from "../../../api"
 
 const Topics = [1, 2, 3, 4]
 
-interface FavoriteTopicsProps {}
-type FavoriteTopicsAttributes = FavoriteTopicsProps & ViewProps
+interface TutorsProps {}
+type TutorsAttributes = TutorsProps & ViewProps
 
-const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
+const Tutors = (props: TutorsAttributes) => {
   const { style } = props
   const parseStyle = typeof style === "object" ? style : {}
 
   const UserApiModel = new UserApi()
 
   const [topics, setTopics] = useState([])
-
-  console.log(topics);
-  
 
   useEffect(() => {
     ;(async () => {
@@ -32,27 +29,31 @@ const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
 
   return (
     <View style={{ ...parseStyle, ...styles.main }}>
-      <Typography
-        variant="heading3"
-        color="ligth"
-        textAlign="center"
-        style={{ fontWeight: "bold", marginBottom: 20 }}
-      >
-        Personaliza tu experiencia
-      </Typography>
-      <Typography variant="p" color="ligth" textAlign="center">
-        Escoge tu TEMA FAVORITO y encuentra el curso que mas te guste
-      </Typography>
+      <View style={styles.swiperTop}>
+          <Typography variant="heading2" textAlign="left" color="ligth">
+            Tutores
+          </Typography>
+          <TouchableOpacity style={{ justifyContent: "center", marginTop: 5 }}>
+            <Typography
+              variant="p3"
+              textAlign="left"
+              color="redPrimary"
+              style={{ fontWeight: "bold" }}
+            >
+              Ver todos
+            </Typography>
+          </TouchableOpacity>
+        </View>
 
       <View style={styles.topicsList}>
-        {topics.map((item: any) => (
+        {[1,2,3,4].map((item: any) => (
           <TouchableOpacity key={item.createdAt} style={styles.topicsItem}>
             <Image
               style={styles.topicImage}
-              source={{uri: item.image}}
+              source={require("../../../../assets/images/course.png")}
             />
-            <Typography variant="p" textAlign="left" color="ligth">
-              {item.name}
+            <Typography variant="p3" textAlign="left" color="ligth">
+              {"Nombres apellidos"}
             </Typography>
           </TouchableOpacity>
         ))}
@@ -61,4 +62,4 @@ const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
   )
 }
 
-export default FavoriteTopics
+export default Tutors

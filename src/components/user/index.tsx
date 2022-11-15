@@ -7,6 +7,7 @@ import AccordionItem from "./AccordionItem"
 import Layout from "./Layout"
 import NavCourse from "./NavCourse"
 import VideoItem from "./VideoItem"
+import Tutors from "./Tutors"
 
 export {
   SliderCourses,
@@ -17,5 +18,6 @@ export {
   AccordionItem,
   Layout,
   NavCourse,
-  VideoItem
+  VideoItem,
+  Tutors
 }

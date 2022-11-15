@@ -27,6 +27,8 @@ export type AuthStackParamList = {
   }
   Registry: undefined
   Terms: undefined
+  Explore: undefined
+  CourseDetail: undefined
 }
 
 export type UserStackParamList = {

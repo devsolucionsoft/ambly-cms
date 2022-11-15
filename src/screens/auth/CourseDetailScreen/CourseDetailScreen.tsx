@@ -3,21 +3,21 @@ import { FontAwesome5 } from "@expo/vector-icons"
 import { LinearGradient } from "expo-linear-gradient"
 
 // Styles compomponent
-import { styles } from "./CourseDetail.styles"
+import { styles } from "./CourseDetailScreen.styles"
 // Types
 import {
   StackNavigationProps,
-  UserStackParamList,
+  AuthStackParamList,
 } from "../../../navigation/types"
 // UI Components
 import { Typography, Button } from "../../../components/global"
 import { Layout, AccordionItem, NavCourse } from "../../../components/user"
 import { palette, paletteGradient } from "../../../utils/theme"
 
-const CourseDetail = ({
+const CourseDetailScreen = ({
   navigation,
   route,
-}: StackNavigationProps<UserStackParamList, "CourseDetail">) => {
+}: StackNavigationProps<AuthStackParamList, "CourseDetail">) => {
   const modules = [
     {
       title: "intoducción",
@@ -55,16 +55,19 @@ const CourseDetail = ({
     },
   ]
 
+
+
+
   return (
     <Layout
       headerProps={{
         returnAction: true,
       }}
-      // navCourse={<NavCourse page={route.name}  />}
-      buttonAction={{
-        text: "Iniciar curso",
-        onPress: () => navigation.navigate("ModuleDetail"),
-      }}
+     // navCourse={<NavCourse page={route.name}  />}
+     buttonAction={{
+      text: "Comprar curso",
+      onPress: () => navigation.navigate("Login", {action: "login"})
+    }}
     >
       <ImageBackground
         style={styles.image}
@@ -118,7 +121,7 @@ const CourseDetail = ({
           style={{ marginBottom: 30 }}
         >
           Por solo $43.000
-        </Typography>
+        </Typography>       
 
         {/* Content price */}
         <View style={styles.caracteristics}>
@@ -266,4 +269,4 @@ const CourseDetail = ({
   )
 }
 
-export default CourseDetail
+export default CourseDetailScreen

@@ -25,6 +25,7 @@ const VideoItem = (props: VideoAttributes) => {
     "PORTRAIT" | "LANDSCAPE_RIGHT"
   >("PORTRAIT")
 
+
   const changeScreenOrientation = async (status: any) => {
     if (status.fullscreenUpdate === 1) {
       setOrientationLock("LANDSCAPE_RIGHT")
@@ -60,6 +61,7 @@ const VideoItem = (props: VideoAttributes) => {
         <View style={{ ...styles.layer }}>
           <TouchableOpacity
             onPress={() => {
+              video.current.presentFullscreenPlayer()
               status.isPlaying
                 ? video.current.pauseAsync()
                 : video.current.playAsync()

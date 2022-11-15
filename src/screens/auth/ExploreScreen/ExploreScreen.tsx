@@ -2,11 +2,11 @@ import {
   View,
 } from "react-native"
 // Styles compomponent
-import { styles } from "./HomeScreen.styles"
+import { styles } from "./Explore.styles"
 // Types
 import {
-  DrawerkNavigationProps,
-  UserStackParamList,
+  StackNavigationProps,
+  AuthStackParamList,
 } from "../../../navigation/types"
 // UI Components
 import {
@@ -20,10 +20,10 @@ import {
 const HomeScreen = ({
   navigation,
   route,
-}: DrawerkNavigationProps<UserStackParamList, "Home">) => {
+}: StackNavigationProps<AuthStackParamList, "Explore">) => {
 
   return (
-    <Layout headerProps={{ icon: true, variant: "user" }}>
+    <Layout headerProps={{ returnAction: true }}>
       {/* Popular courses */}
 
       <SliderCourses variant="next" />

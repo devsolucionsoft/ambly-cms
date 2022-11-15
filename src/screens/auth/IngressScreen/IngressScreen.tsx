@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { View, TouchableOpacity, ImageBackground } from "react-native"
+import { View, TouchableOpacity } from "react-native"
 // Styles compomponent
 import { styles } from "./SIngress.styles"
 // Types
@@ -113,9 +113,11 @@ const FacebookOuth = ({
   const AuthApiModel = new AuthApi()
   const dispatch = useAppDispatch()
 
+  const [loading, setLoading] = useState(false)
+
   // faebook
   const [request, response, promptAsync] = Facebook.useAuthRequest({
-    clientId: "408971244606095",
+    clientId: "1324979871671286",
   })
 
   useEffect(() => {
@@ -159,6 +161,8 @@ const FacebookOuth = ({
       default:
         break
     }
+
+    setLoading(false)
   }
 
   return (
@@ -169,6 +173,8 @@ const FacebookOuth = ({
       text="Continue with Facebook"
       iconRed="facebook-square"
       onPress={() => {
+        setTypeDataComplete("facebook")
+        setLoading(true)
         promptAsync()
       }}
     />
@@ -178,7 +184,6 @@ const FacebookOuth = ({
 const AppleOuth = ({
   setStateInputs,
   setModalDataComplete,
-  setTypeDataComplete
 }: {
   setStateInputs: Function
   setModalDataComplete: Function

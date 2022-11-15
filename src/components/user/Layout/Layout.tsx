@@ -12,7 +12,7 @@ import { useAppSelector } from "../../../store"
 
 
 interface LayoutProps {
-  headerProps: HeaderProps
+  headerProps?: HeaderProps
   spaceTop?: boolean
   buttonAction?: ButtonActionAttributes
   navCourse?: JSX.Element

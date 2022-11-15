@@ -70,7 +70,7 @@ const StartScreen = ({
       </View>
       <View style={styles.content}>
         <View>
-          <Button variant="lg" text="EXPLORAR" color="ligth" colorText="dark" />
+          <Button variant="lg" text="EXPLORAR" color="ligth" colorText="dark"  onPress={() => navigation.navigate("Explore")} />
           <Button
             variant="lg"
             text="INGRESAR"

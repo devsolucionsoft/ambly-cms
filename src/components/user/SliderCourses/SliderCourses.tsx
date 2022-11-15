@@ -8,13 +8,15 @@ import {
 } from "react-native"
 import Swiper from "react-native-swiper"
 import { LinearGradient } from "expo-linear-gradient"
-import { navigateUser } from "../../../navigation/actions"
+import { navigateUser, navigateAuth } from "../../../navigation/actions"
 import { FontAwesome5 } from "@expo/vector-icons"
 // Styles
 import { styles } from "./SliderCourses.styles"
 import { palette, paletteGradient } from "../../../utils/theme"
 // COmponents
 import { Typography, Button } from "../../global"
+// Store
+import { useAppSelector } from "../../../store"
 
 interface SliderCoursesProps {
   variant?: "popular" | "new" | "next"
@@ -27,10 +29,11 @@ type SliderCoursesAttributes = SliderCoursesProps & ViewProps
 const SliderCourses = (props: SliderCoursesAttributes) => {
   const { style, variant, header, title } = props
 
+  const auth = useAppSelector((store) => store.Auth)
+
   const parseStyle = typeof style === "object" ? style : {}
   const items: Array<any> = [1, 2, 3]
 
-  const videoPlayer = useRef<any>()
 
   const getHeigth = () => {
     if (variant === "next") return 600
@@ -112,17 +115,26 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
                       size={12}
                       color={palette["ligth"]}
                     />
-                    <Typography variant="p2" color="ligth" textAlign="left" style={{marginLeft: 10}}>
+                    <Typography
+                      variant="p2"
+                      color="ligth"
+                      textAlign="left"
+                      style={{ marginLeft: 10 }}
+                    >
                       Jorge Enrique Avello
                     </Typography>
                   </View>
                   <Button
-                    text="Acceder"
+                    text={auth.session ? "Acceder" : "Ver curso" }
                     variant="sm"
                     color="redPrimary"
                     colorText="ligth"
                     style={{ marginTop: 15, paddingHorizontal: 60 }}
-                    onPress={() => navigateUser("CourseDetail")}
+                    onPress={() =>
+                      !auth.session
+                        ? navigateAuth("CourseDetail")
+                        : navigateUser("CourseDetail")
+                    }
                   />
                 </LinearGradient>
               </View>
@@ -134,7 +146,11 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
               <TouchableOpacity
                 key={item}
                 style={styles.swiperItemNew}
-                onPress={() => navigateUser("CourseDetail")}
+                onPress={() =>
+                  !auth.session
+                    ? navigateAuth("CourseDetail")
+                    : navigateUser("CourseDetail")
+                }
               >
                 <ImageBackground
                   style={styles.swiperImageNew}
@@ -182,7 +198,11 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
               <TouchableOpacity
                 key={item}
                 style={styles.swiperItemNext}
-                onPress={() => navigateUser("CourseDetail")}
+                onPress={() =>
+                  !auth.session
+                    ? navigateAuth("CourseDetail")
+                    : navigateUser("CourseDetail")
+                }
               >
                 <Image
                   style={styles.swiperVideoNext}
