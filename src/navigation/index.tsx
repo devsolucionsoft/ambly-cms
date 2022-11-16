@@ -21,6 +21,7 @@ import {
   StartScreen,
   IngressScreen,
   LoginScreen,
+  RegistryScreen,
   TermsScreen,
   ExploreScreen,
   CourseDetailScreen
@@ -54,7 +55,7 @@ const AppNavigator = () => {
 
   return (
     <AppStack.Navigator initialRouteName="Auth">
-      {auth.session ? (
+      {!auth.session ? (
         <AppStack.Screen
           name="User"
           component={UserNavigator}
@@ -90,6 +91,11 @@ const AuthNavigator = () => {
       <AuthStack.Screen
         name="Login"
         component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <AuthStack.Screen
+        name="Registry"
+        component={RegistryScreen}
         options={{ headerShown: false }}
       />
       <AuthStack.Screen

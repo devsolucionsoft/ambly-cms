@@ -17,12 +17,8 @@ const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
   const parseStyle = typeof style === "object" ? style : {}
 
   const UserApiModel = new UserApi()
-
   const [topics, setTopics] = useState([])
-
-  console.log(topics);
   
-
   useEffect(() => {
     ;(async () => {
       const response = await UserApiModel.GetCategories()

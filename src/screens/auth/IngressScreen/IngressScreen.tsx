@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { View, TouchableOpacity } from "react-native"
+import { View, TouchableOpacity, Image } from "react-native"
 // Styles compomponent
 import { styles } from "./SIngress.styles"
 // Types
@@ -25,7 +25,7 @@ WebBrowser.maybeCompleteAuthSession()
 const GoogleOuth = ({
   setStateInputs,
   setModalDataComplete,
-  setTypeDataComplete
+  setTypeDataComplete,
 }: {
   setStateInputs: Function
   setModalDataComplete: Function
@@ -60,26 +60,21 @@ const GoogleOuth = ({
       }
     )
 
-    const response = await AuthApiModel.UserLoginGoogle(responseInfo.data.email)
-    
-    switch (response.status) {
-      case 204:
-        setStateInputs({
+    let response = await AuthApiModel.UserLoginGoogle(responseInfo.data.email)
+
+    if (response.status === 204) {
+      response = await AuthApiModel.UserRegistryGoogle({
+        email: responseInfo.data.email,
+      })
+    }
+
+    if (response.status === 200 || response.status === 201) {
+      dispatch(
+        createSession({
           email: responseInfo.data.email,
-          password: "0000000",
+          token: response.data.token,
         })
-        setModalDataComplete(true)
-        break
-      case 200:
-        dispatch(
-          createSession({
-            email: responseInfo.data.email,
-            token: response.data.token,
-          })
-        )
-        break
-      default:
-        break
+      )
     }
     setLoading(false)
   }
@@ -88,7 +83,7 @@ const GoogleOuth = ({
     <Button
       color="blueRed"
       colorText="ligth"
-      variant="md"
+      variant="sm"
       iconRed="google"
       text="Continue with Google"
       loading={loading}
@@ -104,7 +99,7 @@ const GoogleOuth = ({
 const FacebookOuth = ({
   setStateInputs,
   setModalDataComplete,
-  setTypeDataComplete
+  setTypeDataComplete,
 }: {
   setStateInputs: Function
   setModalDataComplete: Function
@@ -123,7 +118,6 @@ const FacebookOuth = ({
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response
-      console.log(authentication)
 
       //fetchUserInfo(authentication?.accessToken)
     }
@@ -143,20 +137,19 @@ const FacebookOuth = ({
 
     const response = await AuthApiModel.UserLoginGoogle(responseInfo.data.email)
 
+    if (response.status === 200 || response.status === 204) {
+      dispatch(
+        createSession({
+          email: responseInfo.data.email,
+          token: response.data.token,
+        })
+      )
+    }
+
     switch (response.status) {
       case 204:
-        setStateInputs({
-          email: responseInfo.data.email,
-        })
-        setModalDataComplete(true)
         break
       case 200:
-        dispatch(
-          createSession({
-            email: responseInfo.data.email,
-            token: response.data.token,
-          })
-        )
         break
       default:
         break
@@ -169,7 +162,7 @@ const FacebookOuth = ({
     <Button
       color="blueRed"
       colorText="ligth"
-      variant="md"
+      variant="sm"
       text="Continue with Facebook"
       iconRed="facebook-square"
       onPress={() => {
@@ -200,7 +193,6 @@ const AppleOuth = ({
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response
-      console.log(authentication)
 
       //fetchUserInfo(authentication?.accessToken)
     }
@@ -245,7 +237,7 @@ const AppleOuth = ({
     <Button
       color="ligth"
       colorText="black"
-      variant="md"
+      variant="sm"
       text="Continue with Apple"
       iconRed="apple1"
       onPress={() => {
@@ -266,33 +258,27 @@ const IngressScreen = ({
     password: "",
   })
 
-
-
   return (
     <LoyoutAuth>
-      <Header icon returnAction />
+      <Header returnAction />
 
       <View style={styles.content}>
-        <ModalDataComplete
-          modalVisible={modalDataComplete}
-          setModalVisible={(value: boolean) => setModalDataComplete(value)}
-          data={stateInputs}
-          typeLogin={typeDataComplete}
-          action={() =>
-            navigation.navigate("Login", {
-              action: "login",
-            })
-          }
+        <Image
+          source={require("../../../../assets/images/icon-ambly.png")}
+          resizeMode="contain"
+          style={{ height: 100, width: 200 }}
         />
-        <Typography variant="heading2" textAlign="center" color="ligth">
-          Crea una cuenta
-        </Typography>
-        <Typography variant="heading2" textAlign="center" color="ligth">
-          {" "}
-          para continuar
-        </Typography>
 
-        <View style={{ ...styles.containButtons, marginTop: 50 }}>
+        <View style={{ ...styles.containButtons }}>
+          <Typography
+            variant="p2"
+            textAlign="center"
+            color="ligth"
+            style={{ marginBottom: 25 }}
+          >
+            Inicia sesión para continuar
+          </Typography>
+
           <FacebookOuth
             setModalDataComplete={setModalDataComplete}
             setStateInputs={setStateInputs}
@@ -308,33 +294,28 @@ const IngressScreen = ({
             setStateInputs={setStateInputs}
             setTypeDataComplete={setTypeDataComplete}
           />
-        </View>
-
-        <Typography variant="heading2" textAlign="center" color="ligth">
-          o
-        </Typography>
-        <View style={styles.containButtons}>
-          <Button
-            color="redPrimary"
-            colorText="ligth"
-            variant="md"
-            text="Crear un correo electrónico"
-            onPress={() =>
-              navigation.navigate("Login", {
-                action: "registry",
-              })
-            }
-          />
-        </View>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Login", {
-              action: "login",
-            })
-          }
-        >
           <Typography
             variant="p"
+            textAlign="center"
+            color="ligth"
+            style={{ marginTop: 10 }}
+          >
+            o
+          </Typography>
+          <View style={styles.containButtons}>
+            <Button
+              color="redPrimary"
+              colorText="ligth"
+              variant="sm"
+              text="Crear un correo electrónico"
+              onPress={() => navigation.navigate("Registry")}
+            />
+          </View>
+        </View>
+
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Typography
+            variant="p2"
             textAlign="center"
             color="ligth"
             textDecorationLine="underline"

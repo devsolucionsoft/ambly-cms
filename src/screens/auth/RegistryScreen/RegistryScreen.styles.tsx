@@ -10,15 +10,22 @@ export const styles = StyleSheet.create({
   },
   content: {
     width: "100%",
-    flex: 1,
-    paddingHorizontal: 40,
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingBottom: "15%",
+    height: "90%",
+    paddingHorizontal: 30,
+    paddingVertical: 50,
+    display: "flex",
+    justifyContent: "flex-end"
   },
-  containButtons: {
+  image: {
+    position: "absolute",
     width: "100%",
-    marginVertical: 10,
-    marginBottom: 20
+    height: "45%",
+    top: 0
   },
+  gradient: {
+    position: "absolute",
+    width: "100%",
+    height: "45%",
+    top: 0
+  }
 })

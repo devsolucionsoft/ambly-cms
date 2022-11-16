@@ -1,7 +1,9 @@
-import { View, Image, ImageBackground } from "react-native"
+import { useState, useEffect } from "react";
+import { View, ImageBackground } from "react-native"
 import { FontAwesome5 } from "@expo/vector-icons"
 import { LinearGradient } from "expo-linear-gradient"
-
+// API
+import { UserApi } from "../../../api"
 // Styles compomponent
 import { styles } from "./CourseDetail.styles"
 // Types
@@ -18,6 +20,21 @@ const CourseDetail = ({
   navigation,
   route,
 }: StackNavigationProps<UserStackParamList, "CourseDetail">) => {
+  const { id_course } = route.params
+
+  const userApiModel = new UserApi()
+  const [courseInfo, setCourseInfo] = useState<any>()
+
+  useEffect(() => {
+    ;(async () => {
+      const response = await userApiModel.GetCourse(id_course)
+      if (response.status === 200) {
+        console.log("--",JSON.stringify(response.data))
+
+        setCourseInfo(response.data)
+      }
+    })()
+  }, [])
   const modules = [
     {
       title: "intoducción",
@@ -82,7 +99,7 @@ const CourseDetail = ({
             color="ligth"
             style={{ marginBottom: 10 }}
           >
-            Fuerza mental
+            {courseInfo.name_course}
           </Typography>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <FontAwesome5 name="user-alt" size={18} color={palette["ligth"]} />
@@ -92,7 +109,7 @@ const CourseDetail = ({
               textAlign="left"
               style={{ marginLeft: 10 }}
             >
-              Jorge Enrique Avello
+              {courseInfo.instructor.name_instructor}
             </Typography>
           </View>
         </LinearGradient>
@@ -105,10 +122,7 @@ const CourseDetail = ({
           color="grayText"
           style={{ marginBottom: 20 }}
         >
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book.
+          {courseInfo.instructor.description_instructor}
         </Typography>
 
         <Typography
@@ -117,7 +131,7 @@ const CourseDetail = ({
           color="ligth"
           style={{ marginBottom: 30 }}
         >
-          Por solo $43.000
+          Por solo {courseInfo.price_course}
         </Typography>
 
         {/* Content price */}

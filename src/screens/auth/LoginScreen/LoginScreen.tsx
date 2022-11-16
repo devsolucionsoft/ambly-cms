@@ -1,9 +1,5 @@
 import { useState } from "react"
-import {
-  SafeAreaView,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native"
+import { SafeAreaView, TouchableOpacity } from "react-native"
 // Styles
 import { styles } from "./LoginScreen.styles"
 // Types
@@ -20,7 +16,7 @@ import {
   Input,
   ModalForgotPassword,
 } from "../../../components/global"
-import { ModalDataComplete, LoyoutAuth } from "../../../components/auth"
+import { LoyoutAuth } from "../../../components/auth"
 // Store
 import { useAppDispatch } from "../../../store"
 import { createSession } from "../../../store/Auth/actions"
@@ -40,18 +36,13 @@ const StartScreen = ({
   const AuthApiModel = new AuthApi()
   const dispatch = useAppDispatch()
 
-  const { action } = route.params
-  const login = !(action === "registry")
-
-  const [check, seCheck] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [modalDataComplete, setModalDataComplete] = useState(false)
   const [modalForgotPassword, setModalForgotPassword] = useState(false)
 
   const defaultInputs = {
     email: "",
     password: "",
-    check: login,
+    check: true,
   }
   // States inputs
   const [stateInputs, setStateInputs] = useState(defaultInputs)
@@ -96,25 +87,12 @@ const StartScreen = ({
             openAlert({
               title: "No pudimos iniciar sesíon",
               text: "Revisa tu email o tu contraseña",
-              icon: "error"
+              icon: "error",
             })
           )
           break
       }
       setLoading(false)
-    } else {
-      setErrorInputs({
-        ...errorInputs,
-        ...errors,
-      })
-    }
-  }
-
-  // Submit forms
-  const handleRegistry = () => {
-    const { errors, validation } = getValidation(stateInputs)
-    if (validation) {
-      setModalDataComplete(true)
     } else {
       setErrorInputs({
         ...errorInputs,
@@ -132,27 +110,16 @@ const StartScreen = ({
   return (
     <LoyoutAuth>
       {/* Modals */}
-      <ModalDataComplete
-        modalVisible={modalDataComplete}
-        setModalVisible={(value: boolean) => setModalDataComplete(value)}
-        data={stateInputs}
-        action={() => navigation.navigate("Login", {
-          action: "login",
-        })}
-      />
       <ModalForgotPassword
         modalVisible={modalForgotPassword}
         setModalVisible={(value: boolean) => setModalForgotPassword(value)}
         ForgotPasswordResponse={forgotPasswordResponse}
       />
-      <Header
-        returnAction
-        title={login ? "Accede a tu cuenta" : "Crea una cuenta"}
-      />
+      <Header returnAction title="Accede a tu cuenta" />
       <SafeAreaView style={styles.content}>
         <Input
           placeholder="E - Mail"
-          icon="Mail"
+          label="E - Mail"
           autoCapitalize="none"
           value={stateInputs.email}
           error={errorInputs.email.error}
@@ -161,7 +128,7 @@ const StartScreen = ({
         />
         <Input
           placeholder="Contraseña"
-          icon="Password"
+          label="Contraseña"
           secureTextEntry
           value={stateInputs.password}
           error={errorInputs.password.error}
@@ -169,42 +136,28 @@ const StartScreen = ({
           onChange={(event) => handleKeyUp(event.nativeEvent.text, "password")}
         />
 
-        {login ? (
-          <TouchableOpacity
-            style={{ marginTop: 20 }}
-            onPress={() => setModalForgotPassword(true)}
-          >
-            <Typography
-              variant="p2"
-              color="ligth"
-              textAlign="center"
-              textDecorationLine="underline"
-            >
-              ¿Olvidaste tu contraseña?
-            </Typography>
-          </TouchableOpacity>
-        ) : (
-          <CheckLabel
-            size={25}
+        <TouchableOpacity
+          style={{ marginTop: 20 }}
+          onPress={() => setModalForgotPassword(true)}
+        >
+          <Typography
+            variant="p2"
             color="ligth"
-            colorIcon="black"
-            label="Al continuar acepto terminos y condiciones"
-            check={stateInputs.check}
-            error={errorInputs.check.error}
-            message={errorInputs.check.message}
-            onChange={() => handleKeyUp(!stateInputs.check, "check")}
-            actionLabel={() => navigation.navigate("Terms")}
-          />
-        )}
+            textAlign="center"
+            textDecorationLine="underline"
+          >
+            ¿Olvidaste tu contraseña?
+          </Typography>
+        </TouchableOpacity>
 
         <Button
           variant="lg"
-          text={login ? "Iniciar" : "Continuar"}
+          text="Iniciar"
           color="redPrimary"
           colorText="ligth"
           style={{ marginTop: 60 }}
           loading={loading}
-          onPress={() => (login ? handleLogin() : handleRegistry())}
+          onPress={() => handleLogin()}
         />
       </SafeAreaView>
     </LoyoutAuth>

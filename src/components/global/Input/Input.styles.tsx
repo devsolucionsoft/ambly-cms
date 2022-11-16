@@ -9,8 +9,9 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-    paddingBottom: 10,
-    borderBottomWidth: 1,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderRadius: 10
   },
   container2: {
     width: "100%",

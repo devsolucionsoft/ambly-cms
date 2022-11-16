@@ -22,9 +22,7 @@ export interface DrawerkNavigationProps<
 export type AuthStackParamList = {
   Start: undefined
   Ingress: undefined
-  Login: {
-    action: "login" | "registry"
-  }
+  Login: undefined
   Registry: undefined
   Terms: undefined
   Explore: undefined
@@ -36,7 +34,9 @@ export type UserStackParamList = {
   ManyCourses: undefined
   ChooseCourses: undefined
   CheckIn: undefined
-  CourseDetail: undefined
+  CourseDetail: {
+    id_course: number
+  }
   MyCourses: undefined
   ModuleDetail: undefined
 }

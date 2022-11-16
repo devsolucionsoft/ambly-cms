@@ -81,7 +81,6 @@ const ModalForgotPassword = (props: ModalForgotPasswordAttributes) => {
 
             <Input
               placeholder="Ingresa tu E - Mail"
-              icon="Mail"
               value={email}
               onChange={(event) => setEmail(event.nativeEvent.text)}
             />

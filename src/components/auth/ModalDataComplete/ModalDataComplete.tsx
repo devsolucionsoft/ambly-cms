@@ -41,7 +41,6 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
 
   const { modalVisible, setModalVisible, data, action, typeLogin } = props
 
-  console.log(typeLogin)
   const [loading, setLoading] = useState(false)
 
   const defaultInputs = {

@@ -22,12 +22,14 @@ interface SliderCoursesProps {
   variant?: "popular" | "new" | "next"
   header?: boolean
   title?: string
+  arrayItems?: Array<any>
+  navigateToCourse?: any
 }
 
 type SliderCoursesAttributes = SliderCoursesProps & ViewProps
 
 const SliderCourses = (props: SliderCoursesAttributes) => {
-  const { style, variant, header, title } = props
+  const { style, variant, header, title, arrayItems = [], navigateToCourse } = props
 
   const auth = useAppSelector((store) => store.Auth)
 
@@ -86,7 +88,7 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
         showsPagination={true}
         renderPagination={renderPagination}
       >
-        {items.map((item) => {
+        {(arrayItems.length > 0 ? arrayItems : items).map((item) => {
           if (variant === "next") {
             return (
               <View key={item} style={styles.swiperItemPopular}>
@@ -130,11 +132,7 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
                     color="redPrimary"
                     colorText="ligth"
                     style={{ marginTop: 15, paddingHorizontal: 60 }}
-                    onPress={() =>
-                      !auth.session
-                        ? navigateAuth("CourseDetail")
-                        : navigateUser("CourseDetail")
-                    }
+                    onPress={() => navigateToCourse(1)}
                   />
                 </LinearGradient>
               </View>

@@ -10,6 +10,7 @@ import { Icon, Typography } from ".."
 interface InputProps {
   icon?: iconsTypes
   variant?: "variant2"
+  label?: string
   error?: boolean
   message?: string
 }
@@ -17,18 +18,21 @@ interface InputProps {
 type InputAttributes = InputProps & TextInputProps
 
 const Input = (props: InputAttributes) => {
-  const { style, icon, variant, error, message } = props
+  const { style, icon, variant, error, message, label } = props
 
   const parseStyle = typeof style === "object" ? style : {}
 
   return (
-    <View style={{ marginBottom: 20 }}>
+    <View style={{ marginBottom: 10 }}>
+      {label && (
+        <Typography variant="p3" color="ligth" textAlign="left" style={{marginBottom: 3}}>
+          {label}
+        </Typography>
+      )}
       <View
         style={{
           ...(variant == "variant2" ? styles.container2 : styles.container),
-          borderBottomColor: error
-            ? palette["redPrimary"]
-            : palette["grayText"],
+          borderColor: error ? palette["redPrimary"] : palette["grayText"],
         }}
       >
         {icon && <Icon color="ligth" size={25} icon={icon} />}
