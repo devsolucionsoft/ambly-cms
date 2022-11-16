@@ -25,7 +25,7 @@ const Input = (props: InputAttributes) => {
   return (
     <View style={{ marginBottom: 10 }}>
       {label && (
-        <Typography variant="p3" color="ligth" textAlign="left" style={{marginBottom: 3}}>
+        <Typography variant="p3" color="grayText" textAlign="left" style={{marginBottom: 3}}>
           {label}
         </Typography>
       )}
@@ -47,7 +47,7 @@ const Input = (props: InputAttributes) => {
         />
       </View>
       {error && (
-        <Typography variant="p3" color="redPrimary" textAlign="left">
+        <Typography variant="p4" color="redPrimary" textAlign="left">
           {message}
         </Typography>
       )}

@@ -1,7 +1,11 @@
-export interface InputValidationI {
+export interface ItemInputValidationI {
   required?: "text" | "number" | "boolean"
   email?: boolean
   minLengt?: number
+}
+
+export interface InputValidationI {
+  [index: string]: ItemInputValidationI
 }
 
 interface IErrorInput {
@@ -15,8 +19,11 @@ export interface IErrorInputs {
 
 interface IUseValidateForm {
   defaultInputs: Object
-  defaultValidation: Array<InputValidationI>
+  defaultValidation: InputValidationI
 }
+
+const emailRegex =
+  /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
 
 const useValidateForm = (
   props: IUseValidateForm
@@ -42,23 +49,40 @@ const useValidateForm = (
     const keys = Object.keys(stateInputs)
     let validation = true
 
-    keys.forEach((name: string, index: number) => {
-      const validationRules: { [code: string]: any } = defaultValidation[index]
+    keys.forEach((name: string) => {
+      const validationRules: { [code: string]: any } = defaultValidation[name]
       const validationKeys = Object.keys(validationRules)
 
       validationKeys.forEach((rule: string) => {
         switch (rule) {
-          case "required":
-            if (!stateInputs[name] || stateInputs[name] === "") {
-              validationInputs[name] = {
-                error: true,
-                message: "Este campo es requerido",
-              }
-            }
-            break
           case "email":
+            !emailRegex.test(stateInputs[name]) &&
+              (validationInputs[name] = {
+                error: true,
+                message: "Ingresa un email válido",
+              })
             break
           case "minLengt":
+            stateInputs[name].length < validationRules[rule] &&
+              (validationInputs[name] = {
+                error: true,
+                message: `Ingresa ${validationRules[rule]} o más caracteres de longitud`,
+              })
+            break
+          case "required":
+            validationRules[rule] === "number" &&
+              isNaN(stateInputs[name]) &&
+              (validationInputs[name] = {
+                error: true,
+                message: "Este numero valido",
+              })
+
+            !stateInputs[name] ||
+              (stateInputs[name] === "" &&
+                (validationInputs[name] = {
+                  error: true,
+                  message: "Este campo es requerido",
+                }))
             break
         }
       })

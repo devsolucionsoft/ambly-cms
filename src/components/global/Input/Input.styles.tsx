@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native"
 // App theme
-import { palette, paletteTypes } from "../../../utils/theme"
+import { palette } from "../../../utils/theme"
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 6,
     paddingVertical: 8,
     borderWidth: 1,
     borderRadius: 10
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 5,
     paddingVertical: 10,
     backgroundColor: palette["ligth"],
     borderRadius: 30

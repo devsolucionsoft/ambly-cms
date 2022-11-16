@@ -14,15 +14,12 @@ import {
 import {
   Header,
   Button,
-  Typography,
   CheckLabel,
   Input,
-  ModalForgotPassword,
 } from "../../../components/global"
-import { ModalDataComplete, LoyoutAuth } from "../../../components/auth"
+import { LoyoutAuth } from "../../../components/auth"
 // Store
 import { useAppDispatch } from "../../../store"
-import { createSession } from "../../../store/Auth/actions"
 import { openAlert, openAlertType } from "../../../store/Alert/actions"
 // Hooks
 import useValidateForm, {

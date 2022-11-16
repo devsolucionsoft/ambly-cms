@@ -1,18 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
 import { View, TouchableOpacity } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { DrawerNavigationProp } from "@react-navigation/drawer"
-import { DrawerActions } from "@react-navigation/native"
-import {
-  DrawerkNavigationProps,
-  StackNavigationProps,
-  UserStackParamList,
-} from "../../../navigation/types"
 import { navigateUser } from "../../../navigation/actions"
 // Styles
 import { styles } from "./DrawerNatigation.styles"
 // Components
-import { Button, Header, Typography } from "../../global"
+import { Button, Header, Typography, ModalForgotPassword } from "../../global"
 import { DrawerContentComponentProps } from "@react-navigation/drawer"
 import {
   AntDesign,
@@ -27,11 +20,25 @@ const DrawerNatigation = ({
   navigation,
   descriptors,
 }: DrawerContentComponentProps) => {
+  const [loading, setLoading] = useState(false)
+  const [modalForgotPassword, setModalForgotPassword] = useState(false)
+
+  const forgotPasswordResponse = (response: any) => {
+    setTimeout(() => {
+      //dispatch(openAlert(response))
+    }, 400)
+  }
+
   return (
     <View style={styles.main}>
       <Header action={() => navigation.closeDrawer()} title="Menú" />
       <SafeAreaView style={styles.content}>
         <View>
+          <ModalForgotPassword
+            modalVisible={modalForgotPassword}
+            setModalVisible={(value: boolean) => setModalForgotPassword(value)}
+            ForgotPasswordResponse={forgotPasswordResponse}
+          />
           <TouchableOpacity
             style={styles.item}
             onPress={() => navigation.navigate("MyCourses")}
@@ -48,7 +55,7 @@ const DrawerNatigation = ({
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.item}
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => navigateUser("MyAccount")}
           >
             <Feather name="user" size={22} color="white" />
             <Typography
@@ -56,11 +63,12 @@ const DrawerNatigation = ({
               color="ligth"
               textAlign="left"
               style={{ marginTop: 3, marginLeft: 20 }}
+              
             >
               Mi perfil
             </Typography>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.item}>
+          <TouchableOpacity style={styles.item} onPress={() => setModalForgotPassword(true)}>
             <Feather name="help-circle" size={22} color="white" />
             <Typography
               variant="p3"

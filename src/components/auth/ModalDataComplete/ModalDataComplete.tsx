@@ -77,15 +77,15 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
   const handleRegistry = async () => {
     const { errors, validation } = getValidation(stateInputs)
 
-    const dataRegistry = {
-      ...data,
-      ...stateInputs,
-    }
-
-    let response: any
-
     if (validation) {
       setLoading(true)
+
+      let response: any
+      const dataRegistry = {
+        ...data,
+        ...stateInputs,
+      }
+
       switch (typeLogin) {
         case "google":
           response = await AuthApiModel.UserRegistryGoogle(dataRegistry)
@@ -94,7 +94,7 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
           response = await AuthApiModel.UserRegister(dataRegistry)
           break
       }
-      
+
       switch (response.status) {
         case 201:
           response.data.token
@@ -118,7 +118,6 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
           break
       }
       setLoading(false)
-      
     } else {
       setErrorInputs({
         ...errorInputs,

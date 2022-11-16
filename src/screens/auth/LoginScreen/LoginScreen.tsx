@@ -12,7 +12,6 @@ import {
   Header,
   Button,
   Typography,
-  CheckLabel,
   Input,
   ModalForgotPassword,
 } from "../../../components/global"

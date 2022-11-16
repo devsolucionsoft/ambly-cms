@@ -39,6 +39,7 @@ export type UserStackParamList = {
   }
   MyCourses: undefined
   ModuleDetail: undefined
+  MyAccount: undefined
 }
 
 export type AppStackParamList = {
