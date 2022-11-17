@@ -12,8 +12,8 @@ export const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     backgroundColor: palette["redPrimary"],
-    paddingVertical: 15,
-    paddingHorizontal: 40,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
     width: "80%",
     borderRadius: 20,
     marginHorizontal: "10%",
@@ -33,7 +33,7 @@ const ButtonAction = (props: ButtonActionAttributes) => {
   const parseStyle = typeof style === "object" ? style : {}
 
   return (
-    <TouchableOpacity {...props} style={{ ...parseStyle, ...styles.buttonStart }}>
+    <TouchableOpacity {...props} style={{...styles.buttonStart , ...parseStyle}}>
       <Typography variant="heading3" textAlign="center" color="ligth" style={{fontWeight: "bold"}}>
         {text}
       </Typography>

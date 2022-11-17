@@ -1,6 +1,5 @@
 export interface ItemInputValidationI {
-  required?: "text" | "number" | "boolean"
-  email?: boolean
+  required?: "text" | "number" | "boolean" | "email"
   minLengt?: number
 }
 
@@ -55,13 +54,6 @@ const useValidateForm = (
 
       validationKeys.forEach((rule: string) => {
         switch (rule) {
-          case "email":
-            !emailRegex.test(stateInputs[name]) &&
-              (validationInputs[name] = {
-                error: true,
-                message: "Ingresa un email válido",
-              })
-            break
           case "minLengt":
             stateInputs[name].length < validationRules[rule] &&
               (validationInputs[name] = {
@@ -70,19 +62,36 @@ const useValidateForm = (
               })
             break
           case "required":
+            // Requerido general
+            ;(!stateInputs[name] || stateInputs[name] === "") &&
+              (validationInputs[name] = {
+                error: true,
+                message: "Este campo es requeridooo",
+              })
+
+            // Requerido booleano
+            validationRules[rule] === "boolean" &&
+              !stateInputs[name] &&
+              (validationInputs[name] = {
+                error: true,
+                message: "Este campo es requerido",
+              })
+
+            // Requerido numero
             validationRules[rule] === "number" &&
               isNaN(stateInputs[name]) &&
               (validationInputs[name] = {
                 error: true,
-                message: "Este numero valido",
+                message: "Ingresa un numero válido",
               })
 
-            !stateInputs[name] ||
-              (stateInputs[name] === "" &&
-                (validationInputs[name] = {
-                  error: true,
-                  message: "Este campo es requerido",
-                }))
+            // Requeriso email
+            validationRules[rule] === "email" &&
+              !emailRegex.test(stateInputs[name]) &&
+              (validationInputs[name] = {
+                error: true,
+                message: "Ingresa un email válido",
+              })
             break
         }
       })

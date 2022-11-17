@@ -20,7 +20,7 @@ const MyAccount = ({
   navigation,
   route,
 }: StackNavigationProps<UserStackParamList, "MyAccount">) => {
-  
+
   const defaultInputs = {
     username: "",
     email: "",
@@ -34,7 +34,7 @@ const MyAccount = ({
   // Use Hook Validation
   const defaultValidation: InputValidationI = {
     username: { required: "text" },
-    email: { required: "text", email: true },
+    email: { required: "email"},
     phone: { required: "number", minLengt: 5 },
     country: { required: "text" },
     city: { required: "text" },

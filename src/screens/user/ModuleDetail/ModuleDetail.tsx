@@ -68,6 +68,7 @@ const ModuleDetailScreen = ({
         variant: "information",
         title: "Nombre del modulo",
       }}
+      navCourse={true}
     >
       <VideoItem style={styles.video} />
 

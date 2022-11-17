@@ -82,6 +82,7 @@ const CourseDetail = ({
         text: "Iniciar curso",
         onPress: () => navigation.navigate("ModuleDetail"),
       }}
+      navCourse={true}
     >
       <ImageBackground
         style={styles.image}
@@ -99,7 +100,7 @@ const CourseDetail = ({
             color="ligth"
             style={{ marginBottom: 10 }}
           >
-            {courseInfo.name_course}
+            {courseInfo?.name_course}
           </Typography>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <FontAwesome5 name="user-alt" size={18} color={palette["ligth"]} />
@@ -109,12 +110,12 @@ const CourseDetail = ({
               textAlign="left"
               style={{ marginLeft: 10 }}
             >
-              {courseInfo.instructor.name_instructor}
+              {courseInfo?.instructor.name_instructor}
             </Typography>
           </View>
         </LinearGradient>
       </ImageBackground>
-      <View style={styles.content}>
+      <View style={styles?.content}>
         {/* Content description */}
         <Typography
           variant="p2"
@@ -122,7 +123,7 @@ const CourseDetail = ({
           color="grayText"
           style={{ marginBottom: 20 }}
         >
-          {courseInfo.instructor.description_instructor}
+          {courseInfo?.instructor.description_instructor}
         </Typography>
 
         <Typography
@@ -131,7 +132,7 @@ const CourseDetail = ({
           color="ligth"
           style={{ marginBottom: 30 }}
         >
-          Por solo {courseInfo.price_course}
+          Por solo {courseInfo?.price_course}
         </Typography>
 
         {/* Content price */}

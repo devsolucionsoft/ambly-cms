@@ -10,8 +10,9 @@ import {
   UserStackParamList,
 } from "../../../navigation/types"
 // UI Components
-import { Typography, Button } from "../../../components/global"
+import { Typography } from "../../../components/global"
 import { Layout } from "../../../components/user"
+import { AntDesign } from '@expo/vector-icons';
 
 const MyCoursesScreen = ({
   navigation,
@@ -20,7 +21,6 @@ const MyCoursesScreen = ({
   const [courses, setCourses] = useState([
     { text: "Curso 1", active: false },
     { text: "Curso 2", active: false },
-    { text: "Curso 3", active: false },
   ])
 
   return (
@@ -31,11 +31,32 @@ const MyCoursesScreen = ({
         variant: "information",
         title: "Mis cursos",
       }}
+      navCourse={true}
     >
       <View style={styles.content}>
+        <Typography color="ligth" variant="p" textAlign="center">
+          Andrés{" "}
+          <Typography
+            color="ligth"
+            variant="p"
+            textAlign="center"
+            style={{ fontWeight: "bold" }}
+          >
+            continua con tu aprendizaje
+          </Typography>{" "}
+          con estos cursos…
+        </Typography>
         <View style={styles.listCourses}>
           {courses.map((item, index) => (
-            <TouchableOpacity style={styles.itemCourse} onPress={() => navigation.navigate("CourseDetail")}>
+            <TouchableOpacity
+              style={styles.itemCourse}
+              onPress={() =>
+                navigation.navigate("CourseDetail", {
+                  id_course: 1,
+                })
+              }
+            >
+              <AntDesign name="play" size={30} color="white" style={{position: "absolute", zIndex: 3, right: 20, top: 20}} />
               <ImageBackground
                 style={styles.itemCourseImage}
                 source={require("../../../../assets/images/course.png")}
@@ -46,25 +67,25 @@ const MyCoursesScreen = ({
                   style={styles.itemCourseContent}
                   colors={paletteGradient.gradientOpacity2}
                 >
-                  <View style={{ marginRight: 10 }}>
+                  <View style={{ marginRight: 10, width: "70%" }}>
                     <Typography
                       color="ligth"
                       textAlign="left"
-                      variant="heading3"
+                      variant="heading2"
+                      style={{ lineHeight: 30 }}
                     >
                       Cocina de lujo
                     </Typography>
-                    <Typography color="grayText" textAlign="left" variant="p2">
-                      Módulo 4 - min 4:30
-                    </Typography>
+                    <View style={styles.beagle}>
+                      <Typography
+                        color="grayText"
+                        textAlign="left"
+                        variant="p3"
+                      >
+                        Módulo 4 - min 4:30
+                      </Typography>
+                    </View>
                   </View>
-                  <Button
-                    color="redPrimary"
-                    colorText="ligth"
-                    text="Continuar"
-                    variant="sm"
-                    onPress={() => navigation.navigate("ModuleDetail")}
-                  />
                 </LinearGradient>
               </ImageBackground>
             </TouchableOpacity>

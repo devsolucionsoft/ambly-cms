@@ -6,17 +6,21 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingVertical: 20,
+    paddingVertical: 0,
     paddingHorizontal: 30,
   },
   listCourses: {
     marginVertical: 30,
   },
   itemCourse: {
-    height: 150,
+    height: 180,
     marginBottom: 25,
     borderRadius: 20,
     overflow: "hidden",
+    position: "relative",
+    shadowColor: "#000",
+    shadowOpacity: 1,
+    elevation: 24,
   },
   itemCourseImage: {
     height: "100%",
@@ -30,5 +34,12 @@ export const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "space-between",
     padding: 20,
+  },
+  beagle: {
+    backgroundColor: "#1010109e",
+    paddingHorizontal: 10,
+    paddingTop: 3,
+    borderRadius: 15,
+    marginTop: 10,
   },
 })

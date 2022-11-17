@@ -11,12 +11,7 @@ import {
   AuthStackParamList,
 } from "../../../navigation/types"
 // Components
-import {
-  Header,
-  Button,
-  CheckLabel,
-  Input,
-} from "../../../components/global"
+import { Header, Button, CheckLabel, Input } from "../../../components/global"
 import { LoyoutAuth } from "../../../components/auth"
 // Store
 import { useAppDispatch } from "../../../store"
@@ -39,6 +34,7 @@ const RegistryScreen = ({
   const [loading, setLoading] = useState(false)
 
   const defaultInputs = {
+    username: "",
     email: "",
     password: "",
     check: false,
@@ -46,11 +42,13 @@ const RegistryScreen = ({
   // States inputs
   const [stateInputs, setStateInputs] = useState(defaultInputs)
   // Use Hook Validation
-  const defaultValidation: Array<InputValidationI> = [
-    { required: "text", email: true },
-    { required: "number", minLengt: 6 },
-    { required: "boolean" },
-  ]
+  const defaultValidation: InputValidationI = {
+    username: { required: "text" },
+    email: { required: "email" },
+    password: { required: "text", minLengt: 6 },
+    check: { required: "boolean" },
+  }
+
   const { validationInputs, getValidation } = useValidateForm({
     defaultInputs,
     defaultValidation,
@@ -69,6 +67,7 @@ const RegistryScreen = ({
   const handleRegistry = async () => {
     const { errors, validation } = getValidation(stateInputs)
     if (validation) {
+      setLoading(true)
       const response = await AuthApiModel.UserRegister(stateInputs)
 
       switch (response.status) {
@@ -94,18 +93,13 @@ const RegistryScreen = ({
           )
           break
       }
+      setLoading(false)
     } else {
       setErrorInputs({
         ...errorInputs,
         ...errors,
       })
     }
-  }
-
-  const forgotPasswordResponse = (response: openAlertType) => {
-    setTimeout(() => {
-      dispatch(openAlert(response))
-    }, 400)
   }
 
   return (
@@ -122,15 +116,17 @@ const RegistryScreen = ({
       />
       <Header returnAction title="Crea una cuenta" />
       <SafeAreaView style={styles.content}>
-        <View style={{marginBottom: "15%"}}>
+        <View style={{ marginBottom: "15%" }}>
           <Input
             placeholder="Nombre"
             label="Nombre"
             autoCapitalize="none"
-            value={stateInputs.email}
-            error={errorInputs.email.error}
-            message={errorInputs.email.message}
-            onChange={(event) => handleKeyUp(event.nativeEvent.text, "email")}
+            value={stateInputs.username}
+            error={errorInputs.username.error}
+            message={errorInputs.username.message}
+            onChange={(event) =>
+              handleKeyUp(event.nativeEvent.text, "username")
+            }
           />
           <Input
             placeholder="E - Mail"
@@ -152,6 +148,7 @@ const RegistryScreen = ({
               handleKeyUp(event.nativeEvent.text, "password")
             }
           />
+
 
           <CheckLabel
             size={25}

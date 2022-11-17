@@ -41,16 +41,14 @@ const StartScreen = ({
   const defaultInputs = {
     email: "",
     password: "",
-    check: true,
   }
   // States inputs
   const [stateInputs, setStateInputs] = useState(defaultInputs)
   // Use Hook Validation
-  const defaultValidation: Array<InputValidationI> = [
-    { required: "text", email: true },
-    { required: "number", minLengt: 6 },
-    { required: "boolean" },
-  ]
+  const defaultValidation: InputValidationI = {
+    email: { required: "email" },
+    password: { required: "number" },
+  }
   const { validationInputs, getValidation } = useValidateForm({
     defaultInputs,
     defaultValidation,

@@ -2,11 +2,12 @@ import React from "react"
 import { View, ViewProps, TouchableOpacity, Image } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
+import { navigateUser } from "../../../navigation/actions"
 // Theme
 import AntDesign from "@expo/vector-icons/AntDesign"
 import { SimpleLineIcons } from "@expo/vector-icons"
 import { palette, paletteGradient } from "../../../utils/theme"
-import { navigationBack } from "../../../navigation/actions";
+import { navigationBack } from "../../../navigation/actions"
 // Styles
 import { styles } from "./Header.styles"
 // Components
@@ -62,11 +63,13 @@ const Header = (props: HeaderProps) => {
 
       <View style={{ alignItems: "center" }}>
         {icon && (
-          <Image
-            resizeMode="contain"
-            style={styles.icon}
-            source={require("../../../../assets/images/icon-ambly.png")}
-          />
+          <TouchableOpacity onPress={() => navigateUser("Home")}>
+            <Image
+              resizeMode="contain"
+              style={styles.icon}
+              source={require("../../../../assets/images/icon-ambly.png")}
+            />
+          </TouchableOpacity>
         )}
         {title && (
           <Typography
@@ -81,7 +84,10 @@ const Header = (props: HeaderProps) => {
       </View>
       <View style={styles.action}>
         {variant == "user" && (
-          <TouchableOpacity style={styles.user}>
+          <TouchableOpacity
+            style={styles.user}
+            onPress={() => navigateUser("MyAccount")}
+          >
             <AntDesign name="user" size={25} color={palette["ligth"]} />
           </TouchableOpacity>
         )}

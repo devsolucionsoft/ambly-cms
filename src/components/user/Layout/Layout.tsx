@@ -4,7 +4,7 @@ import { View, ViewProps, ScrollView } from "react-native"
 import { styles } from "./Layout.styles"
 // Components
 import { Header, Alert } from "../../global"
-import { ButtonAction } from "../../user"
+import { ButtonAction, NavCourse } from "../../user"
 import { ButtonActionAttributes } from "../../user/ButtonAction"
 import { HeaderProps } from "../../global/Header/Header"
 // Store
@@ -15,7 +15,7 @@ interface LayoutProps {
   headerProps?: HeaderProps
   spaceTop?: boolean
   buttonAction?: ButtonActionAttributes
-  navCourse?: JSX.Element
+  navCourse?: boolean
 }
 
 type TemplateAttributes = LayoutProps & ViewProps
@@ -35,9 +35,9 @@ const Layout = (props: TemplateAttributes) => {
             {children}
           </ScrollView>
           {buttonAction && (
-            <ButtonAction {...buttonAction} text={buttonAction.text} />
+            <ButtonAction {...buttonAction} text={buttonAction.text} style={navCourse ? {bottom: 80}: {}} />
           )}
-          {navCourse && navCourse}
+          {navCourse && <NavCourse/> }
         </View>
       </View>
     </ThemeContext.Provider>

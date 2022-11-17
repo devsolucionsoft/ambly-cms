@@ -9,7 +9,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient"
 // Theme
 import { palette, paletteGradient } from "../../../utils/theme"
-import { AntDesign, MaterialIcons } from "@expo/vector-icons"
+import { AntDesign } from "@expo/vector-icons"
 // Styles
 import { styles } from "./Alert.styles"
 // Components
