@@ -1,8 +1,6 @@
 import "react-native-gesture-handler"
 import { StatusBar } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
-
-import useCachedResources from "./src/hooks/useCachedResources"
 import Navigation from "./src/navigation"
 import store from "./src/store"
 import { Provider } from "react-redux"

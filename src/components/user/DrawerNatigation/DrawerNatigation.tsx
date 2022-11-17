@@ -123,13 +123,13 @@ const DrawerNatigation = ({
               Cerrar sesión
             </Typography>
           </TouchableOpacity>
-          <Button
+          {/*<Button
             variant="lg"
             text="Escoger cursos"
             color="redPrimary"
             colorText="ligth"
             onPress={() => navigation.navigate("ManyCourses")}
-          />
+  />*/}
         </View>
       </SafeAreaView>
     </View>

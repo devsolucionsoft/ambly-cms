@@ -38,8 +38,6 @@ import {
 } from "../screens/user"
 // Drawer
 import { DrawerNatigation } from "../components/user"
-// components
-import { Alert } from "../components/global"
 
 export default function Navigation() {
   return (
@@ -76,7 +74,6 @@ const AppNavigator = () => {
 const AuthStack = createNativeStackNavigator<AuthStackParamList>()
 
 const AuthNavigator = () => {
-  const alertState = useAppSelector((store) => store.Alert)
   return (
     <AuthStack.Navigator initialRouteName="Start">
       <AuthStack.Screen

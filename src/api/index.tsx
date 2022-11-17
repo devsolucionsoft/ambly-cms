@@ -72,9 +72,10 @@ export class AuthApi {
     }
   }
 
-  async UserRegister(data: userLoginType) {
+  async UserRegister(data: any) {
     try {
       return await axios.post(`${url}/users`, {
+        username: data.username,
         password: data.password,
         email: data.email,
         role: "user",

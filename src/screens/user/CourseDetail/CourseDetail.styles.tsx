@@ -29,6 +29,7 @@ export const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: 10,
     marginVertical: 30
   },
   caracteristicsItem: {

@@ -2,20 +2,19 @@ import React, { useState, useRef } from "react"
 import { View, ViewProps, TouchableOpacity } from "react-native"
 import * as ScreenOrientation from "expo-screen-orientation"
 import { AntDesign } from "@expo/vector-icons"
-// Theme
-import { palette, paletteTypes } from "../../../utils/theme"
-// Styles
 import { styles } from "./VideoItem.styles"
-// Components
-import { Typography } from "../../global"
 import { Video, ResizeMode } from "expo-av"
 
-interface VideoProps {}
+interface VideoProps {
+  url?: string
+}
+
+const defaultUrl = "https://joy.videvo.net/videvo_files/video/free/video0455/large_watermarked/_import_6091143fc4c4b6.26692621_preview.mp4"
 
 type VideoAttributes = VideoProps & ViewProps
 
 const VideoItem = (props: VideoAttributes) => {
-  const { style } = props
+  const { style, url } = props
 
   const parseStyle = typeof style === "object" ? style : {}
 
@@ -47,7 +46,7 @@ const VideoItem = (props: VideoAttributes) => {
         ref={video}
         style={{ ...parseStyle }}
         source={{
-          uri: "https://joy.videvo.net/videvo_files/video/free/video0455/large_watermarked/_import_6091143fc4c4b6.26692621_preview.mp4",
+          uri: url ? url : defaultUrl,
         }}
         isLooping={false}
         useNativeControls={status.isPlaying}

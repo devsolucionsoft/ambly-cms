@@ -52,8 +52,8 @@ const Select = (props: SelectAttributes) => {
         onValueChange={(itemValue) => onChange(itemValue)}
       >
         <Picker.Item style={styles.item} label="Elije una opción" value="" />
-        <Picker.Item style={styles.item} label="Java" value="java" />
-        <Picker.Item style={styles.item} label="JavaScript" value="js" />
+        <Picker.Item style={styles.item} label="opcion 1" value="opcion 1" />
+        <Picker.Item style={styles.item} label="opcion 2" value="opcion " />
       </Picker>
       {error && (
         <Typography

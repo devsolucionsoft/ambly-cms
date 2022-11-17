@@ -117,6 +117,7 @@ const StartScreen = ({
         <Input
           placeholder="E - Mail"
           label="E - Mail"
+          keyboardType="email-address"
           autoCapitalize="none"
           value={stateInputs.email}
           error={errorInputs.email.error}

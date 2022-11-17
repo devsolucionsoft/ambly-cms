@@ -15,7 +15,8 @@ import {
 import { Typography, Button } from "../../../components/global"
 import { Layout, AccordionItem, NavCourse } from "../../../components/user"
 import { palette, paletteGradient } from "../../../utils/theme"
-
+// Utils
+import { thousandPoints } from "../../../utils/functions";
 const CourseDetail = ({
   navigation,
   route,
@@ -29,8 +30,6 @@ const CourseDetail = ({
     ;(async () => {
       const response = await userApiModel.GetCourse(id_course)
       if (response.status === 200) {
-        console.log("--",JSON.stringify(response.data))
-
         setCourseInfo(response.data)
       }
     })()
@@ -95,20 +94,20 @@ const CourseDetail = ({
           style={styles.imageContent}
         >
           <Typography
-            variant="headingLg"
+            variant="h2"
             textAlign="left"
             color="ligth"
-            style={{ marginBottom: 10 }}
+            style={{ marginBottom: 0, fontWeight: "normal" }}
           >
             {courseInfo?.name_course}
           </Typography>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <FontAwesome5 name="user-alt" size={18} color={palette["ligth"]} />
+            <FontAwesome5 name="user-alt" size={16} color={palette["ligth"]} />
             <Typography
-              variant="p"
+              variant="p18"
               color="ligth"
               textAlign="left"
-              style={{ marginLeft: 10 }}
+              style={{ marginLeft: 10, fontWeight: "normal", marginTop: 5 }}
             >
               {courseInfo?.instructor.name_instructor}
             </Typography>
@@ -132,7 +131,7 @@ const CourseDetail = ({
           color="ligth"
           style={{ marginBottom: 30 }}
         >
-          Por solo {courseInfo?.price_course}
+          Por solo ${thousandPoints(courseInfo?.price_course)}
         </Typography>
 
         {/* Content price */}

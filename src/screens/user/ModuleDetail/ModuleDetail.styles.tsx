@@ -5,7 +5,8 @@ export const styles = StyleSheet.create({
   content: {
     paddingVertical: 30,
     paddingBottom: 150,
-    paddingHorizontal: 25
+    paddingHorizontal: 25,
+    position: "relative"
   },
   beagle: {
     paddingVertical: 5,
@@ -43,5 +44,20 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center"
-  }
+  },
+  videos: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+    backgroundColor: palette["ligth"],
+    padding: 10,
+    borderRadius: 15,
+    borderWidth: 3
+  },
+  imageVideo: {
+    width: 60,
+    height: 50,
+    marginRight: 20,
+    borderRadius: 10
+  },
 })

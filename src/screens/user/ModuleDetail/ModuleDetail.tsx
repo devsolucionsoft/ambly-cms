@@ -1,5 +1,5 @@
 import { useState, useRef } from "react"
-import { View, TouchableOpacity } from "react-native"
+import { View, TouchableOpacity, Image } from "react-native"
 import { Octicons } from "@expo/vector-icons"
 import { MaterialIcons } from "@expo/vector-icons"
 // Styles compomponent
@@ -13,31 +13,45 @@ import {
 // UI Components
 import { Typography, Button } from "../../../components/global"
 import { Layout, AccordionItem, VideoItem } from "../../../components/user"
+// Store
+import { useAppDispatch } from "../../../store"
+import { onLoader } from "../../../store/Loader/actions"
 
 const modules = [
   {
-    title: "intoducción",
+    title: "Nombre del video 1",
     duration: "5:00",
+    video:
+      "https://joy.videvo.net/videvo_files/video/free/video0455/large_watermarked/_import_6091143fc4c4b6.26692621_preview.mp4",
     description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "description video 1 description video 1 description video 1 description video 1 description video 1 description video 1.",
+
+  },
+  {
+    title: "Nombre del video 2",
+    duration: "5:00",
+    video:
+      "https://cdn.videvo.net/videvo_files/video/premium/video0037/large_watermarked/docklands_clocks00_preview.mp4",
+    description:
+      "description video 2 description video 2 description video 2 description video 2 description video 2 description video 2description video 2.",
     videos: [
       {
         title: "intoducción",
         duration: "5:00",
-        sub: "Due in 1 day",
       },
       {
         title: "intoducción",
         duration: "5:00",
-        sub: "Due in 1 day",
       },
     ],
   },
   {
-    title: "intoducción",
+    title: "Nombre del video 3",
     duration: "5:00",
+    video:
+      "https://joy.videvo.net/videvo_files/video/free/video0453/large_watermarked/_121__import_preview.mp4",
     description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "description video 3 description video 3 description video 3 description video 3 description video 3 description video 3description video 3.",
     videos: [
       {
         title: "intoducción",
@@ -51,15 +65,32 @@ const modules = [
   },
 ]
 
+
 const ModuleDetailScreen = ({
   navigation,
   route,
 }: StackNavigationProps<UserStackParamList, "ModuleDetail">) => {
   const [courses, setCourses] = useState([
-    { text: "Cuerso 1", active: false },
-    { text: "Cuerso 2", active: false },
-    { text: "Cuerso 3", active: false },
+    { text: "Curso 1", active: false },
+    { text: "Curso 2", active: false },
+    { text: "Curso 3", active: false },
   ])
+
+  const [currentModule, setCurrentModule] = useState(0)
+
+  const dispatch = useAppDispatch()
+
+  const setModule = (module: number) => {
+    dispatch(onLoader(true))
+
+    setTimeout(() => {
+      setCurrentModule(module)
+    }, 1000)
+
+    setTimeout(() => {
+      dispatch(onLoader(false))
+    }, 2000)
+  }
 
   return (
     <Layout
@@ -70,7 +101,7 @@ const ModuleDetailScreen = ({
       }}
       navCourse={true}
     >
-      <VideoItem style={styles.video} />
+      <VideoItem style={styles.video} url={modules[currentModule].video} />
 
       {/* Content modules */}
       <View style={styles.content}>
@@ -82,7 +113,7 @@ const ModuleDetailScreen = ({
               textAlign="left"
               style={{ fontWeight: "bold" }}
             >
-              Modulo 2
+              Modulo 1
             </Typography>
           </View>
         </View>
@@ -92,7 +123,7 @@ const ModuleDetailScreen = ({
           textAlign="left"
           style={{ fontWeight: "bold", marginBottom: 10 }}
         >
-          Nombre del modulo
+          {modules[currentModule].title}
         </Typography>
         <Typography
           color="ligth"
@@ -100,26 +131,43 @@ const ModuleDetailScreen = ({
           textAlign="left"
           style={{ marginBottom: 20 }}
         >
-          En este modulo aprenderás algunos conceptos básicos que todo un chef
-          en casa debe conocer. en este modulo aprenderás algunos conceptos
-          básicos que todo un chef en casa debe conocer.
+          {modules[currentModule].description}
         </Typography>
 
-        <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
           <Button
             color="redPrimary"
             colorText="ligth"
             variant="sm"
             text="Anterior"
-            style={{ marginBottom: 30, width: 150}}
+            disabled={currentModule === 0}
+            style={{
+              marginBottom: 30,
+              width: 150,
+              opacity: currentModule === 0 ? 0.5 : 1,
+            }}
+            onPress={() => setModule(currentModule - 1)}
             iconLeft
           />
+
           <Button
             color="redPrimary"
             colorText="ligth"
             variant="sm"
             text="Siguiente"
-            style={{ marginBottom: 30, width: 150}}
+            disabled={currentModule === modules.length - 1}
+            style={{
+              marginBottom: 30,
+              width: 150,
+              opacity: currentModule === modules.length - 1 ? 0.5 : 1,
+            }}
+            onPress={() => setModule(currentModule + 1)}
             iconRight
           />
         </View>
@@ -133,7 +181,7 @@ const ModuleDetailScreen = ({
           Descargables
         </Typography>
         <View style={styles.moduleList}>
-          {modules.map((item) => (
+          {[1,2].map((item) => (
             <TouchableOpacity style={styles.downloadable}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <View style={styles.downloadableIcon}>
@@ -150,7 +198,7 @@ const ModuleDetailScreen = ({
                     textAlign="left"
                     style={{ fontWeight: "bold" }}
                   >
-                    Nombre del modulo
+                    Documento pdf
                   </Typography>
                   <Typography color="grayText" variant="p3" textAlign="left">
                     Descargado
@@ -159,6 +207,48 @@ const ModuleDetailScreen = ({
               </View>
               <View style={styles.downloadableDown}>
                 <Octicons name="download" size={24} color={palette["ligth"]} />
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <Typography
+          color="ligth"
+          variant="p"
+          textAlign="left"
+          style={{ fontWeight: "bold", marginBottom: 20, marginTop: 20 }}
+        >
+          Videos del modulo
+        </Typography>
+
+        <View style={{ marginBottom: 20 }}>
+          {modules.map((item, index) => (
+            <TouchableOpacity
+              style={{
+                ...styles.videos,
+                borderColor:
+                  currentModule === index
+                    ? palette["redPrimary"]
+                    : palette["ligth"],
+              }}
+              onPress={() => setModule(index)}
+            >
+              <Image
+                style={styles.imageVideo}
+                source={require("../../../../assets/images/mariana.jpg")}
+              />
+              <View>
+                <Typography
+                  variant="p2"
+                  textAlign="left"
+                  color="dark"
+                  style={{ fontWeight: "bold" }}
+                >
+                  {item.title}
+                </Typography>
+                <Typography variant="p3" textAlign="left" color="grayText">
+                  {item.duration} minutes
+                </Typography>
               </View>
             </TouchableOpacity>
           ))}

@@ -104,10 +104,10 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
                   style={styles.swiperItemPopularContent}
                 >
                   <Typography
-                    variant="heading"
+                    variant="h2"
                     color="ligth"
                     textAlign="left"
-                    style={{ fontWeight: "bold" }}
+                    style={{ fontWeight: "normal", width: "80%" }}
                   >
                     Confianza en si mismo
                   </Typography>

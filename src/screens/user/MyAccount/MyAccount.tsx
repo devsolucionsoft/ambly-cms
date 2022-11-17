@@ -71,7 +71,7 @@ const MyAccount = ({
     }
   }
   return (
-    <Layout spaceTop headerProps={{ returnAction: true, title: "Perfil" }}>
+    <Layout spaceTop headerProps={{ returnAction: true, title: "Perfil" }} navCourse={true}>
       <ScrollView style={styles.content}>
         <Input
           placeholder="Nombre"

@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     borderRadius: 30
   },
   input: {
-    fontSize: 18,
+    fontSize: 17,
     color: palette["grayText"],
     width: "100%",
     marginLeft: 20,

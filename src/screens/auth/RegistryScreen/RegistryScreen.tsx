@@ -23,6 +23,7 @@ import useValidateForm, {
 } from "../../../hooks/useValidateForm"
 // Api
 import { AuthApi } from "../../../api"
+import { log } from "react-native-reanimated"
 
 const RegistryScreen = ({
   navigation,
@@ -86,8 +87,8 @@ const RegistryScreen = ({
         default:
           dispatch(
             openAlert({
-              title: "Ha ocurrido un error",
-              text: "Intentalo mas tarde",
+              title: "El usuario ya está registrado",
+              text: "Ingresa otro email",
               icon: "error",
             })
           )
@@ -132,6 +133,7 @@ const RegistryScreen = ({
             placeholder="E - Mail"
             label="E - Mail"
             autoCapitalize="none"
+            keyboardType="email-address"
             value={stateInputs.email}
             error={errorInputs.email.error}
             message={errorInputs.email.message}

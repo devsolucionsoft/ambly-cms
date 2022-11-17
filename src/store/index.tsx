@@ -3,11 +3,13 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
 // App reducers
 import Auth from "./Auth/reducer"
 import Alert from "./Alert/reducer"
+import Loader from "./Loader/reducer"
 
 const store = configureStore({
   reducer: {
     Auth,
-    Alert
+    Alert,
+    Loader
   },
 })
 
