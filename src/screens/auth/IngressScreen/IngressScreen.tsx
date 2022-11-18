@@ -9,7 +9,7 @@ import {
 } from "../../../navigation/types"
 // UI Components
 import { Typography, Button, Header } from "../../../components/global"
-import { ModalDataComplete, LoyoutAuth } from "../../../components/auth"
+import { LoyoutAuth } from "../../../components/auth"
 import * as Google from "expo-auth-session/providers/google"
 import * as Facebook from "expo-auth-session/providers/facebook"
 import * as WebBrowser from "expo-web-browser"
@@ -23,8 +23,6 @@ import axios from "axios"
 WebBrowser.maybeCompleteAuthSession()
 
 const GoogleOuth = ({
-  setStateInputs,
-  setModalDataComplete,
   setTypeDataComplete,
 }: {
   setStateInputs: Function
@@ -39,9 +37,11 @@ const GoogleOuth = ({
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
       "743164640778-el5jhbgmhp91h4gj1eimeme1akk3bb2g.apps.googleusercontent.com",
+    scopes: ["email"],
   })
 
   useEffect(() => {
+    setLoading(false)
     if (response?.type === "success") {
       const { authentication } = response
       fetchUserInfo(authentication?.accessToken)
@@ -49,6 +49,7 @@ const GoogleOuth = ({
   }, [response])
 
   const fetchUserInfo = async (token?: string) => {
+    setLoading(true)
     const responseInfo = await axios.get(
       "https://www.googleapis.com/oauth2/v3/userinfo",
       {
@@ -97,8 +98,6 @@ const GoogleOuth = ({
 }
 
 const FacebookOuth = ({
-  setStateInputs,
-  setModalDataComplete,
   setTypeDataComplete,
 }: {
   setStateInputs: Function
@@ -107,37 +106,36 @@ const FacebookOuth = ({
 }) => {
   const AuthApiModel = new AuthApi()
   const dispatch = useAppDispatch()
-
   const [loading, setLoading] = useState(false)
-
-  // faebook
+  // facebook
   const [request, response, promptAsync] = Facebook.useAuthRequest({
-    clientId: "1324979871671286",
+    expoClientId: "1324979871671286",
+    redirectUri: "https://auth.expo.io/@solucionsoft/ambly-app",
   })
 
   useEffect(() => {
+    setLoading(false)
     if (response?.type === "success") {
-      const { authentication } = response
-
-      //fetchUserInfo(authentication?.accessToken)
+      const { access_token } = response.params
+      fetchUserInfo(access_token)
     }
   }, [response])
 
   const fetchUserInfo = async (token?: string) => {
+    setLoading(false)
     const responseInfo = await axios.get(
-      "https://www.googleapis.com/oauth2/v3/userinfo",
-      {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
+      `https://graph.facebook.com/me?fields=email&access_token=${token}`
     )
 
-    const response = await AuthApiModel.UserLoginGoogle(responseInfo.data.email)
+    let response = await AuthApiModel.UserLoginFacebook(responseInfo.data.email)
 
-    if (response.status === 200 || response.status === 204) {
+    if (response.status === 204) {
+      response = await AuthApiModel.UserRegistryFacebook({
+        email: responseInfo.data.email,
+      })
+    }
+
+    if (response.status === 200 || response.status === 201) {
       dispatch(
         createSession({
           email: responseInfo.data.email,
@@ -145,16 +143,6 @@ const FacebookOuth = ({
         })
       )
     }
-
-    switch (response.status) {
-      case 204:
-        break
-      case 200:
-        break
-      default:
-        break
-    }
-
     setLoading(false)
   }
 
@@ -163,6 +151,7 @@ const FacebookOuth = ({
       color="blueRed"
       colorText="ligth"
       variant="sm"
+      loading={loading}
       text="Continue with Facebook"
       iconRed="facebook-square"
       onPress={() => {
@@ -193,45 +182,8 @@ const AppleOuth = ({
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response
-
-      //fetchUserInfo(authentication?.accessToken)
     }
   }, [response])
-
-  const fetchUserInfo = async (token?: string) => {
-    const responseInfo = await axios.get(
-      "https://www.googleapis.com/oauth2/v3/userinfo",
-      {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    )
-
-    const response = await AuthApiModel.UserLoginGoogle(responseInfo.data.email)
-
-    switch (response.status) {
-      case 204:
-        setStateInputs({
-          email: responseInfo.data.email,
-          password: "0000000",
-        })
-        setModalDataComplete(true)
-        break
-      case 200:
-        dispatch(
-          createSession({
-            email: responseInfo.data.email,
-            token: response.data.token,
-          })
-        )
-        break
-      default:
-        break
-    }
-  }
 
   return (
     <Button

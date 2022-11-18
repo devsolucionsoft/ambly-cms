@@ -54,7 +54,7 @@ const AppNavigator = () => {
 
   return (
     <AppStack.Navigator initialRouteName="Auth">
-      {!auth.session ? (
+      {auth.session ? (
         <AppStack.Screen
           name="User"
           component={UserNavigator}

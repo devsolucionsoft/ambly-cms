@@ -1,4 +1,4 @@
-import { CREATE_SESSION } from "../actionTypes";
+import { CREATE_SESSION, CLOSE_SESSION } from "../actionTypes";
 
 const initial_state = {
     session: false,
@@ -12,7 +12,11 @@ const categoryReducer = (state = initial_state, action: any) => {
                 session: true,
                 user: action.payload
             };
-
+        case CLOSE_SESSION:
+            return {
+                session: false,
+                user: {}
+            };
         default: return { ...state };
     }
 }

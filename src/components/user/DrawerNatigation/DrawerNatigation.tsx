@@ -14,6 +14,9 @@ import {
   MaterialIcons,
   Ionicons,
 } from "@expo/vector-icons"
+// Store
+import { useAppDispatch } from "../../../store"
+import { closeSession } from "../../../store/Auth/actions"
 
 const DrawerNatigation = ({
   state,
@@ -22,12 +25,15 @@ const DrawerNatigation = ({
 }: DrawerContentComponentProps) => {
   const [loading, setLoading] = useState(false)
   const [modalForgotPassword, setModalForgotPassword] = useState(false)
+  const dispatch = useAppDispatch()
 
   const forgotPasswordResponse = (response: any) => {
     setTimeout(() => {
       //dispatch(openAlert(response))
     }, 400)
   }
+
+  const handleCloseSession = () => dispatch(closeSession())
 
   return (
     <View style={styles.main}>
@@ -63,12 +69,14 @@ const DrawerNatigation = ({
               color="ligth"
               textAlign="left"
               style={{ marginTop: 3, marginLeft: 20 }}
-              
             >
               Mi perfil
             </Typography>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.item} onPress={() => setModalForgotPassword(true)}>
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => setModalForgotPassword(true)}
+          >
             <Feather name="help-circle" size={22} color="white" />
             <Typography
               variant="p3"
@@ -112,7 +120,7 @@ const DrawerNatigation = ({
               Políticas de privacidad
             </Typography>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.item}>
+          <TouchableOpacity style={styles.item} onPress={handleCloseSession}>
             <Ionicons name="exit-outline" size={22} color="white" />
             <Typography
               variant="p3"

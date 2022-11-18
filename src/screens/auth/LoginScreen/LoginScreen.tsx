@@ -79,6 +79,15 @@ const StartScreen = ({
             })
           )
           break
+        case 403:
+          dispatch(
+            openAlert({
+              title: `Este email está asociado a una cuenta de ${response.data?.message}`,
+              text: `Inicia sesión con ${response.data?.message}`,
+              icon: "error",
+            })
+          )
+          break
         default:
           dispatch(
             openAlert({

@@ -23,7 +23,9 @@ export type AuthStackParamList = {
   Start: undefined
   Ingress: undefined
   Login: undefined
-  Registry: undefined
+  Registry: {
+    check?: boolean
+  }
   Terms: undefined
   Explore: undefined
   CourseDetail: undefined

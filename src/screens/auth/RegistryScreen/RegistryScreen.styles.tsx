@@ -9,12 +9,6 @@ export const styles = StyleSheet.create({
     backgroundColor: palette["black"],
   },
   content: {
-    width: "100%",
-    height: "90%",
-    paddingHorizontal: 30,
-    paddingVertical: 50,
-    display: "flex",
-    justifyContent: "flex-end"
   },
   image: {
     position: "absolute",

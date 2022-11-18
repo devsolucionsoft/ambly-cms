@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { SafeAreaView, Image, View } from "react-native"
+import { useState, useEffect } from "react"
+import { SafeAreaView, Image, View, ScrollView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { paletteGradient } from "../../../utils/theme"
 
@@ -15,7 +15,7 @@ import { Header, Button, CheckLabel, Input } from "../../../components/global"
 import { LoyoutAuth } from "../../../components/auth"
 // Store
 import { useAppDispatch } from "../../../store"
-import { openAlert, openAlertType } from "../../../store/Alert/actions"
+import { openAlert } from "../../../store/Alert/actions"
 // Hooks
 import useValidateForm, {
   InputValidationI,
@@ -38,8 +38,9 @@ const RegistryScreen = ({
     username: "",
     email: "",
     password: "",
-    check: false,
+    check: route.params?.check ?? false,
   }
+
   // States inputs
   const [stateInputs, setStateInputs] = useState(defaultInputs)
   // Use Hook Validation
@@ -54,6 +55,7 @@ const RegistryScreen = ({
     defaultInputs,
     defaultValidation,
   })
+
   const [errorInputs, setErrorInputs] = useState<IErrorInputs>(validationInputs)
   // Inputs keyup
   const handleKeyUp = (value: string | boolean, name: string): void => {
@@ -63,6 +65,11 @@ const RegistryScreen = ({
     })
     setErrorInputs(validationInputs)
   }
+
+  useEffect(() => {
+    handleKeyUp(route.params?.check ?? false, "check")
+  }, [route.params?.check])
+  
 
   // Registry login
   const handleRegistry = async () => {
@@ -116,65 +123,81 @@ const RegistryScreen = ({
         style={styles.gradient}
       />
       <Header returnAction title="Crea una cuenta" />
-      <SafeAreaView style={styles.content}>
-        <View style={{ marginBottom: "15%" }}>
-          <Input
-            placeholder="Nombre"
-            label="Nombre"
-            autoCapitalize="none"
-            value={stateInputs.username}
-            error={errorInputs.username.error}
-            message={errorInputs.username.message}
-            onChange={(event) =>
-              handleKeyUp(event.nativeEvent.text, "username")
-            }
-          />
-          <Input
-            placeholder="E - Mail"
-            label="E - Mail"
-            autoCapitalize="none"
-            keyboardType="email-address"
-            value={stateInputs.email}
-            error={errorInputs.email.error}
-            message={errorInputs.email.message}
-            onChange={(event) => handleKeyUp(event.nativeEvent.text, "email")}
-          />
-          <Input
-            placeholder="Contraseña"
-            label="Contraseña"
-            secureTextEntry
-            value={stateInputs.password}
-            error={errorInputs.password.error}
-            message={errorInputs.password.message}
-            onChange={(event) =>
-              handleKeyUp(event.nativeEvent.text, "password")
-            }
-          />
+      <View
+        style={{
+          height: "100%",
+          justifyContent: "space-between",
+          paddingBottom: 100,
+        }}
+      >
+        <View></View>
+        <View
+          style={{
+            width: "100%",
+            paddingHorizontal: 30,
+          }}
+        >
+          <ScrollView style={{marginBottom: 80}}>
+            <View style={{ marginBottom: "10%" }}>
+              <Input
+                placeholder="Nombre"
+                label="Nombre"
+                autoCapitalize="none"
+                value={stateInputs.username}
+                error={errorInputs.username.error}
+                message={errorInputs.username.message}
+                onChange={(event) =>
+                  handleKeyUp(event.nativeEvent.text, "username")
+                }
+              />
+              <Input
+                placeholder="E - Mail"
+                label="E - Mail"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                value={stateInputs.email}
+                error={errorInputs.email.error}
+                message={errorInputs.email.message}
+                onChange={(event) =>
+                  handleKeyUp(event.nativeEvent.text, "email")
+                }
+              />
+              <Input
+                placeholder="Contraseña"
+                label="Contraseña"
+                secureTextEntry
+                value={stateInputs.password}
+                error={errorInputs.password.error}
+                message={errorInputs.password.message}
+                onChange={(event) =>
+                  handleKeyUp(event.nativeEvent.text, "password")
+                }
+              />
 
-
-          <CheckLabel
-            size={25}
-            color="ligth"
-            colorIcon="black"
-            label="Al continuar acepto terminos y condiciones"
-            check={stateInputs.check}
-            error={errorInputs.check.error}
-            message={errorInputs.check.message}
-            onChange={() => handleKeyUp(!stateInputs.check, "check")}
-            actionLabel={() => navigation.navigate("Terms")}
-          />
+              <CheckLabel
+                size={25}
+                color="ligth"
+                colorIcon="black"
+                label="Al continuar acepto terminos y condiciones"
+                check={stateInputs.check}
+                error={errorInputs.check.error}
+                message={errorInputs.check.message}
+                onChange={() => handleKeyUp(!stateInputs.check, "check")}
+                actionLabel={() => navigation.navigate("Terms")}
+              />
+            </View>
+          </ScrollView>
         </View>
-
         <Button
           variant="lg"
-          text="Continuar"
+          text="Guardar"
           color="redPrimary"
           colorText="ligth"
-          style={{ marginTop: 60 }}
+          style={{ position: "absolute", bottom: 10, width: "80%", marginLeft: "10%" }}
           loading={loading}
           onPress={() => handleRegistry()}
         />
-      </SafeAreaView>
+      </View>
     </LoyoutAuth>
   )
 }

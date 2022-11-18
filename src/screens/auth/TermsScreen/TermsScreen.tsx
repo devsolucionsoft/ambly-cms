@@ -7,7 +7,7 @@ import {
   AuthStackParamList,
 } from "../../../navigation/types"
 // Components
-import { Typography, Header } from "../../../components/global"
+import { Typography, Header, Button } from "../../../components/global"
 import { LoyoutAuth } from "../../../components/auth"
 
 const TermsScreen = ({
@@ -37,6 +37,17 @@ const TermsScreen = ({
           textos y los mezcló de tal manera que logró hacer un libro de textos
           especimen.
         </Typography>
+        <Button
+          variant="lg"
+          text="Aceptar"
+          color="redPrimary"
+          colorText="ligth"
+          style={{marginTop: 40}}
+          onPress={() => navigation.navigate("Registry", {
+            check: true
+          })}
+        />
+
       </ScrollView>
     </LoyoutAuth>
   )

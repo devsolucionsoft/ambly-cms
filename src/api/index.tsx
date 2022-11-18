@@ -59,13 +59,35 @@ export class AuthApi {
       return await axios.post(`${url}/social/google`, {
         email_google: data.email,
         password: "0000000",
+        username: data.email,
         role: "user",
         dateTime: "1970-01-01T00:00:00.000Z",
-        username: "string",
-        phone: "string",
-        city: "string",
-        country: "string",
-        gender: "string",
+      })
+    } catch (error: any) {
+      return error.response
+    }
+  }
+
+  async UserLoginFacebook(email?: string) {
+    try {
+      return await axios.post(`${url}/social/facebook`, {
+        email_facebook: email,
+      })
+    } catch (error: any) {
+      return error.response
+    }
+  }
+
+  async UserRegistryFacebook(data: { email: string }) {
+    console.log(data.email);
+    
+    try {
+      return await axios.post(`${url}/social/facebook`, {
+        email_facebook: data.email,
+        password: "0000000",
+        username: data.email,
+        role: "user",
+        dateTime: "1970-01-01T00:00:00.000Z",
       })
     } catch (error: any) {
       return error.response
