@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { View, ImageBackground } from "react-native"
+import { View, ImageBackground, Pressable } from "react-native"
 import Swiper from "react-native-swiper"
 // Styles
 import { styles } from "./StartScreen.styles"
@@ -13,6 +13,7 @@ import { Typography, Button } from "../../../components/global"
 import { LoyoutAuth } from "../../../components/auth"
 // Api
 import { ConfigApi } from "../../../api"
+import { loop } from "react-native-reanimated/lib/types/lib/reanimated2/animation/repeat"
 
 const StartScreen = ({
   navigation,
@@ -20,6 +21,8 @@ const StartScreen = ({
 }: StackNavigationProps<AuthStackParamList, "Start">) => {
   const [splash, setSplash] = useState([])
   const ConfigApiModel = new ConfigApi()
+
+  const [run, setRun] = useState(true)
 
   useEffect(() => {
     ;(async () => {
@@ -49,30 +52,51 @@ const StartScreen = ({
   return (
     <LoyoutAuth style={styles.container}>
       <View style={styles.swiper}>
-        <Swiper renderPagination={renderPagination} loop={false}>
+        <Swiper renderPagination={renderPagination} loop={true} autoplay={run} autoplayTimeout={5}>
           {splash.map((item: any) => (
-            <View key={item.createdAt} style={styles.swiperItem}>
+            <Pressable key={item.createdAt} style={styles.swiperItem} onPressIn={() => {
+              //setRun(!run)
+            }}>
               <ImageBackground
                 style={styles.image}
                 source={require("../../../../assets/images/start-login.png")}
               />
               <View style={styles.swiperContent}>
-                <Typography variant="heading" textAlign="center" color="ligth">
+                <Typography variant="h5" textAlign="center" color="ligth">
                   {item.title}
                 </Typography>
-                <Typography variant="p" textAlign="center" color="ligth">
+                <Typography variant="p16" textAlign="center" color="grayText" style={{marginTop: 10}}>
                   {item.description}
                 </Typography>
               </View>
-            </View>
+            </Pressable>
+          ))}
+          {splash.map((item: any) => (
+            <Pressable key={item.createdAt} style={styles.swiperItem} 
+            onPressIn={() => {
+              //setRun(!run)
+            }}>
+              <ImageBackground
+                style={styles.image}
+                source={require("../../../../assets/images/start-login.png")}
+              />
+              <View style={styles.swiperContent}>
+                <Typography variant="h5" textAlign="center" color="ligth">
+                  {item.title}
+                </Typography>
+                <Typography variant="p16" textAlign="center" color="grayText" style={{marginTop: 10}}>
+                  {item.description}
+                </Typography>
+              </View>
+            </Pressable>
           ))}
         </Swiper>
       </View>
       <View style={styles.content}>
         <View>
-          <Button variant="lg" text="EXPLORAR" color="ligth" colorText="dark"  onPress={() => navigation.navigate("Explore")} />
+          <Button variant="sm" text="EXPLORAR" color="ligth" colorText="dark"  onPress={() => navigation.navigate("Explore")} />
           <Button
-            variant="lg"
+            variant="sm"
             text="INGRESAR"
             color="redPrimary"
             colorText="ligth"

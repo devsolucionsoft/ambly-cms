@@ -73,7 +73,7 @@ const Header = (props: HeaderProps) => {
         )}
         {title && (
           <Typography
-            variant="p"
+            variant="p19"
             color="ligth"
             textAlign="center"
             style={{ width: "100%", fontWeight: "600" }}

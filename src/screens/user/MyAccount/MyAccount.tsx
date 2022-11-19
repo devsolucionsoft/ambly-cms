@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { View, ScrollView } from "react-native"
+import { View, ScrollView, SafeAreaView } from "react-native"
 // Styles compomponent
 import { styles } from "./MyAccount.styles"
 // Types
@@ -20,7 +20,6 @@ const MyAccount = ({
   navigation,
   route,
 }: StackNavigationProps<UserStackParamList, "MyAccount">) => {
-
   const defaultInputs = {
     username: "",
     email: "",
@@ -34,11 +33,11 @@ const MyAccount = ({
   // Use Hook Validation
   const defaultValidation: InputValidationI = {
     username: { required: "text" },
-    email: { required: "email"},
+    email: { required: "email" },
     phone: { required: "number", minLengt: 5 },
     country: { required: "text" },
     city: { required: "text" },
-    gender:{ required: "text" },
+    gender: { required: "text" },
   }
 
   const { validationInputs, getValidation } = useValidateForm({
@@ -71,69 +70,77 @@ const MyAccount = ({
     }
   }
   return (
-    <Layout spaceTop headerProps={{ returnAction: true, title: "Perfil" }} navCourse={true}>
-      <ScrollView style={styles.content}>
-        <Input
-          placeholder="Nombre"
-          label="Nombre"
-          value={stateInputs.username}
-          error={errorInputs.username.error}
-          message={errorInputs.username.message}
-          onChange={(event) => handleKeyUp(event.nativeEvent.text, "username")}
-        />
-        <Input
-          placeholder="E - Mail"
-          label="E - Mail"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          value={stateInputs.email}
-          error={errorInputs.email.error}
-          message={errorInputs.email.message}
-          onChange={(event) => handleKeyUp(event.nativeEvent.text, "email")}
-        />
-        <Input
-          placeholder="Teléfono"
-          label="Teléfono"
-          keyboardType="number-pad"
-          value={stateInputs.phone}
-          error={errorInputs.phone.error}
-          message={errorInputs.phone.message}
-          onChange={(event) => handleKeyUp(event.nativeEvent.text, "phone")}
-        />
-        <Select
-          items={[]}
-          label="País"
-          value={stateInputs.country}
-          error={errorInputs.country.error}
-          message={errorInputs.country.message}
-          onChange={(value: any) => handleKeyUp(value, "country")}
-        />
-        <Select
-          items={[]}
-          label="Ciudad"
-          value={stateInputs.city}
-          error={errorInputs.city.error}
-          message={errorInputs.city.message}
-          onChange={(value: any) => handleKeyUp(value, "city")}
-        />
-        <Select
-          items={[]}
-          label="Sexo"
-          value={stateInputs.gender}
-          error={errorInputs.gender.error}
-          message={errorInputs.gender.message}
-          onChange={(value: any) => handleKeyUp(value, "gender")}
-        />
+    <Layout
+      spaceTop
+      headerProps={{ returnAction: true, title: "Perfil" }}
+      navCourse={true}
+    >
+      <SafeAreaView style={{paddingBottom: 100}}>
+        <ScrollView style={styles.content}>
+          <Input
+            placeholder="Nombre"
+            label="Nombre"
+            value={stateInputs.username}
+            error={errorInputs.username.error}
+            message={errorInputs.username.message}
+            onChange={(event) =>
+              handleKeyUp(event.nativeEvent.text, "username")
+            }
+          />
+          <Input
+            placeholder="E - Mail"
+            label="E - Mail"
+            autoCapitalize="none"
+            keyboardType="email-address"
+            value={stateInputs.email}
+            error={errorInputs.email.error}
+            message={errorInputs.email.message}
+            onChange={(event) => handleKeyUp(event.nativeEvent.text, "email")}
+          />
+          <Input
+            placeholder="Teléfono"
+            label="Teléfono"
+            keyboardType="number-pad"
+            value={stateInputs.phone}
+            error={errorInputs.phone.error}
+            message={errorInputs.phone.message}
+            onChange={(event) => handleKeyUp(event.nativeEvent.text, "phone")}
+          />
+          <Select
+            items={[]}
+            label="País"
+            value={stateInputs.country}
+            error={errorInputs.country.error}
+            message={errorInputs.country.message}
+            onChange={(value: any) => handleKeyUp(value, "country")}
+          />
+          <Select
+            items={[]}
+            label="Ciudad"
+            value={stateInputs.city}
+            error={errorInputs.city.error}
+            message={errorInputs.city.message}
+            onChange={(value: any) => handleKeyUp(value, "city")}
+          />
+          <Select
+            items={[]}
+            label="Sexo"
+            value={stateInputs.gender}
+            error={errorInputs.gender.error}
+            message={errorInputs.gender.message}
+            onChange={(value: any) => handleKeyUp(value, "gender")}
+          />
 
-        <Button
-          variant="md"
-          text="Continuar"
-          color="redPrimary"
-          colorText="ligth"
-          style={{ marginTop: 40, marginBottom: 80 }}
-          onPress={handleSend}
-        />
-      </ScrollView>
+          <Button
+            variant="md"
+            text="Continuar"
+            color="redPrimary"
+            colorText="ligth"
+            style={{ marginTop: 40, marginBottom: 80 }}
+            onPress={handleSend}
+          />
+        </ScrollView>
+      </SafeAreaView>
     </Layout>
   )
 }

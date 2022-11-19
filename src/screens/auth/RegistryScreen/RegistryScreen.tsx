@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react"
-import { SafeAreaView, Image, View, ScrollView } from "react-native"
+import {
+  SafeAreaView,
+  Image,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Platform
+} from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { paletteGradient } from "../../../utils/theme"
 
@@ -11,7 +18,13 @@ import {
   AuthStackParamList,
 } from "../../../navigation/types"
 // Components
-import { Header, Button, CheckLabel, Input } from "../../../components/global"
+import {
+  Header,
+  Button,
+  CheckLabel,
+  Input,
+  Typography,
+} from "../../../components/global"
 import { LoyoutAuth } from "../../../components/auth"
 // Store
 import { useAppDispatch } from "../../../store"
@@ -68,8 +81,7 @@ const RegistryScreen = ({
 
   useEffect(() => {
     handleKeyUp(route.params?.check ?? false, "check")
-  }, [route.params?.check])
-  
+  }, [route.params])
 
   // Registry login
   const handleRegistry = async () => {
@@ -113,7 +125,7 @@ const RegistryScreen = ({
   return (
     <LoyoutAuth>
       <Image
-        source={require("../../../../assets/images/registry.jpg")}
+        source={require("../../../../assets/images/registry.png")}
         style={styles.image}
       />
       <LinearGradient
@@ -137,7 +149,7 @@ const RegistryScreen = ({
             paddingHorizontal: 30,
           }}
         >
-          <ScrollView style={{marginBottom: 80}}>
+          <View style={{ marginBottom: 80 }}>
             <View style={{ marginBottom: "10%" }}>
               <Input
                 placeholder="Nombre"
@@ -173,27 +185,47 @@ const RegistryScreen = ({
                   handleKeyUp(event.nativeEvent.text, "password")
                 }
               />
-
-              <CheckLabel
-                size={25}
-                color="ligth"
-                colorIcon="black"
-                label="Al continuar acepto terminos y condiciones"
-                check={stateInputs.check}
-                error={errorInputs.check.error}
-                message={errorInputs.check.message}
-                onChange={() => handleKeyUp(!stateInputs.check, "check")}
-                actionLabel={() => navigation.navigate("Terms")}
-              />
+                <Typography
+                  variant="p15"
+                  color="ligth"
+                  textAlign="center"
+                  style={{ marginLeft: 0, marginTop: 20 }}
+                >
+                  Al continuar acepto{" "}
+                  <Typography
+                    variant="p15"
+                    color="ligth"
+                    textAlign="left"
+                    textDecorationLine="underline"
+                    style={{ marginLeft: 20 }}
+                  >
+                    terminos y condiciones
+                  </Typography>{" "}
+                  y{" "}
+                  <Typography
+                    variant="p15"
+                    color="ligth"
+                    textAlign="left"
+                    textDecorationLine="underline"
+                    style={{ marginLeft: 20 }}
+                  >
+                    politicas de privacidad
+                  </Typography>
+                </Typography>
             </View>
-          </ScrollView>
+          </View>
         </View>
         <Button
-          variant="lg"
-          text="Guardar"
+          variant="sm"
+          text="Continuar"
           color="redPrimary"
           colorText="ligth"
-          style={{ position: "absolute", bottom: 10, width: "80%", marginLeft: "10%" }}
+          style={{
+            position: "absolute",
+            bottom: Platform.OS === 'ios' ? 50 : 20,
+            width: "80%",
+            marginLeft: "10%",
+          }}
           loading={loading}
           onPress={() => handleRegistry()}
         />

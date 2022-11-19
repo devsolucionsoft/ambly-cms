@@ -20,10 +20,10 @@ interface CheckProps {
   colorIcon: paletteTypes
   check: boolean
   onChange: Function
-  label: string
+  label?: boolean
   error: boolean
   message: string
-  actionLabel?: any 
+  actionLabel?: any
 }
 
 type CheckAttributes = CheckProps & ViewProps
@@ -39,12 +39,12 @@ const CheckLabel = (props: CheckAttributes) => {
     label,
     error,
     message,
-    actionLabel
+    actionLabel,
   } = props
   const parseStyle = typeof style === "object" ? style : {}
 
   return (
-    <View style={{ alignItems: "center" }}>
+    <View style={{ alignItems: "center", ...parseStyle }}>
       <View
         style={{
           flexDirection: "row",
@@ -55,12 +55,11 @@ const CheckLabel = (props: CheckAttributes) => {
         <TouchableOpacity
           onPress={() => onChange()}
           style={{
-            ...parseStyle,
             ...styles.main,
             height: size,
             width: size,
             borderRadius: size / 2,
-            backgroundColor: palette[color],
+            backgroundColor: check ? palette[color] : palette["ligth"],
           }}
         >
           {check && (
@@ -79,7 +78,26 @@ const CheckLabel = (props: CheckAttributes) => {
             textAlign="left"
             style={{ marginLeft: 20 }}
           >
-            {label}
+            Al continuar acepto{" "}
+            <Typography
+              variant="p2"
+              color="ligth"
+              textAlign="left"
+              textDecorationLine="underline"
+              style={{ marginLeft: 20 }}
+            >
+              terminos y condiciones
+            </Typography>
+            {" "}y{" "}
+            <Typography
+              variant="p2"
+              color="ligth"
+              textAlign="left"
+              textDecorationLine="underline"
+              style={{ marginLeft: 20 }}
+            >
+              politicas de privacidad
+            </Typography>
           </Typography>
         </TouchableOpacity>
       </View>

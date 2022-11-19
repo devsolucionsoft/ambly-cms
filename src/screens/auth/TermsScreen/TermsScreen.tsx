@@ -38,7 +38,7 @@ const TermsScreen = ({
           especimen.
         </Typography>
         <Button
-          variant="lg"
+          variant="sm"
           text="Aceptar"
           color="redPrimary"
           colorText="ligth"

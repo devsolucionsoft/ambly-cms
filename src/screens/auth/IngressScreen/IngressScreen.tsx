@@ -218,7 +218,7 @@ const IngressScreen = ({
         <Image
           source={require("../../../../assets/images/icon-ambly.png")}
           resizeMode="contain"
-          style={{ height: 100, width: 200 }}
+          style={{ height: 100, width: 200, marginTop: 10 }}
         />
 
         <View style={{ ...styles.containButtons }}>
@@ -260,21 +260,26 @@ const IngressScreen = ({
               colorText="ligth"
               variant="sm"
               text="Crear un correo electrónico"
-              onPress={() => navigation.navigate("Registry")}
+              onPress={() =>
+                navigation.navigate("Registry", {
+                  check: false,
+                })
+              }
             />
           </View>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")} style={{marginTop: 10}}>
+            <Typography
+              variant="p2"
+              textAlign="center"
+              color="ligth"
+              textDecorationLine="underline"
+            >
+              Accede a tu cuenta
+            </Typography>
+          </TouchableOpacity>
         </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <Typography
-            variant="p2"
-            textAlign="center"
-            color="ligth"
-            textDecorationLine="underline"
-          >
-            Accede a tu cuenta
-          </Typography>
-        </TouchableOpacity>
+        <View></View>
       </View>
     </LoyoutAuth>
   )

@@ -3,33 +3,33 @@ import { StyleSheet } from "react-native"
 export const styles = StyleSheet.create({
   lg: {
     width: "100%",
-    paddingVertical: 15,
+    paddingVertical: 16,
     paddingBottom: 12,
     paddingHorizontal: 25,
-    borderRadius: 20,
-    marginVertical: 10,
+    borderRadius: 18,
+    marginVertical: 12,
   },
   md: {
     width: "100%",
-    paddingVertical: 13,
+    paddingVertical: 15,
     paddingBottom: 10,
     paddingHorizontal: 20,
-    borderRadius: 18,
-    marginVertical: 10,
+    borderRadius: 15,
+    marginVertical: 12,
   },
   sm: {
     width: "100%",
-    paddingVertical: 10,
+    paddingVertical: 13,
     paddingBottom: 7,
     paddingHorizontal: 18,
-    borderRadius: 15,
-    marginVertical: 8,
+    borderRadius: 12,
+    marginVertical: 9,
   },
 })
 
 export const stylesText = StyleSheet.create({
   lg: {
-    fontSize: 20,
+    fontSize: 19,
     fontWeight: "600",
     textAlign: "center",
   },

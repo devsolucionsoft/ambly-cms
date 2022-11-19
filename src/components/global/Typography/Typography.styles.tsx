@@ -59,6 +59,14 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "poppins",
   },
+  p10: {
+    fontSize: 10,
+    fontFamily: "poppins",
+  },
+  p11: {
+    fontSize: 11,
+    fontFamily: "poppins",
+  },
   p12: {
     fontSize: 12,
     fontFamily: "poppins",

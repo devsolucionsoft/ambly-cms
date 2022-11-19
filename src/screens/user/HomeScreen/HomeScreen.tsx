@@ -10,6 +10,7 @@ import {
 import {
   SliderCourses,
   FavoriteTopics,
+  ContinueClasses,
   Tutors,
   Layout,
 } from "../../../components/user"
@@ -52,6 +53,7 @@ const HomeScreen = ({
         />
         <Tutors />
         <FavoriteTopics />
+        <ContinueClasses />
       </View>
     </Layout>
   )

@@ -29,14 +29,14 @@ const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
   return (
     <View style={{ ...parseStyle, ...styles.main }}>
       <Typography
-        variant="heading3"
+        variant="h5"
         color="ligth"
         textAlign="center"
-        style={{ fontWeight: "bold", marginBottom: 20 }}
+        style={{ fontWeight: "normal", marginBottom: 20 }}
       >
         Personaliza tu experiencia
       </Typography>
-      <Typography variant="p" color="ligth" textAlign="center">
+      <Typography variant="p16" color="ligth" textAlign="center" style={{ fontWeight: "300"}}>
         Escoge tu TEMA FAVORITO y encuentra el curso que mas te guste
       </Typography>
 

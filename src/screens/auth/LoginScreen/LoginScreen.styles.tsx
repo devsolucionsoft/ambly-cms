@@ -13,4 +13,16 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 50,
   },
+  image: {
+    position: "absolute",
+    width: "100%",
+    height: "45%",
+    top: 0
+  },
+  gradient: {
+    position: "absolute",
+    width: "100%",
+    height: "45%",
+    top: 0
+  }
 })

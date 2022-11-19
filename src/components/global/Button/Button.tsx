@@ -44,6 +44,7 @@ const Button = (props: ButtonAttributes) => {
   const [loadingActive, setLoadingActive] = useState(false)
 
   const parseStyle = typeof style === "object" ? style : {}
+  
 
   useEffect(() => {
     if (loadingActive && !loading) {
@@ -54,6 +55,9 @@ const Button = (props: ButtonAttributes) => {
       setLoadingActive(loading)
     }
   }, [loading])
+
+  const padding = iconRed === "facebook-square" ? "1%" : (iconRed === "google" ? "1%" : "1%") 
+  
 
   return (
     <View>
@@ -67,21 +71,22 @@ const Button = (props: ButtonAttributes) => {
           ...(iconRed || iconLeft || iconRight
             ? {
                 flexDirection: "row",
-                justifyContent: "center",
+                justifyContent: iconRed ? "flex-start" : "flex-end",
                 alignItems: "center",
+                paddingLeft: iconRed ? "14%" : ""
               }
             : {}),
         }}
       >
         {iconLeft && (
-          <MaterialIcons name="skip-previous" size={24} color="white" />
+          <MaterialIcons name="skip-previous" size={24} color="white"/>
         )}
         {iconRed && (
           <AntDesign
             name={iconRed}
             size={24}
             color={palette[colorText]}
-            style={{ marginRight: 10, marginBottom: "1%" }}
+            style={{ marginRight: 10, marginBottom:  padding }}
           />
         )}
         {loadingActive ? (
@@ -92,6 +97,8 @@ const Button = (props: ButtonAttributes) => {
               ...stylesText[variant],
               color: palette[colorText],
               fontFamily: "poppins",
+              marginTop: !iconRed && variant == "sm" ? 0 : "0%",
+              marginBottom: !iconRed && variant == "sm" ? 4 : "0%"
             }}
           >
             {text}

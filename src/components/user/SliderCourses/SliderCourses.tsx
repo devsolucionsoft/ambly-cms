@@ -29,13 +29,19 @@ interface SliderCoursesProps {
 type SliderCoursesAttributes = SliderCoursesProps & ViewProps
 
 const SliderCourses = (props: SliderCoursesAttributes) => {
-  const { style, variant, header, title, arrayItems = [], navigateToCourse } = props
+  const {
+    style,
+    variant,
+    header,
+    title,
+    arrayItems = [],
+    navigateToCourse,
+  } = props
 
   const auth = useAppSelector((store) => store.Auth)
 
   const parseStyle = typeof style === "object" ? style : {}
   const items: Array<any> = [1, 2, 3]
-
 
   const getHeigth = () => {
     if (variant === "next") return 600
@@ -53,6 +59,7 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
               key={index}
               style={{
                 ...styles.swiperPaginationItem,
+                width: current === index ? 22 : 8,
                 backgroundColor: current === index ? "#FFFFFF" : "#787878",
               }}
             />
@@ -65,7 +72,12 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
     <View style={{ ...parseStyle, ...styles.main, height: getHeigth() }}>
       {header && (
         <View style={styles.swiperTop}>
-          <Typography variant="heading2" textAlign="left" color="ligth">
+          <Typography
+            variant="heading3"
+            textAlign="left"
+            color="ligth"
+            style={{ fontWeight: "bold" }}
+          >
             {title}
           </Typography>
           <TouchableOpacity style={{ justifyContent: "center", marginTop: 5 }}>
@@ -107,27 +119,27 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
                     variant="h2"
                     color="ligth"
                     textAlign="left"
-                    style={{ fontWeight: "normal", width: "80%" }}
+                    style={{ fontWeight: "normal", width: "90%" }}
                   >
                     Confianza en si mismo
                   </Typography>
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <FontAwesome5
                       name="user-alt"
-                      size={12}
+                      size={10}
                       color={palette["ligth"]}
                     />
                     <Typography
-                      variant="p2"
+                      variant="p12"
                       color="ligth"
                       textAlign="left"
-                      style={{ marginLeft: 10 }}
+                      style={{ marginLeft: 8, marginTop: 3 }}
                     >
                       Jorge Enrique Avello
                     </Typography>
                   </View>
                   <Button
-                    text={auth.session ? "Acceder" : "Ver curso" }
+                    text={auth.session ? "Acceder" : "Ver curso"}
                     variant="sm"
                     color="redPrimary"
                     colorText="ligth"

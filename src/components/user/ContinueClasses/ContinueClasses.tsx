@@ -26,18 +26,23 @@ const ContinueClasses = (props: ContinueClassesAttributes) => {
     <View style={{ ...parseStyle, ...styles.main }}>
       <View style={styles.mainTop}>
         <Typography
-          variant="heading2"
-          color="ligth"
+          variant="heading3"
           textAlign="left"
-          style={{ marginBottom: 8 }}
+          color="ligth"
+          style={{ fontWeight: "bold" }}
         >
           Continuar clase
         </Typography>
-        <TouchableOpacity>
-          <Typography variant="p" color="yellowPrimary" textAlign="right">
-            See all
-          </Typography>
-        </TouchableOpacity>
+        <TouchableOpacity style={{ justifyContent: "center", marginTop: 5 }}>
+            <Typography
+              variant="p3"
+              textAlign="left"
+              color="redPrimary"
+              style={{ fontWeight: "bold" }}
+            >
+              Ver todos
+            </Typography>
+          </TouchableOpacity>
       </View>
 
       {items.map((item) => (
@@ -57,30 +62,31 @@ const ContinueClasses = (props: ContinueClassesAttributes) => {
                 variant="p"
                 color="ligth"
                 textAlign="left"
-                style={{ fontWeight: "bold", width: "60%" }}
+                style={{ fontWeight: "bold", width: "60%", lineHeight: 20 }}
               >
                 Cocina española
               </Typography>
               <MaterialIcons
                 name="keyboard-arrow-right"
-                size={40}
+                size={35}
                 color={palette["ligth"]}
               />
             </View>
 
             <View style={{ width: "100%" }}>
-              <Typography variant="p4" color="grayText" textAlign="left">
+              <Typography variant="p10" color="grayText" textAlign="left">
                 32 videos - 35 Files - 12 Quiz
               </Typography>
             </View>
             <View style={{ width: "100%", marginTop: 10 }}>
               <Slider
-                style={{ width: "100%", height: 10, marginVertical: 5 }}
+                style={{ width: "100%", height: 10, marginBottom: 5 }}
                 minimumValue={0}
                 maximumValue={100}
                 value={60}
                 minimumTrackTintColor="#FF3437"
                 maximumTrackTintColor="#686868"
+                thumbTintColor="#FF3437"
               />
               <View
                 style={{
@@ -88,10 +94,10 @@ const ContinueClasses = (props: ContinueClassesAttributes) => {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography variant="p4" color="grayText" textAlign="right">
+                <Typography variant="p10" color="grayText" textAlign="right">
                   24 lesson
                 </Typography>
-                <Typography variant="p4" color="grayText" textAlign="right">
+                <Typography variant="p10" color="grayText" textAlign="right">
                   24 lesson
                 </Typography>
               </View>

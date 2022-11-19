@@ -1,7 +1,16 @@
 import { useState } from "react"
-import { SafeAreaView, TouchableOpacity } from "react-native"
+
+import {
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  View,
+  Platform,
+} from "react-native"
 // Styles
 import { styles } from "./LoginScreen.styles"
+import { LinearGradient } from "expo-linear-gradient"
+import { paletteGradient } from "../../../utils/theme"
 // Types
 import {
   StackNavigationProps,
@@ -115,58 +124,93 @@ const StartScreen = ({
 
   return (
     <LoyoutAuth>
-      {/* Modals */}
-      <ModalForgotPassword
-        modalVisible={modalForgotPassword}
-        setModalVisible={(value: boolean) => setModalForgotPassword(value)}
-        ForgotPasswordResponse={forgotPasswordResponse}
+      <Image
+        source={require("../../../../assets/images/registry.png")}
+        style={styles.image}
       />
-      <Header returnAction title="Accede a tu cuenta" />
-      <SafeAreaView style={styles.content}>
-        <Input
-          placeholder="E - Mail"
-          label="E - Mail"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          value={stateInputs.email}
-          error={errorInputs.email.error}
-          message={errorInputs.email.message}
-          onChange={(event) => handleKeyUp(event.nativeEvent.text, "email")}
-        />
-        <Input
-          placeholder="Contraseña"
-          label="Contraseña"
-          secureTextEntry
-          value={stateInputs.password}
-          error={errorInputs.password.error}
-          message={errorInputs.password.message}
-          onChange={(event) => handleKeyUp(event.nativeEvent.text, "password")}
-        />
-
-        <TouchableOpacity
-          style={{ marginTop: 20 }}
-          onPress={() => setModalForgotPassword(true)}
+      <LinearGradient
+        colors={paletteGradient["gradientOpacity3"]}
+        start={{ x: 0.5, y: 1 }}
+        end={{ x: 0.5, y: 0.4 }}
+        style={styles.gradient}
+      />
+      <Header returnAction title="Inicia sesión" />
+      <View
+        style={{
+          height: "100%",
+          justifyContent: "space-between",
+          paddingBottom: 100,
+        }}
+      >
+        <View></View>
+        <View
+          style={{
+            width: "100%",
+            paddingHorizontal: 30,
+          }}
         >
-          <Typography
-            variant="p2"
-            color="ligth"
-            textAlign="center"
-            textDecorationLine="underline"
-          >
-            ¿Olvidaste tu contraseña?
-          </Typography>
-        </TouchableOpacity>
+          <ModalForgotPassword
+            ForgotPasswordResponse={forgotPasswordResponse}
+            modalVisible={modalForgotPassword}
+            setModalVisible={() => setModalForgotPassword(false)}
+          />
+          <View style={{ marginBottom: 80 }}>
+            <View style={{ marginBottom: "10%" }}>
+              <Input
+                placeholder="E - Mail"
+                label="E - Mail"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                value={stateInputs.email}
+                error={errorInputs.email.error}
+                message={errorInputs.email.message}
+                onChange={(event) =>
+                  handleKeyUp(event.nativeEvent.text, "email")
+                }
+              />
+              <Input
+                placeholder="Contraseña"
+                label="Contraseña"
+                secureTextEntry
+                value={stateInputs.password}
+                error={errorInputs.password.error}
+                message={errorInputs.password.message}
+                onChange={(event) =>
+                  handleKeyUp(event.nativeEvent.text, "password")
+                }
+              />
 
+              <TouchableOpacity
+                style={{ marginTop: 20 }}
+                onPress={() => setModalForgotPassword(true)}
+              >
+                <Typography
+                  variant="p2"
+                  color="ligth"
+                  textAlign="center"
+                  textDecorationLine="underline"
+                >
+                  ¿Olvidaste tu contraseña?
+                </Typography>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
         <Button
-          variant="lg"
-          text="Iniciar"
+          variant="sm"
+          text="Continuar"
           color="redPrimary"
           colorText="ligth"
-          style={{ marginTop: 60 }}
+          style={{
+            position: "absolute",
+            bottom: Platform.OS === "ios" ? 50 : 20,
+            width: "80%",
+            marginLeft: "10%",
+          }}
           loading={loading}
           onPress={() => handleLogin()}
         />
-      </SafeAreaView>
+      </View>
     </LoyoutAuth>
   )
 }

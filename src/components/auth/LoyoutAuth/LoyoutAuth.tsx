@@ -6,6 +6,7 @@ import { styles } from "./LoyoutAuth.styles"
 import { Alert } from "../../../components/global"
 // Store
 import { useAppSelector } from "../../../store"
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface LoyoutAuthProps {}
 
@@ -15,10 +16,9 @@ const LoyoutAuth = (props: LoyoutAuthAttributes) => {
   const alertState = useAppSelector((store) => store.Alert)
 
   return (
-    <ImageBackground
-      resizeMode="cover"
+    <LinearGradient
       style={styles.container}
-      source={require("../../../../assets/images/background-screen.png")}
+      colors={['#101010', '#343434']}
     >
       {props.children}
       <Alert
@@ -29,7 +29,7 @@ const LoyoutAuth = (props: LoyoutAuthAttributes) => {
         actionText={alertState.data.actionText}
         action={alertState.data.action}
       />
-    </ImageBackground>
+    </LinearGradient>
   )
 }
 

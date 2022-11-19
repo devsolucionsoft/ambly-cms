@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 5,
-    paddingVertical: 10,
+    paddingVertical: 8,
     backgroundColor: palette["ligth"],
     borderRadius: 30
   },
@@ -28,5 +28,6 @@ export const styles = StyleSheet.create({
     color: palette["grayText"],
     width: "100%",
     marginLeft: 20,
+    paddingVertical: 5
   },
 })
