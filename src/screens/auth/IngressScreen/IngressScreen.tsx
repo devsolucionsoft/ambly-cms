@@ -216,7 +216,7 @@ const IngressScreen = ({
 
       <View style={styles.content}>
         <Image
-          source={require("../../../../assets/images/icon-ambly.png")}
+          source={require("../../../../assets/images/icon-ambly.webp")}
           resizeMode="contain"
           style={{ height: 100, width: 200, marginTop: 10 }}
         />

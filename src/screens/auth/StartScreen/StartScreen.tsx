@@ -13,7 +13,6 @@ import { Typography, Button } from "../../../components/global"
 import { LoyoutAuth } from "../../../components/auth"
 // Api
 import { ConfigApi } from "../../../api"
-import { loop } from "react-native-reanimated/lib/types/lib/reanimated2/animation/repeat"
 
 const StartScreen = ({
   navigation,
@@ -51,50 +50,50 @@ const StartScreen = ({
 
   return (
     <LoyoutAuth style={styles.container}>
-      <View style={styles.swiper}>
-        <Swiper renderPagination={renderPagination} loop={true} autoplay={run} autoplayTimeout={5}>
-          {splash.map((item: any) => (
-            <Pressable key={item.createdAt} style={styles.swiperItem} onPressIn={() => {
-              //setRun(!run)
-            }}>
-              <ImageBackground
-                style={styles.image}
-                source={require("../../../../assets/images/start-login.png")}
-              />
-              <View style={styles.swiperContent}>
-                <Typography variant="h5" textAlign="center" color="ligth">
-                  {item.title}
-                </Typography>
-                <Typography variant="p16" textAlign="center" color="grayText" style={{marginTop: 10}}>
-                  {item.description}
-                </Typography>
+      <Pressable style={styles.swiper}>
+        {({ pressed }) => (
+          <Swiper
+            renderPagination={renderPagination}
+            loop={true}
+            autoplay={!pressed}
+            autoplayTimeout={4}
+            
+          >
+            {[1, 2, 3].map((item: any) => (
+              <View key={item.createdAt} style={styles.swiperItem}>
+                <ImageBackground
+                  style={styles.image}
+                  source={require("../../../../assets/images/start-login.png")}
+                />
+                <View style={styles.swiperContent}>
+                  <Typography variant="h5" textAlign="center" color="ligth">
+                    {"Lorem Ipsum es simplemente el texto"}
+                  </Typography>
+                  <Typography
+                    variant="p16"
+                    textAlign="center"
+                    color="grayText"
+                    style={{ marginTop: 10 }}
+                  >
+                    {
+                      "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto"
+                    }
+                  </Typography>
+                </View>
               </View>
-            </Pressable>
-          ))}
-          {splash.map((item: any) => (
-            <Pressable key={item.createdAt} style={styles.swiperItem} 
-            onPressIn={() => {
-              //setRun(!run)
-            }}>
-              <ImageBackground
-                style={styles.image}
-                source={require("../../../../assets/images/start-login.png")}
-              />
-              <View style={styles.swiperContent}>
-                <Typography variant="h5" textAlign="center" color="ligth">
-                  {item.title}
-                </Typography>
-                <Typography variant="p16" textAlign="center" color="grayText" style={{marginTop: 10}}>
-                  {item.description}
-                </Typography>
-              </View>
-            </Pressable>
-          ))}
-        </Swiper>
-      </View>
+            ))}
+          </Swiper>
+        )}
+      </Pressable>
       <View style={styles.content}>
         <View>
-          <Button variant="sm" text="EXPLORAR" color="ligth" colorText="dark"  onPress={() => navigation.navigate("Explore")} />
+          <Button
+            variant="sm"
+            text="EXPLORAR"
+            color="ligth"
+            colorText="dark"
+            onPress={() => navigation.navigate("Explore")}
+          />
           <Button
             variant="sm"
             text="INGRESAR"

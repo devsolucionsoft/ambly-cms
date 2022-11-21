@@ -1,5 +1,5 @@
 import React from "react"
-import { ViewProps, ImageBackground } from "react-native"
+import { ViewProps } from "react-native"
 // Styles
 import { styles } from "./LoyoutAuth.styles"
 // components

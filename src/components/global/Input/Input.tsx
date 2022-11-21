@@ -1,5 +1,5 @@
 import React from "react"
-import { View, TextInput, TextInputProps } from "react-native"
+import { View, TextInput, TextInputProps, Pressable  } from "react-native"
 // Theme
 import { palette, iconsTypes } from "../../../utils/theme"
 // Styles
@@ -23,7 +23,7 @@ const Input = (props: InputAttributes) => {
   const parseStyle = typeof style === "object" ? style : {}
 
   return (
-    <View style={{ marginBottom: 10 }}>
+    <Pressable  style={{ marginBottom: 10 }}>
       {label && (
         <Typography variant="p3" color="ligth" textAlign="left" style={{marginBottom: 3}}>
           {label}
@@ -51,7 +51,7 @@ const Input = (props: InputAttributes) => {
           {message}
         </Typography>
       )}
-    </View>
+    </Pressable >
   )
 }
 

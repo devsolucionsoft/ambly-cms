@@ -1,11 +1,12 @@
-import { useState } from "react"
+import React, { useState } from "react"
 
 import {
-  SafeAreaView,
   TouchableOpacity,
   Image,
   View,
   Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native"
 // Styles
 import { styles } from "./LoginScreen.styles"
@@ -135,82 +136,84 @@ const StartScreen = ({
         style={styles.gradient}
       />
       <Header returnAction title="Inicia sesión" />
-      <View
-        style={{
-          height: "100%",
-          justifyContent: "space-between",
-          paddingBottom: 100,
-        }}
-      >
-        <View></View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View
           style={{
-            width: "100%",
-            paddingHorizontal: 30,
+            height: "100%",
+            justifyContent: "space-between",
+            paddingBottom: 100,
           }}
         >
-          <ModalForgotPassword
-            ForgotPasswordResponse={forgotPasswordResponse}
-            modalVisible={modalForgotPassword}
-            setModalVisible={() => setModalForgotPassword(false)}
-          />
-          <View style={{ marginBottom: 80 }}>
-            <View style={{ marginBottom: "10%" }}>
-              <Input
-                placeholder="E - Mail"
-                label="E - Mail"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                value={stateInputs.email}
-                error={errorInputs.email.error}
-                message={errorInputs.email.message}
-                onChange={(event) =>
-                  handleKeyUp(event.nativeEvent.text, "email")
-                }
-              />
-              <Input
-                placeholder="Contraseña"
-                label="Contraseña"
-                secureTextEntry
-                value={stateInputs.password}
-                error={errorInputs.password.error}
-                message={errorInputs.password.message}
-                onChange={(event) =>
-                  handleKeyUp(event.nativeEvent.text, "password")
-                }
-              />
+          <View></View>
+          <View
+            style={{
+              width: "100%",
+              paddingHorizontal: 30,
+            }}
+          >
+            <ModalForgotPassword
+              ForgotPasswordResponse={forgotPasswordResponse}
+              modalVisible={modalForgotPassword}
+              setModalVisible={() => setModalForgotPassword(false)}
+            />
+            <View style={{ marginBottom: 80 }}>
+              <View style={{ marginBottom: "10%" }}>
+                <Input
+                  placeholder="E - Mail"
+                  label="E - Mail"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  value={stateInputs.email}
+                  error={errorInputs.email.error}
+                  message={errorInputs.email.message}
+                  onChange={(event) =>
+                    handleKeyUp(event.nativeEvent.text, "email")
+                  }
+                />
+                <Input
+                  placeholder="Contraseña"
+                  label="Contraseña"
+                  secureTextEntry
+                  value={stateInputs.password}
+                  error={errorInputs.password.error}
+                  message={errorInputs.password.message}
+                  onChange={(event) =>
+                    handleKeyUp(event.nativeEvent.text, "password")
+                  }
+                />
 
-              <TouchableOpacity
-                style={{ marginTop: 20 }}
-                onPress={() => setModalForgotPassword(true)}
-              >
-                <Typography
-                  variant="p2"
-                  color="ligth"
-                  textAlign="center"
-                  textDecorationLine="underline"
+                <TouchableOpacity
+                  style={{ marginTop: 20 }}
+                  onPress={() => setModalForgotPassword(true)}
                 >
-                  ¿Olvidaste tu contraseña?
-                </Typography>
-              </TouchableOpacity>
+                  <Typography
+                    variant="p2"
+                    color="ligth"
+                    textAlign="center"
+                    textDecorationLine="underline"
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </Typography>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
+          <Button
+            variant="sm"
+            text="Continuar"
+            color="redPrimary"
+            colorText="ligth"
+            style={{
+              position: "absolute",
+              bottom: Platform.OS === "ios" ? 50 : 20,
+              width: "80%",
+              marginLeft: "10%",
+            }}
+            loading={loading}
+            onPress={() => handleLogin()}
+          />
         </View>
-        <Button
-          variant="sm"
-          text="Continuar"
-          color="redPrimary"
-          colorText="ligth"
-          style={{
-            position: "absolute",
-            bottom: Platform.OS === "ios" ? 50 : 20,
-            width: "80%",
-            marginLeft: "10%",
-          }}
-          loading={loading}
-          onPress={() => handleLogin()}
-        />
-      </View>
+      </TouchableWithoutFeedback>
     </LoyoutAuth>
   )
 }

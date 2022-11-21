@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react"
 import {
-  SafeAreaView,
   Image,
   View,
-  ScrollView,
-  TouchableOpacity,
-  Platform
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard
 } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { paletteGradient } from "../../../utils/theme"
@@ -21,7 +20,6 @@ import {
 import {
   Header,
   Button,
-  CheckLabel,
   Input,
   Typography,
 } from "../../../components/global"
@@ -36,7 +34,6 @@ import useValidateForm, {
 } from "../../../hooks/useValidateForm"
 // Api
 import { AuthApi } from "../../../api"
-import { log } from "react-native-reanimated"
 
 const RegistryScreen = ({
   navigation,
@@ -135,6 +132,7 @@ const RegistryScreen = ({
         style={styles.gradient}
       />
       <Header returnAction title="Crea una cuenta" />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View
         style={{
           height: "100%",
@@ -230,6 +228,7 @@ const RegistryScreen = ({
           onPress={() => handleRegistry()}
         />
       </View>
+      </TouchableWithoutFeedback>
     </LoyoutAuth>
   )
 }

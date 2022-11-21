@@ -79,8 +79,6 @@ export class AuthApi {
   }
 
   async UserRegistryFacebook(data: { email: string }) {
-    console.log(data.email);
-    
     try {
       return await axios.post(`${url}/social/facebook`, {
         email_facebook: data.email,
