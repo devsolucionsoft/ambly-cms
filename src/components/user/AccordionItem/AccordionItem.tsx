@@ -14,7 +14,7 @@ interface AccordionItemProps {
   title: string
   duration: string
   description: string
-  items: Array<any>
+  items: any
 }
 
 type AccordionItemAttributes = AccordionItemProps & ViewProps
@@ -63,7 +63,7 @@ const AccordionItem = (props: AccordionItemAttributes) => {
           >
             {description}
           </Typography>
-          {items.map((item) => (
+          {items.map((item:any) => (
             <TouchableOpacity style={styles.videos} onPress={() => navigateUser("ModuleDetail")}>
               <Image
                 style={styles.image}

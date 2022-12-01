@@ -19,6 +19,7 @@ import { AuthApi } from "../../../api"
 import { useAppDispatch } from "../../../store"
 import { createSession } from "../../../store/Auth/actions"
 import axios from "axios"
+import * as AppleAuthentication from "expo-apple-authentication"
 
 WebBrowser.maybeCompleteAuthSession()
 
@@ -29,9 +30,9 @@ const GoogleOuth = ({
   setModalDataComplete: Function
   setTypeDataComplete: Function
 }) => {
+  const [loading, setLoading] = useState(false)
   const AuthApiModel = new AuthApi()
   const dispatch = useAppDispatch()
-  const [loading, setLoading] = useState(false)
 
   // Google
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -86,7 +87,7 @@ const GoogleOuth = ({
       colorText="ligth"
       variant="sm"
       iconRed="google"
-      text="Continue with Google"
+      text="Continue con Google"
       loading={loading}
       onPress={() => {
         setTypeDataComplete("google")
@@ -104,9 +105,9 @@ const FacebookOuth = ({
   setModalDataComplete: Function
   setTypeDataComplete: Function
 }) => {
+  const [loading, setLoading] = useState(false)
   const AuthApiModel = new AuthApi()
   const dispatch = useAppDispatch()
-  const [loading, setLoading] = useState(false)
   // facebook
   const [request, response, promptAsync] = Facebook.useAuthRequest({
     expoClientId: "1324979871671286",
@@ -152,7 +153,7 @@ const FacebookOuth = ({
       colorText="ligth"
       variant="sm"
       loading={loading}
-      text="Continue with Facebook"
+      text="Continue con Facebook"
       iconRed="facebook-square"
       onPress={() => {
         setTypeDataComplete("facebook")
@@ -163,27 +164,47 @@ const FacebookOuth = ({
   )
 }
 
-const AppleOuth = ({
-  setStateInputs,
-  setModalDataComplete,
-}: {
-  setStateInputs: Function
-  setModalDataComplete: Function
-  setTypeDataComplete: Function
-}) => {
+const AppleOuth = () => {
+  const [loading, setLoading] = useState(false)
   const AuthApiModel = new AuthApi()
   const dispatch = useAppDispatch()
 
-  // faebook
-  const [request, response, promptAsync] = Facebook.useAuthRequest({
-    clientId: "408971244606095",
-  })
+  const promptAsync = async () => {
+    setLoading(true)
+    try {
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [AppleAuthentication.AppleAuthenticationScope.EMAIL],
+      })
 
-  useEffect(() => {
-    if (response?.type === "success") {
-      const { authentication } = response
+      console.log(credential);
+      
+
+      let response = await AuthApiModel.UserLoginApple(credential.user)
+
+      if (response.status === 204) {
+        response = await AuthApiModel.UserRegistryApple({
+          email: credential.email,
+          id: credential.user,
+        })
+      }
+
+      if (response.status === 200 || response.status === 201) {
+        dispatch(
+          createSession({
+            email: credential.user,
+            token: response.data.token,
+          })
+        )
+      }
+    } catch (e: any) {
+      if (e.code === "ERR_CANCELED") {
+        // handle that the user canceled the sign-in flow
+      } else {
+        // handle other errors
+      }
     }
-  }, [response])
+    setLoading(false)
+  }
 
   return (
     <Button
@@ -192,9 +213,8 @@ const AppleOuth = ({
       variant="sm"
       text="Continue with Apple"
       iconRed="apple1"
-      onPress={() => {
-        promptAsync()
-      }}
+      onPress={() => promptAsync()}
+      loading={loading}
     />
   )
 }
@@ -236,11 +256,7 @@ const IngressScreen = ({
             setStateInputs={setStateInputs}
             setTypeDataComplete={setTypeDataComplete}
           />
-          <AppleOuth
-            setModalDataComplete={setModalDataComplete}
-            setStateInputs={setStateInputs}
-            setTypeDataComplete={setTypeDataComplete}
-          />
+          <AppleOuth />
           <GoogleOuth
             setModalDataComplete={setModalDataComplete}
             setStateInputs={setStateInputs}
@@ -267,7 +283,10 @@ const IngressScreen = ({
               }
             />
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate("Login")} style={{marginTop: 10}}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Login")}
+            style={{ marginTop: 10 }}
+          >
             <Typography
               variant="p2"
               textAlign="center"

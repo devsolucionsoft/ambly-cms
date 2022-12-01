@@ -4,9 +4,8 @@ import { StatusBar } from "react-native"
 
 export const styles = StyleSheet.create({
   main: {
-    height: 250,
     width: "100%",
-    marginBottom: 50,
+    marginBottom: 40,
     position: "relative"
   },
   swiper: {
@@ -14,7 +13,6 @@ export const styles = StyleSheet.create({
   },
   swiperTop: {
     flexDirection: "row",
-    marginBottom: 20,
     alignItems: "center",
     justifyContent: "space-between",
   },
@@ -32,6 +30,10 @@ export const styles = StyleSheet.create({
     height: 200,
     justifyContent: "center",
   },
+  swiperSvgPopular: {
+    width: "60%",
+    maxHeight: 100
+  },
   swiperItemPopularContent: {
     width: "100%",
     paddingTop: 60,
@@ -39,6 +41,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 30,
     position: "absolute",
     alignItems: "flex-start",
+    justifyContent: "flex-end"
   },
   swiperItemNew: {
     flex: 1,
@@ -67,7 +70,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    width: "80%",
+    width: "100%",
     overflow: "hidden",
   },
   swiperVideoNext: {
@@ -95,3 +98,48 @@ export const styles = StyleSheet.create({
     borderRadius: 5
   },
 })
+
+
+export const stylesNew = StyleSheet.create({
+  swiperItemNew: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: 300,
+    backgroundColor: palette["ligth"],
+    borderRadius: 30,
+    overflow: "hidden",
+  },
+  swiperImageNew: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  swiperItemNewContent: {
+    width: "100%",
+    height: "70%",
+    paddingBottom: 0,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "flex-end",
+
+  },
+  swiperItemNext: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: "80%",
+    overflow: "hidden",
+  },
+  swiperVideoNext: {
+    width: "100%",
+    height: 150,
+    borderRadius: 30,
+    overflow: "hidden",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+})
+

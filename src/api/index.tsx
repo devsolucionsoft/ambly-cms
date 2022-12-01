@@ -92,6 +92,33 @@ export class AuthApi {
     }
   }
 
+  async UserLoginApple(user?: any) {
+    console.log("UserLoginApple", user)
+
+    try {
+      return await axios.post(`${url}/social/apple`, {
+        token_apple: user,
+      })
+    } catch (error: any) {
+      return error.response
+    }
+  }
+
+  async UserRegistryApple(data: any) {
+    try {
+      return await axios.post(`${url}/social/apple`, {
+        email_apple: data.email,
+        token_apple: data.id,
+        password: "0000000",
+        username: data.email,
+        role: "user",
+        dateTime: "1970-01-01T00:00:00.000Z",
+      })
+    } catch (error: any) {
+      return error.response
+    }
+  }
+
   async UserRegister(data: any) {
     try {
       return await axios.post(`${url}/users`, {

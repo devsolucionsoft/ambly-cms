@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     paddingVertical: 15,
-    paddingTop: Platform.OS === 'ios' ? 52 : 20,
+    paddingTop: Platform.OS === 'ios' ? 35 : 20,
     paddingHorizontal: 25,
     position: "relative",
     zIndex: 10,
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   icon: {
-    width: 100,
+    width: 110,
   },
   action: {
     width: 40,
@@ -45,5 +45,6 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 8
   }
 })

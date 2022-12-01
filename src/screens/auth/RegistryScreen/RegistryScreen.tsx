@@ -17,12 +17,7 @@ import {
   AuthStackParamList,
 } from "../../../navigation/types"
 // Components
-import {
-  Header,
-  Button,
-  Input,
-  Typography,
-} from "../../../components/global"
+import { Header, Button, Input, Typography } from "../../../components/global"
 import { LoyoutAuth } from "../../../components/auth"
 // Store
 import { useAppDispatch } from "../../../store"
@@ -48,7 +43,6 @@ const RegistryScreen = ({
     username: "",
     email: "",
     password: "",
-    check: route.params?.check ?? false,
   }
 
   // States inputs
@@ -57,8 +51,7 @@ const RegistryScreen = ({
   const defaultValidation: InputValidationI = {
     username: { required: "text" },
     email: { required: "email" },
-    password: { required: "text", minLengt: 6 },
-    check: { required: "boolean" },
+    password: { required: "text", minLengt: 6 }
   }
 
   const { validationInputs, getValidation } = useValidateForm({
@@ -77,19 +70,21 @@ const RegistryScreen = ({
   }
 
   useEffect(() => {
-    handleKeyUp(route.params?.check ?? false, "check")
+    //handleKeyUp(route.params?.check ?? false, "check")
   }, [route.params])
 
   // Registry login
   const handleRegistry = async () => {
+    console.log("validation", stateInputs);
     const { errors, validation } = getValidation(stateInputs)
+    
     if (validation) {
       setLoading(true)
       const response = await AuthApiModel.UserRegister(stateInputs)
 
       switch (response.status) {
         case 201:
-          setStateInputs({ ...defaultInputs, check: true })
+          setStateInputs({ ...defaultInputs })
           dispatch(
             openAlert({
               title: "Registro exitoso",
@@ -133,56 +128,56 @@ const RegistryScreen = ({
       />
       <Header returnAction title="Crea una cuenta" />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View
-        style={{
-          height: "100%",
-          justifyContent: "space-between",
-          paddingBottom: 100,
-        }}
-      >
-        <View></View>
         <View
           style={{
-            width: "100%",
-            paddingHorizontal: 30,
+            height: "100%",
+            justifyContent: "space-between",
+            paddingBottom: 100,
           }}
         >
-          <View style={{ marginBottom: 80 }}>
-            <View style={{ marginBottom: "10%" }}>
-              <Input
-                placeholder="Nombre"
-                label="Nombre"
-                autoCapitalize="none"
-                value={stateInputs.username}
-                error={errorInputs.username.error}
-                message={errorInputs.username.message}
-                onChange={(event) =>
-                  handleKeyUp(event.nativeEvent.text, "username")
-                }
-              />
-              <Input
-                placeholder="E - Mail"
-                label="E - Mail"
-                autoCapitalize="none"
-                keyboardType="email-address"
-                value={stateInputs.email}
-                error={errorInputs.email.error}
-                message={errorInputs.email.message}
-                onChange={(event) =>
-                  handleKeyUp(event.nativeEvent.text, "email")
-                }
-              />
-              <Input
-                placeholder="Contraseña"
-                label="Contraseña"
-                secureTextEntry
-                value={stateInputs.password}
-                error={errorInputs.password.error}
-                message={errorInputs.password.message}
-                onChange={(event) =>
-                  handleKeyUp(event.nativeEvent.text, "password")
-                }
-              />
+          <View></View>
+          <View
+            style={{
+              width: "100%",
+              paddingHorizontal: 30,
+            }}
+          >
+            <View style={{ marginBottom: 80 }}>
+              <View style={{ marginBottom: "10%" }}>
+                <Input
+                  placeholder="Nombre"
+                  label="Nombre"
+                  autoCapitalize="none"
+                  value={stateInputs.username}
+                  error={errorInputs.username.error}
+                  message={errorInputs.username.message}
+                  onChange={(event) =>
+                    handleKeyUp(event.nativeEvent.text, "username")
+                  }
+                />
+                <Input
+                  placeholder="E - Mail"
+                  label="E - Mail"
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  value={stateInputs.email}
+                  error={errorInputs.email.error}
+                  message={errorInputs.email.message}
+                  onChange={(event) =>
+                    handleKeyUp(event.nativeEvent.text, "email")
+                  }
+                />
+                <Input
+                  placeholder="Contraseña"
+                  label="Contraseña"
+                  secureTextEntry
+                  value={stateInputs.password}
+                  error={errorInputs.password.error}
+                  message={errorInputs.password.message}
+                  onChange={(event) =>
+                    handleKeyUp(event.nativeEvent.text, "password")
+                  }
+                />
                 <Typography
                   variant="p15"
                   color="ligth"
@@ -210,24 +205,24 @@ const RegistryScreen = ({
                     politicas de privacidad
                   </Typography>
                 </Typography>
+              </View>
             </View>
           </View>
+          <Button
+            variant="sm"
+            text="Continuar"
+            color="redPrimary"
+            colorText="ligth"
+            style={{
+              position: "absolute",
+              bottom: Platform.OS === "ios" ? 50 : 20,
+              width: "80%",
+              marginLeft: "10%",
+            }}
+            loading={loading}
+            onPress={() => handleRegistry()}
+          />
         </View>
-        <Button
-          variant="sm"
-          text="Continuar"
-          color="redPrimary"
-          colorText="ligth"
-          style={{
-            position: "absolute",
-            bottom: Platform.OS === 'ios' ? 50 : 20,
-            width: "80%",
-            marginLeft: "10%",
-          }}
-          loading={loading}
-          onPress={() => handleRegistry()}
-        />
-      </View>
       </TouchableWithoutFeedback>
     </LoyoutAuth>
   )

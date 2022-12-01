@@ -4,24 +4,31 @@ export const styles = StyleSheet.create({
   main: {
     marginBottom: 30
   },
+  swiperTop: {
+    flexDirection: "row",
+    marginBottom: 20,
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   topicsList: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     flexWrap: "wrap",
-    marginVertical: 30
+    paddingHorizontal: 5,
+    marginVertical: 30,
+    marginTop: 0
   },
   topicsItem: {
     alignItems: "center",
-    width: "48%",
-    marginBottom: 25,
+    width: "50%",
+    marginBottom: 28,
   },
   topicImage: {
-    width: 120,
-    height: 120,
+    width: 150,
+    height: 150,
     borderRadius: 60,
-    marginBottom: 8,
     shadowOffset: {
       width: 0,
       height: 12,

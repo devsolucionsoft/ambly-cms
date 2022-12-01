@@ -56,7 +56,7 @@ const Button = (props: ButtonAttributes) => {
     }
   }, [loading])
 
-  const padding = iconRed === "facebook-square" ? "1%" : (iconRed === "google" ? "1%" : "1%") 
+  const padding = iconRed === "facebook-square" ? "1%" : (iconRed === "google" ? "1%" : "2%") 
   
 
   return (
@@ -73,7 +73,7 @@ const Button = (props: ButtonAttributes) => {
                 flexDirection: "row",
                 justifyContent: iconRed ? "flex-start" : "flex-end",
                 alignItems: "center",
-                paddingLeft: iconRed ? "14%" : ""
+                paddingLeft: iconRed ? "14%" : "0%",
               }
             : {}),
         }}
@@ -84,7 +84,7 @@ const Button = (props: ButtonAttributes) => {
         {iconRed && (
           <AntDesign
             name={iconRed}
-            size={24}
+            size={22}
             color={palette[colorText]}
             style={{ marginRight: 10, marginBottom:  padding }}
           />

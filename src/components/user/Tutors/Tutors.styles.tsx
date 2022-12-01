@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native"
 
 export const styles = StyleSheet.create({
   main: {
-    marginBottom: 50
+    marginBottom: 40
   },
   swiperTop: {
     flexDirection: "row",
@@ -13,10 +13,11 @@ export const styles = StyleSheet.create({
   topicsList: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     flexWrap: "wrap",
-    marginVertical: 0
+    marginVertical: 0,
+    paddingHorizontal: 1
   },
   topicsItem: {
     alignItems: "center",
@@ -24,10 +25,11 @@ export const styles = StyleSheet.create({
     marginBottom: 25,
   },
   topicImage: {
-    width: "100%",
-    height: 100,
+    width: 150,
+    height: 150,
     borderRadius: 15,
     marginBottom: 8,
+    marginHorizontal: 20,
     shadowOffset: {
       width: 0,
       height: 12,

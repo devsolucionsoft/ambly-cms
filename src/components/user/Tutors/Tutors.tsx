@@ -29,24 +29,35 @@ const Tutors = (props: TutorsAttributes) => {
 
   return (
     <View style={{ ...parseStyle, ...styles.main }}>
-      <View style={styles.swiperTop}>
-          <Typography variant="heading2" textAlign="left" color="ligth">
-            Tutores
+      <View
+        style={{
+          ...styles.swiperTop,
+          marginBottom: 20,
+          paddingHorizontal: 30,
+        }}
+      >
+        <Typography
+          variant="heading3"
+          textAlign="left"
+          color="ligth"
+          style={{ fontWeight: "bold" }}
+        >
+          Maestros
+        </Typography>
+        <TouchableOpacity style={{ justifyContent: "center", marginTop: 5 }}>
+          <Typography
+            variant="p3"
+            textAlign="left"
+            color="redPrimary"
+            style={{ fontWeight: "bold" }}
+          >
+            Ver todos
           </Typography>
-          <TouchableOpacity style={{ justifyContent: "center", marginTop: 5 }}>
-            <Typography
-              variant="p3"
-              textAlign="left"
-              color="redPrimary"
-              style={{ fontWeight: "bold" }}
-            >
-              Ver todos
-            </Typography>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.topicsList}>
-        {[1,2,3,4].map((item: any) => (
+        {[1, 2].map((item: any) => (
           <TouchableOpacity key={item.createdAt} style={styles.topicsItem}>
             <Image
               style={styles.topicImage}

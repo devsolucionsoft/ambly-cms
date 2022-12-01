@@ -22,7 +22,7 @@ const modules = [
     title: "Nombre del video 1",
     duration: "5:00",
     video:
-      "https://joy.videvo.net/videvo_files/video/free/video0455/large_watermarked/_import_6091143fc4c4b6.26692621_preview.mp4",
+      "https://app-ambly.s3.amazonaws.com/y2mate.com+-+SOLDADO+NAVY+SEAL+Da+El+Mejor+Discurso+Sobre+FORTALEZA+MENTAL++David+Goggins_480p.mp4",
     description:
       "description video 1 description video 1 description video 1 description video 1 description video 1 description video 1.",
 
@@ -31,7 +31,7 @@ const modules = [
     title: "Nombre del video 2",
     duration: "5:00",
     video:
-      "https://cdn.videvo.net/videvo_files/video/premium/video0037/large_watermarked/docklands_clocks00_preview.mp4",
+      "https://app-ambly.s3.amazonaws.com/y2mate.com+-+SOLDADO+NAVY+SEAL+Da+El+Mejor+Discurso+Sobre+FORTALEZA+MENTAL++David+Goggins_480p.mp4",
     description:
       "description video 2 description video 2 description video 2 description video 2 description video 2 description video 2description video 2.",
     videos: [
@@ -49,7 +49,7 @@ const modules = [
     title: "Nombre del video 3",
     duration: "5:00",
     video:
-      "https://joy.videvo.net/videvo_files/video/free/video0453/large_watermarked/_121__import_preview.mp4",
+      "https://app-ambly.s3.amazonaws.com/y2mate.com+-+SOLDADO+NAVY+SEAL+Da+El+Mejor+Discurso+Sobre+FORTALEZA+MENTAL++David+Goggins_480p.mp4",
     description:
       "description video 3 description video 3 description video 3 description video 3 description video 3 description video 3description video 3.",
     videos: [
@@ -153,7 +153,7 @@ const ModuleDetailScreen = ({
               opacity: currentModule === 0 ? 0.5 : 1,
             }}
             onPress={() => setModule(currentModule - 1)}
-            iconLeft
+            iconLeft={true}
           />
 
           <Button
@@ -168,7 +168,7 @@ const ModuleDetailScreen = ({
               opacity: currentModule === modules.length - 1 ? 0.5 : 1,
             }}
             onPress={() => setModule(currentModule + 1)}
-            iconRight
+            iconRight={true}
           />
         </View>
 

@@ -20,10 +20,10 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: palette["black"],
-    paddingVertical: 10,
+    paddingVertical: 18,
     paddingHorizontal: 15,
     borderRadius: 20,
-    marginBottom: 15
+    marginBottom: 20
   },
   swiperContent: {
     width: "70%",
@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
   swiperImage: {
     width: "30%",
     borderRadius: 15,
-    height: "95%",
+    height: "100%",
     overflow: "hidden"
   },
   swiperTop: {

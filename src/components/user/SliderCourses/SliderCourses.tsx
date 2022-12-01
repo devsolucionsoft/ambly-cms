@@ -5,18 +5,21 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  Pressable,
+  Dimensions,
 } from "react-native"
 import Swiper from "react-native-swiper"
 import { LinearGradient } from "expo-linear-gradient"
 import { navigateUser, navigateAuth } from "../../../navigation/actions"
 import { FontAwesome5 } from "@expo/vector-icons"
 // Styles
-import { styles } from "./SliderCourses.styles"
+import { styles, stylesNew } from "./SliderCourses.styles"
 import { palette, paletteGradient } from "../../../utils/theme"
 // COmponents
 import { Typography, Button } from "../../global"
 // Store
 import { useAppSelector } from "../../../store"
+import Carousel from "react-native-snap-carousel"
 
 interface SliderCoursesProps {
   variant?: "popular" | "new" | "next"
@@ -44,12 +47,16 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
   const items: Array<any> = [1, 2, 3]
 
   const getHeigth = () => {
-    if (variant === "next") return 600
-    if (variant === "new") return 420
-    if (variant === "popular") return 300
+    if (variant === "next") return 660
+    if (variant === "new") return 340
+    if (variant === "popular") return 280
   }
 
   const renderPagination = (current: number, total: number) => {
+    if (variant === "new") {
+      return <View></View>
+    }
+
     return (
       <View style={styles.swiperPagination}>
         {Array(total)
@@ -59,7 +66,7 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
               key={index}
               style={{
                 ...styles.swiperPaginationItem,
-                width: current === index ? 22 : 8,
+                width: current === index ? 8 : 8,
                 backgroundColor: current === index ? "#FFFFFF" : "#787878",
               }}
             />
@@ -68,10 +75,100 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
     )
   }
 
+  const itemSlider = ({ item, index }: { item: any; index: any }) => {
+    return (
+      <TouchableOpacity
+        key={item}
+        style={stylesNew.swiperItemNew}
+        onPress={() => false}
+      >
+        <ImageBackground
+          style={stylesNew.swiperImageNew}
+          source={require("../../../../assets/images/course-1.png")}
+        >
+          <LinearGradient
+            start={{ x: 0.5, y: 0.8 }}
+            end={{ x: 0.5, y: 0 }}
+            colors={paletteGradient.gradientOpacity2}
+            style={stylesNew.swiperItemNewContent}
+          >
+            <Image
+              resizeMode="contain"
+              style={{ width: "70%", height: 100 }}
+              source={require("../../../../assets/images/svg-ejem.png")}
+            />
+          </LinearGradient>
+        </ImageBackground>
+      </TouchableOpacity>
+    )
+  }
+
+  const itemSliderPopu = ({ item, index }: { item: any; index: any }) => {
+    return (
+      <TouchableOpacity
+        key={item}
+        style={styles.swiperItemNext}
+        onPress={() =>
+          !auth.session
+            ? navigateAuth("CourseDetail")
+            : navigateUser("CourseDetail")
+        }
+      >
+        <Image
+          style={styles.swiperVideoNext}
+          source={require("../../../../assets/images/course-2.png")}
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: 20,
+          }}
+        >
+          <Image
+            style={{ width: 35, height: 35, marginRight: 10 }}
+            source={require("../../../../assets/images/user.png")}
+          />
+          <View>
+            <Typography
+              variant="p16"
+              color="ligth"
+              textAlign="left"
+              style={{ fontWeight: "bold" }}
+            >
+              Confianza en si mismo
+            </Typography>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <FontAwesome5
+                name="user-alt"
+                size={12}
+                color={palette["ligth"]}
+              />
+              <Typography
+                variant="p14"
+                color="ligth"
+                textAlign="left"
+                style={{ marginLeft: 10 }}
+              >
+                Jorge Enrique Avello
+              </Typography>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
   return (
     <View style={{ ...parseStyle, ...styles.main, height: getHeigth() }}>
       {header && (
-        <View style={styles.swiperTop}>
+        <View
+          style={{
+            ...styles.swiperTop,
+            marginBottom: 20,
+            paddingHorizontal: 30,
+          }}
+        >
           <Typography
             variant="heading3"
             textAlign="left"
@@ -93,95 +190,43 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
         </View>
       )}
 
-      <Swiper
-        loop={false}
-        loadMinimalSize={2}
-        loadMinimal={false}
-        showsPagination={true}
-        renderPagination={renderPagination}
-      >
-        {(arrayItems.length > 0 ? arrayItems : items).map((item) => {
-          if (variant === "next") {
-            return (
-              <View key={item} style={styles.swiperItemPopular}>
-                <Image
-                  style={styles.swiperImagePopular}
-                  resizeMode="contain"
-                  source={require("../../../../assets/images/course-3.jpg")}
-                />
-                <LinearGradient
-                  start={{ x: 0.5, y: 0.8 }}
-                  end={{ x: 0.5, y: 0 }}
-                  colors={paletteGradient.gradientOpacity}
-                  style={styles.swiperItemPopularContent}
-                >
-                  <Typography
-                    variant="h2"
-                    color="ligth"
-                    textAlign="left"
-                    style={{ fontWeight: "normal", width: "90%" }}
-                  >
-                    Confianza en si mismo
-                  </Typography>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <FontAwesome5
-                      name="user-alt"
-                      size={10}
-                      color={palette["ligth"]}
-                    />
-                    <Typography
-                      variant="p12"
-                      color="ligth"
-                      textAlign="left"
-                      style={{ marginLeft: 8, marginTop: 3 }}
-                    >
-                      Jorge Enrique Avello
-                    </Typography>
-                  </View>
-                  <Button
-                    text={auth.session ? "Acceder" : "Ver curso"}
-                    variant="sm"
-                    color="redPrimary"
-                    colorText="ligth"
-                    style={{ marginTop: 15, paddingHorizontal: 60 }}
-                    onPress={() => navigateToCourse(1)}
+      {variant === "next" && (
+        <Pressable style={styles.swiper}>
+          {({ pressed }) => (
+            <Swiper
+              loop={variant === "next"}
+              loadMinimalSize={2}
+              loadMinimal={false}
+              showsPagination={true}
+              renderPagination={renderPagination}
+              autoplay={variant === "next" && (!pressed ? true : false)}
+              autoplayTimeout={5}
+            >
+              {(arrayItems.length > 0 ? arrayItems : items).map((item) => (
+                <View key={item} style={styles.swiperItemPopular}>
+                  <Image
+                    style={styles.swiperImagePopular}
+                    resizeMode="contain"
+                    source={require("../../../../assets/images/course-3.jpg")}
                   />
-                </LinearGradient>
-              </View>
-            )
-          }
-
-          if (variant === "new") {
-            return (
-              <TouchableOpacity
-                key={item}
-                style={styles.swiperItemNew}
-                onPress={() =>
-                  !auth.session
-                    ? navigateAuth("CourseDetail")
-                    : navigateUser("CourseDetail")
-                }
-              >
-                <ImageBackground
-                  style={styles.swiperImageNew}
-                  source={require("../../../../assets/images/course-1.png")}
-                >
                   <LinearGradient
                     start={{ x: 0.5, y: 0.8 }}
                     end={{ x: 0.5, y: 0 }}
-                    colors={paletteGradient.gradientOpacity2}
-                    style={styles.swiperItemNewContent}
+                    colors={paletteGradient.gradientOpacity}
+                    style={styles.swiperItemPopularContent}
                   >
-                    <Typography
-                      variant="heading2"
-                      color="ligth"
-                      textAlign="left"
-                      style={{ marginBottom: 10 }}
-                    >
-                      Confianza en si mismo
-                    </Typography>
+                    <Image
+                      resizeMode="contain"
+                      style={styles.swiperSvgPopular}
+                      source={require("../../../../assets/images/svg-ejem.png")}
+                    />
                     <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        marginLeft: 3,
+                        marginVertical: 5,
+                      }}
                     >
                       <FontAwesome5
                         name="user-alt"
@@ -189,79 +234,51 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
                         color={palette["ligth"]}
                       />
                       <Typography
-                        variant="p2"
+                        variant="p13"
                         color="ligth"
                         textAlign="left"
-                        style={{ marginLeft: 10 }}
+                        style={{ marginLeft: 9, marginTop: 3 }}
                       >
                         Jorge Enrique Avello
                       </Typography>
                     </View>
+                    <Button
+                      text={auth.session ? "Acceder" : "Ver curso"}
+                      variant="sm"
+                      color="redPrimary"
+                      colorText="ligth"
+                      style={{ marginTop: 15, paddingHorizontal: 60 }}
+                      onPress={() => navigateToCourse(1)}
+                    />
                   </LinearGradient>
-                </ImageBackground>
-              </TouchableOpacity>
-            )
-          }
-
-          if (variant === "popular") {
-            return (
-              <TouchableOpacity
-                key={item}
-                style={styles.swiperItemNext}
-                onPress={() =>
-                  !auth.session
-                    ? navigateAuth("CourseDetail")
-                    : navigateUser("CourseDetail")
-                }
-              >
-                <Image
-                  style={styles.swiperVideoNext}
-                  source={require("../../../../assets/images/course-2.png")}
-                />
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginTop: 20,
-                  }}
-                >
-                  <Image
-                    style={{ width: 40, height: 40, marginRight: 10 }}
-                    source={require("../../../../assets/images/user.png")}
-                  />
-                  <View>
-                    <Typography
-                      variant="p"
-                      color="ligth"
-                      textAlign="left"
-                      style={{ fontWeight: "bold" }}
-                    >
-                      Confianza en si mismo
-                    </Typography>
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                      <FontAwesome5
-                        name="user-alt"
-                        size={12}
-                        color={palette["ligth"]}
-                      />
-                      <Typography
-                        variant="p2"
-                        color="ligth"
-                        textAlign="left"
-                        style={{ marginLeft: 10 }}
-                      >
-                        Jorge Enrique Avello
-                      </Typography>
-                    </View>
-                  </View>
                 </View>
-              </TouchableOpacity>
-            )
-          }
-        })}
-      </Swiper>
+              ))}
+            </Swiper>
+          )}
+        </Pressable>
+      )}
+
+      {variant === "new" && (
+        <Carousel
+          data={[1, 2, 3, 4, 5]}
+          renderItem={itemSlider}
+          sliderWidth={Dimensions.get("screen").width}
+          itemWidth={Dimensions.get("screen").width * 0.6}
+          vertical={false}
+          loop={true}
+        />
+      )}
+
+      {variant === "popular" && (
+        <Carousel
+          data={[1, 2, 3, 4, 5]}
+          renderItem={itemSliderPopu}
+          sliderWidth={Dimensions.get("screen").width}
+          itemWidth={Dimensions.get("screen").width * 0.7}
+          vertical={false}
+          loop={true}
+        />
+      )}
     </View>
   )
 }

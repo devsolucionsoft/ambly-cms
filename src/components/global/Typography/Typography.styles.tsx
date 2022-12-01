@@ -4,103 +4,104 @@ export const styles = StyleSheet.create({
   headingLg: {
     fontSize: 45,
     fontWeight: "bold",
+    fontFamily:  'Inter',
   },
   heading: {
     fontSize: 34,
     fontWeight: "bold",
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   heading2: {
     fontSize: 28,
     fontWeight: "600",
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   heading3: {
     fontSize: 23,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   h1: {
     fontSize: 45,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   h2: {
     fontSize: 39,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   h3: {
     fontSize: 34,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   h4: {
     fontSize: 28,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   h5: {
     fontSize: 25,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   h6: {
     fontSize: 22,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p: {
     fontSize: 20,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p2: {
     fontSize: 16,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p3: {
     fontSize: 14,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p4: {
     fontSize: 12,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p10: {
     fontSize: 10,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p11: {
     fontSize: 11,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p12: {
     fontSize: 12,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p13: {
     fontSize: 13,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p14: {
     fontSize: 14,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p15: {
     fontSize: 15,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p16: {
     fontSize: 16,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p17: {
     fontSize: 17,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p18: {
     fontSize: 18,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p19: {
     fontSize: 19,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
   p20: {
     fontSize: 20,
-    fontFamily: "poppins",
+    fontFamily:  'Inter',
   },
 })

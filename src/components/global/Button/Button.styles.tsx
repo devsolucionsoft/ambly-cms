@@ -32,15 +32,18 @@ export const stylesText = StyleSheet.create({
     fontSize: 19,
     fontWeight: "600",
     textAlign: "center",
+    fontFamily: "Inter"
   },
   md: {
     fontSize: 17,
     fontWeight: "600",
     textAlign: "center",
+    fontFamily: "Inter"
   },
   sm: {
     fontSize: 16,
     fontWeight: "500",
     textAlign: "center",
+    fontFamily: "Inter"
   },
 })

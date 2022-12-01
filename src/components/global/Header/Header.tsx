@@ -8,6 +8,7 @@ import AntDesign from "@expo/vector-icons/AntDesign"
 import { SimpleLineIcons } from "@expo/vector-icons"
 import { palette, paletteGradient } from "../../../utils/theme"
 import { navigationBack } from "../../../navigation/actions"
+import { Entypo } from '@expo/vector-icons';
 // Styles
 import { styles } from "./Header.styles"
 // Components
@@ -52,7 +53,7 @@ const Header = (props: HeaderProps) => {
           onPress={() => navigationHook.openDrawer()}
           style={styles.iconMenu}
         >
-          <SimpleLineIcons name="menu" size={25} color={palette["ligth"]} />
+          <Entypo name="menu" size={35} color={palette["ligth"]} />
         </TouchableOpacity>
       )}
       {variant !== "user" && (

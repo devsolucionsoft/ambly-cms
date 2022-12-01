@@ -1,5 +1,11 @@
 import React from "react"
-import { View, TextInput, TextInputProps, Pressable  } from "react-native"
+import {
+  View,
+  TextInput,
+  TextInputProps,
+  Pressable,
+  Keyboard,
+} from "react-native"
 // Theme
 import { palette, iconsTypes } from "../../../utils/theme"
 // Styles
@@ -23,9 +29,14 @@ const Input = (props: InputAttributes) => {
   const parseStyle = typeof style === "object" ? style : {}
 
   return (
-    <Pressable  style={{ marginBottom: 10 }}>
+    <Pressable style={{ marginBottom: 10 }} onPress={Keyboard.dismiss}>
       {label && (
-        <Typography variant="p3" color="ligth" textAlign="left" style={{marginBottom: 3}}>
+        <Typography
+          variant="p3"
+          color="ligth"
+          textAlign="left"
+          style={{ marginBottom: 3 }}
+        >
           {label}
         </Typography>
       )}
@@ -51,7 +62,7 @@ const Input = (props: InputAttributes) => {
           {message}
         </Typography>
       )}
-    </Pressable >
+    </Pressable>
   )
 }
 
