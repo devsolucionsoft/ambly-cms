@@ -100,6 +100,7 @@ const ModalDataComplete = (props: ModalDataCompleteAttributes) => {
           response.data.token
             ? dispatch(
                 createSession({
+                  id: response.data.id,
                   email: dataRegistry.email,
                   token: response.data.token,
                 })

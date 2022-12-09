@@ -93,8 +93,6 @@ export class AuthApi {
   }
 
   async UserLoginApple(user?: any) {
-    console.log("UserLoginApple", user)
-
     try {
       return await axios.post(`${url}/social/apple`, {
         token_apple: user,
@@ -154,6 +152,32 @@ export class UserApi {
   async GetAllCourses() {
     try {
       return await axios.get(`${url}/course/all`)
+    } catch (error: any) {
+      return error.response
+    }
+  }
+
+  async GetMyCourses(id: any) {
+    try {
+      return await axios.get(`${url}/course/all/course/${id}`)
+    } catch (error: any) {
+      return error.response
+    }
+  }
+}
+
+export class CourseApi {
+  async saveVideoTrailer(data: {
+    time_seen: number,
+    modules_id: number,
+    video_id: number
+}) {
+    try {
+      return await axios.post(`${url}/modules/save/video`, {
+        "time_seen": data.time_seen,
+        "modules_id": data.modules_id,
+        "video_id": data.video_id
+    })
     } catch (error: any) {
       return error.response
     }

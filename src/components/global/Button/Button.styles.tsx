@@ -19,8 +19,8 @@ export const styles = StyleSheet.create({
   },
   sm: {
     width: "100%",
-    paddingVertical: 13,
-    paddingBottom: 7,
+    paddingTop: 10,
+    paddingBottom: 12,
     paddingHorizontal: 18,
     borderRadius: 12,
     marginVertical: 9,

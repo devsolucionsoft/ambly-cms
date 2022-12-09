@@ -73,6 +73,7 @@ const GoogleOuth = ({
     if (response.status === 200 || response.status === 201) {
       dispatch(
         createSession({
+          id: response.data.id,
           email: responseInfo.data.email,
           token: response.data.token,
         })
@@ -139,6 +140,7 @@ const FacebookOuth = ({
     if (response.status === 200 || response.status === 201) {
       dispatch(
         createSession({
+          id: response.data.id,
           email: responseInfo.data.email,
           token: response.data.token,
         })
@@ -176,9 +178,6 @@ const AppleOuth = () => {
         requestedScopes: [AppleAuthentication.AppleAuthenticationScope.EMAIL],
       })
 
-      console.log(credential);
-      
-
       let response = await AuthApiModel.UserLoginApple(credential.user)
 
       if (response.status === 204) {
@@ -191,6 +190,7 @@ const AppleOuth = () => {
       if (response.status === 200 || response.status === 201) {
         dispatch(
           createSession({
+            id: response.data.id,
             email: credential.user,
             token: response.data.token,
           })

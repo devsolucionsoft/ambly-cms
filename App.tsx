@@ -10,6 +10,7 @@ import { Asset } from "expo-asset"
 import { LinearGradient } from "expo-linear-gradient"
 import * as Font from "expo-font"
 import { useFonts } from "expo-font"
+import { Video, ResizeMode } from "expo-av"
 
 // Instruct SplashScreen not to hide yet, we want to do this manually
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -27,13 +28,13 @@ const LayoutApp = () => {
 
 export default function App() {
   useFonts({
-    poppins: require("./assets/fonts/Poppins/Poppins-Regular.ttf"),
-    inter: require("./assets/fonts/Inter/static/Inter-Medium.ttf"),
+    Poppins: require("./assets/fonts/Poppins/Poppins-Regular.ttf"),
+    Inter: require("./assets/fonts/Inter/static/Inter-Medium.ttf"),
   })
-  
+
   return (
     <Provider store={store}>
-      <AnimatedAppLoader image={{ uri: "https://i.imgur.com/U1aNgeU.png" }}>
+      <AnimatedAppLoader image={{ uri: "https://i.imgur.com/2v8cMRN.gif" }}>
         <LayoutApp />
       </AnimatedAppLoader>
     </Provider>
@@ -42,7 +43,7 @@ export default function App() {
 
 function AnimatedAppLoader({ children, image }: any) {
   const [isSplashReady, setSplashReady] = useState(false)
-  
+
   useEffect(() => {
     async function prepare() {
       await Asset.fromURI(image.uri).downloadAsync()
@@ -60,7 +61,7 @@ function AnimatedAppLoader({ children, image }: any) {
 }
 
 function AnimatedSplashScreen({ children, image }: any) {
-  const animation = useMemo(() => new Animated.Value(1), [])
+  const animation: any = useMemo(() => new Animated.Value(0), [])
   const scale = useMemo(() => new Animated.Value(1), [])
 
   const [isAppReady, setAppReady] = useState(false)
@@ -69,16 +70,17 @@ function AnimatedSplashScreen({ children, image }: any) {
   useEffect(() => {
     if (isAppReady) {
       Animated.timing(animation, {
-        toValue: 0,
-        duration: 600,
+        toValue: 1,
+        duration: 800,
+        delay: 5000,
         useNativeDriver: true,
-      }).start(() => setAnimationComplete(true))
+      }).start(() => setAnimationComplete(false))
 
       Animated.timing(scale, {
-        toValue: 0.8,
+        toValue: 0.6,
         duration: 600,
         useNativeDriver: true,
-      }).start(() => setAnimationComplete(true))
+      }).start()
     }
   }, [isAppReady])
 
@@ -90,43 +92,45 @@ function AnimatedSplashScreen({ children, image }: any) {
     } finally {
       setAppReady(true)
     }
-  }, [])
+  }, [])  
 
   return (
     <View style={{ flex: 1 }}>
-      {children}
       {!isSplashAnimationComplete && (
-        <Animated.View
-          pointerEvents="none"
+        <LinearGradient
           style={[
             StyleSheet.absoluteFill,
             {
-              opacity: animation,
+              alignItems: "center",
+              justifyContent: "center",
+              flex: 1,
+              height: "100%",
+              width: "100%",
             },
           ]}
+          colors={["#101010", "#343434"]}
         >
-          <LinearGradient
-            style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
-            colors={["#101010", "#343434"]}
-          >
-            <Animated.Image
-              style={{
-                width: "50%",
-                height: 100,
-                resizeMode: "contain",
-                transform: [
-                  {
-                    scale: scale,
-                  },
-                ],
-              }}
-              source={image}
-              onLoadEnd={onImageLoaded}
-              fadeDuration={0}
-            />
-          </LinearGradient>
-        </Animated.View>
+          <Video
+            style={{ height: "100%", width: "100%" }}
+            useNativeControls={false}
+            source={require("./assets/animations/splash.mp4")}
+            isLooping={false}
+            shouldPlay={true}
+            resizeMode={ResizeMode.COVER}
+            onLoad={() => onImageLoaded()}
+          />
+        </LinearGradient>
       )}
+      <Animated.View
+        style={[
+          StyleSheet.absoluteFill,
+          {
+            opacity: animation,
+          },
+        ]}
+      >
+        {children}
+      </Animated.View>
     </View>
   )
 }

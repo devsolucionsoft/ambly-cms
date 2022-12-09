@@ -84,6 +84,7 @@ const StartScreen = ({
         case 200:
           dispatch(
             createSession({
+              id: response.data.id,
               email: stateInputs.email,
               token: response.data.token,
             })

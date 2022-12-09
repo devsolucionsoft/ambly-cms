@@ -7,27 +7,43 @@ import { AntDesign, MaterialIcons } from "@expo/vector-icons"
 import { styles } from "./AccordionItem.styles"
 // Components
 import { Typography } from "../../global"
-// Navigation
-import { navigateUser } from "../../../navigation/actions"
 
 interface AccordionItemProps {
   title: string
   duration: string
   description: string
-  items: any
+  videos: any
+  handleNavigateVideo?: any
+  activeItem?: any
 }
 
 type AccordionItemAttributes = AccordionItemProps & ViewProps
 
 const AccordionItem = (props: AccordionItemAttributes) => {
-  const { style, title, duration, description, items } = props
-
+  const {
+    style,
+    title,
+    duration,
+    description,
+    videos,
+    handleNavigateVideo,
+    activeItem,
+  } = props
   const [active, setActive] = useState(false)
-
   const parseStyle = typeof style === "object" ? style : {}
 
   return (
-    <View style={{ ...parseStyle, ...styles.main }}>
+    <View
+      style={[
+        parseStyle,
+        styles.main,
+        {
+          borderColor: !isNaN(parseInt(activeItem))
+            ? palette["redPrimary"]
+            : palette["dark"],
+        },
+      ]}
+    >
       <View style={styles.header}>
         <TouchableOpacity>
           <AntDesign name="play" size={40} color={palette["ligth"]} />
@@ -63,8 +79,20 @@ const AccordionItem = (props: AccordionItemAttributes) => {
           >
             {description}
           </Typography>
-          {items.map((item:any) => (
-            <TouchableOpacity style={styles.videos} onPress={() => navigateUser("ModuleDetail")}>
+          {videos.map((item: any, index: number) => (
+            <TouchableOpacity
+              style={[
+                styles.videos,
+                {
+                  borderWidth: 2,
+                  borderColor:
+                    activeItem === index
+                      ? palette["redPrimary"]
+                      : palette["ligth"],
+                },
+              ]}
+              onPress={() => handleNavigateVideo(index)}
+            >
               <Image
                 style={styles.image}
                 source={require("../../../../assets/images/mariana.jpg")}
@@ -76,7 +104,7 @@ const AccordionItem = (props: AccordionItemAttributes) => {
                   color="dark"
                   style={{ fontWeight: "bold" }}
                 >
-                  {item.title}
+                  {item.name_video}
                 </Typography>
                 <Typography variant="p3" textAlign="left" color="grayText">
                   {item.duration} minutes

@@ -57,8 +57,8 @@ const Tutors = (props: TutorsAttributes) => {
       </View>
 
       <View style={styles.topicsList}>
-        {[1, 2].map((item: any) => (
-          <TouchableOpacity key={item.createdAt} style={styles.topicsItem}>
+        {[1, 2].map((item: any, index) => (
+          <TouchableOpacity key={index} style={styles.topicsItem}>
             <Image
               style={styles.topicImage}
               source={require("../../../../assets/images/course.png")}

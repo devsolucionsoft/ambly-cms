@@ -23,7 +23,6 @@ const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
     ;(async () => {
       const response = await UserApiModel.GetCategories()
       response.status === 200 && setTopics(response.data)
-      console.log(response.data);
     })()
   }, [])
 
@@ -100,8 +99,8 @@ const FavoriteTopics = (props: FavoriteTopicsAttributes) => {
       </View>
 
       <View style={styles.topicsList}>
-        {itmes.map((item: any) => (
-          <TouchableOpacity key={item.createdAt} style={styles.topicsItem}>
+        {itmes.map((item: any, index) => (
+          <TouchableOpacity key={index} style={styles.topicsItem}>
             <Image
               style={styles.topicImage}
               source={{uri: item.image}}

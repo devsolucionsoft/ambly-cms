@@ -40,7 +40,10 @@ export type UserStackParamList = {
     id_course: number
   }
   MyCourses: undefined
-  ModuleDetail: undefined
+  ModuleDetail?: {
+    module?: any
+    video?: any
+  }
   MyAccount: undefined
 }
 

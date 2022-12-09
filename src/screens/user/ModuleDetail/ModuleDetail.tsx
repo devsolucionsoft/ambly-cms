@@ -1,7 +1,11 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { View, TouchableOpacity, Image } from "react-native"
 import { Octicons } from "@expo/vector-icons"
 import { MaterialIcons } from "@expo/vector-icons"
+import * as Sharing from "expo-sharing"
+import * as FileSystem from "expo-file-system"
+import { WebView } from "react-native-webview"
+
 // Styles compomponent
 import { styles } from "./ModuleDetail.styles"
 import { palette } from "../../../utils/theme"
@@ -14,72 +18,64 @@ import {
 import { Typography, Button } from "../../../components/global"
 import { Layout, AccordionItem, VideoItem } from "../../../components/user"
 // Store
-import { useAppDispatch } from "../../../store"
+import { useAppSelector, useAppDispatch } from "../../../store"
 import { onLoader } from "../../../store/Loader/actions"
-
-const modules = [
-  {
-    title: "Nombre del video 1",
-    duration: "5:00",
-    video:
-      "https://app-ambly.s3.amazonaws.com/y2mate.com+-+SOLDADO+NAVY+SEAL+Da+El+Mejor+Discurso+Sobre+FORTALEZA+MENTAL++David+Goggins_480p.mp4",
-    description:
-      "description video 1 description video 1 description video 1 description video 1 description video 1 description video 1.",
-
-  },
-  {
-    title: "Nombre del video 2",
-    duration: "5:00",
-    video:
-      "https://app-ambly.s3.amazonaws.com/y2mate.com+-+SOLDADO+NAVY+SEAL+Da+El+Mejor+Discurso+Sobre+FORTALEZA+MENTAL++David+Goggins_480p.mp4",
-    description:
-      "description video 2 description video 2 description video 2 description video 2 description video 2 description video 2description video 2.",
-    videos: [
-      {
-        title: "intoducción",
-        duration: "5:00",
-      },
-      {
-        title: "intoducción",
-        duration: "5:00",
-      },
-    ],
-  },
-  {
-    title: "Nombre del video 3",
-    duration: "5:00",
-    video:
-      "https://app-ambly.s3.amazonaws.com/y2mate.com+-+SOLDADO+NAVY+SEAL+Da+El+Mejor+Discurso+Sobre+FORTALEZA+MENTAL++David+Goggins_480p.mp4",
-    description:
-      "description video 3 description video 3 description video 3 description video 3 description video 3 description video 3description video 3.",
-    videos: [
-      {
-        title: "intoducción",
-        duration: "5:00",
-      },
-      {
-        title: "intoducción",
-        duration: "5:00",
-      },
-    ],
-  },
-]
-
 
 const ModuleDetailScreen = ({
   navigation,
   route,
 }: StackNavigationProps<UserStackParamList, "ModuleDetail">) => {
-  const [courses, setCourses] = useState([
-    { text: "Curso 1", active: false },
-    { text: "Curso 2", active: false },
-    { text: "Curso 3", active: false },
-  ])
+  // Store
+  const courseInfo = useAppSelector((store) => store.User.selectCourse)
 
-  const [currentModule, setCurrentModule] = useState(0)
+  // Params
+  const selectedModule = route.params?.module
+  const selectedVideo = route.params?.video
+
+  const [currentModule, setCurrentModule] = useState(selectedModule)
+  const [currentVideo, setCurrentVideo] = useState(selectedVideo)
+  const [currentVideoTime, setCurrentVideoTime] = useState(0)
+  console.log("currentVideoTime 2")
+
+  const [disableNext, setDisableNext] = useState(false)
+  const [disablePrev, setDisablePrev] = useState(false)
+
+  useEffect(() => {
+    setModule(selectedModule)
+  }, [selectedModule])
+
+  useEffect(() => {
+    setVideo(selectedVideo)
+  }, [selectedVideo])
+
+  // Efecto para desactivar los botones prev/next cuando lleguen al primer y ultimo video
+  useEffect(() => {
+    const idVideo = courseInfo.modules[currentModule].videos[currentVideo].id
+    const saved = courseInfo.modules[currentModule].save.find(
+      (item: any) => item.videos.id === idVideo
+    )
+
+    saved && setCurrentVideoTime(saved.time_seen)
+  
+
+    if (
+      currentVideo === courseInfo.modules[currentModule].videos.length - 1 &&
+      currentModule === courseInfo.modules.length - 1
+    ) {
+      setDisableNext(true)
+    } else {
+      setDisableNext(false)
+    }
+    if (currentVideo === 0 && currentModule === 0) {
+      setDisablePrev(true)
+    } else {
+      setDisablePrev(false)
+    }
+  }, [currentModule, currentVideo])
 
   const dispatch = useAppDispatch()
 
+  //Cambiar modulo actual
   const setModule = (module: number) => {
     dispatch(onLoader(true))
 
@@ -92,18 +88,111 @@ const ModuleDetailScreen = ({
     }, 2000)
   }
 
+  // Cambiar video actual
+  const setVideo = (video: number) => {
+    if (video > currentVideo) {
+      dispatch(onLoader(true))
+      if (video === courseInfo.modules[currentModule].videos.length) {
+        setCurrentVideo(0)
+        setModule(currentModule + 1)
+      } else {
+        setTimeout(() => {
+          setCurrentVideo(video)
+        }, 1000)
+
+        setTimeout(() => {
+          dispatch(onLoader(false))
+        }, 2000)
+      }
+    }
+
+    if (video < currentVideo) {
+      dispatch(onLoader(true))
+      if (video < 0) {
+        setCurrentVideo(0)
+        setModule(currentModule - 1)
+      } else {
+        setTimeout(() => {
+          setCurrentVideo(video)
+        }, 1000)
+
+        setTimeout(() => {
+          dispatch(onLoader(false))
+        }, 2000)
+      }
+    }
+  }
+
+  const handleNavigateVideo = (module: number, video: number) => {
+    setVideo(0)
+    setModule(module)
+    setVideo(video)
+  }
+
+  useEffect(() => {
+    /*Sharing.isAvailableAsync().then((available) => {
+      if (available) {
+        console.log("Sharing is available")
+      } else {
+        console.log("Sharing is NOT available")
+      }
+    })*/
+  }, [])
+
+  const callback = (downloadProgress: any) => {
+    /*const progress =
+      downloadProgress.totalBytesWritten /
+      downloadProgress.totalBytesExpectedToWrite
+    console.log(progress)*/
+  }
+
+  const handleDownload = async (uri: string) => {
+    /*console.log("handleDownload")
+
+    const downloadResumable = FileSystem.createDownloadResumable(
+      "https://www.proturbiomarspa.com/files/_pdf-prueba.pdf",
+      FileSystem.documentDirectory + "pdf-prueba.pdf",
+      {},
+      callback
+    )
+
+    try {
+      const { uri }: any = await downloadResumable.downloadAsync()
+      console.log("Finished downloading to ", uri)
+      Sharing.shareAsync(uri)
+    } catch (e) {
+      console.error(e)
+    }*/
+  }
+
   return (
     <Layout
       headerProps={{
-        returnAction: true,
+        action: () => {
+          navigation.goBack()
+        },
+        returnAction: false,
         variant: "information",
         title: "Nombre del modulo",
       }}
       navCourse={true}
     >
-      <VideoItem style={styles.video} url={modules[currentModule].video} />
+      <WebView
+        style={{ height: 0, width: "100%" }}
+        source={{
+          uri: "file:///data/user/0/host.exp.exponent/files/ExperienceData/%2540solucionsoft%252Fambly-app/pdf-prueba.pdf",
+        }}
+      />
+      <VideoItem
+        style={styles.video}
+        url={courseInfo.modules[currentModule].videos[currentVideo].video}
+        saved={true}
+        moduleId={courseInfo.modules[currentModule].id}
+        videoId={courseInfo.modules[currentModule].videos[currentVideo].id}
+        startTime={currentVideoTime}
+      />
 
-      {/* Content modules */}
+      {/* Content courseInfo.modules */}
       <View style={styles.content}>
         <View style={{ flexDirection: "row", marginBottom: 20 }}>
           <View style={styles.beagle}>
@@ -113,7 +202,7 @@ const ModuleDetailScreen = ({
               textAlign="left"
               style={{ fontWeight: "bold" }}
             >
-              Modulo 1
+              Modulo {currentModule + 1}
             </Typography>
           </View>
         </View>
@@ -123,7 +212,7 @@ const ModuleDetailScreen = ({
           textAlign="left"
           style={{ fontWeight: "bold", marginBottom: 10 }}
         >
-          {modules[currentModule].title}
+          {courseInfo.modules[currentModule].name_module}
         </Typography>
         <Typography
           color="ligth"
@@ -131,7 +220,7 @@ const ModuleDetailScreen = ({
           textAlign="left"
           style={{ marginBottom: 20 }}
         >
-          {modules[currentModule].description}
+          {courseInfo.modules[currentModule].description}
         </Typography>
 
         <View
@@ -146,13 +235,13 @@ const ModuleDetailScreen = ({
             colorText="ligth"
             variant="sm"
             text="Anterior"
-            disabled={currentModule === 0}
+            disabled={disablePrev}
             style={{
               marginBottom: 30,
               width: 150,
-              opacity: currentModule === 0 ? 0.5 : 1,
+              opacity: disablePrev ? 0.5 : 1,
             }}
-            onPress={() => setModule(currentModule - 1)}
+            onPress={() => setVideo(currentVideo - 1)}
             iconLeft={true}
           />
 
@@ -161,13 +250,13 @@ const ModuleDetailScreen = ({
             colorText="ligth"
             variant="sm"
             text="Siguiente"
-            disabled={currentModule === modules.length - 1}
+            disabled={disableNext}
             style={{
               marginBottom: 30,
               width: 150,
-              opacity: currentModule === modules.length - 1 ? 0.5 : 1,
+              opacity: disableNext ? 0.5 : 1,
             }}
-            onPress={() => setModule(currentModule + 1)}
+            onPress={() => setVideo(currentVideo + 1)}
             iconRight={true}
           />
         </View>
@@ -181,8 +270,11 @@ const ModuleDetailScreen = ({
           Descargables
         </Typography>
         <View style={styles.moduleList}>
-          {[1,2].map((item) => (
-            <TouchableOpacity style={styles.downloadable}>
+          {courseInfo.modules[currentModule].file.map((item: any) => (
+            <TouchableOpacity
+              style={styles.downloadable}
+              onPress={() => handleDownload(item.link_file)}
+            >
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <View style={styles.downloadableIcon}>
                   <MaterialIcons
@@ -198,7 +290,7 @@ const ModuleDetailScreen = ({
                     textAlign="left"
                     style={{ fontWeight: "bold" }}
                   >
-                    Documento pdf
+                    {item.name_file}
                   </Typography>
                   <Typography color="grayText" variant="p3" textAlign="left">
                     Descargado
@@ -222,36 +314,40 @@ const ModuleDetailScreen = ({
         </Typography>
 
         <View style={{ marginBottom: 20 }}>
-          {modules.map((item, index) => (
-            <TouchableOpacity
-              style={{
-                ...styles.videos,
-                borderColor:
-                  currentModule === index
-                    ? palette["redPrimary"]
-                    : palette["ligth"],
-              }}
-              onPress={() => setModule(index)}
-            >
-              <Image
-                style={styles.imageVideo}
-                source={require("../../../../assets/images/mariana.jpg")}
-              />
-              <View>
-                <Typography
-                  variant="p2"
-                  textAlign="left"
-                  color="dark"
-                  style={{ fontWeight: "bold" }}
-                >
-                  {item.title}
-                </Typography>
-                <Typography variant="p3" textAlign="left" color="grayText">
-                  {item.duration} minutes
-                </Typography>
-              </View>
-            </TouchableOpacity>
-          ))}
+          {courseInfo.modules[currentModule].videos.map(
+            (item: any, index: number) => (
+              <TouchableOpacity
+                style={[
+                  styles.videos,
+                  {
+                    borderColor:
+                      currentVideo === index
+                        ? palette["redPrimary"]
+                        : palette["ligth"],
+                  },
+                ]}
+                onPress={() => setVideo(index)}
+              >
+                <Image
+                  style={styles.imageVideo}
+                  source={require("../../../../assets/images/mariana.jpg")}
+                />
+                <View>
+                  <Typography
+                    variant="p2"
+                    textAlign="left"
+                    color="dark"
+                    style={{ fontWeight: "bold" }}
+                  >
+                    {item.name_video}
+                  </Typography>
+                  <Typography variant="p3" textAlign="left" color="grayText">
+                    {item.duration} minutes
+                  </Typography>
+                </View>
+              </TouchableOpacity>
+            )
+          )}
         </View>
 
         <Typography
@@ -263,12 +359,16 @@ const ModuleDetailScreen = ({
           Todos lo modulos
         </Typography>
         <View style={styles.moduleList}>
-          {modules.map((item) => (
+          {courseInfo.modules.map((item: any, index: number) => (
             <AccordionItem
-              title={item.title}
-              duration={item.duration}
+              title={item.name_module}
+              duration={item.time_module}
               description={item.description}
-              items={item.videos}
+              videos={item.videos}
+              activeItem={index === currentModule && currentVideo}
+              handleNavigateVideo={(video: number) =>
+                handleNavigateVideo(index, video)
+              }
             />
           ))}
         </View>

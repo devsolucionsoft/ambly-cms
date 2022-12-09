@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { View, ImageBackground, TouchableOpacity } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 // Styles compomponent
@@ -12,16 +12,15 @@ import {
 // UI Components
 import { Typography } from "../../../components/global"
 import { Layout } from "../../../components/user"
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons"
+// Store
+import { useAppSelector } from "../../../store"
 
 const MyCoursesScreen = ({
   navigation,
   route,
 }: StackNavigationProps<UserStackParamList, "MyCourses">) => {
-  const [courses, setCourses] = useState([
-    { text: "Curso 1", active: false, image: "../../../../assets/images/course.png", title: "Fuerza mental"},
-    { text: "Curso 2", active: false, image: "../../../../assets/images/cocina.png", title: "Cocina de lujo" },
-  ])
+  const coursesItems = useAppSelector((store) => store.User.myCourses)
 
   return (
     <Layout
@@ -47,16 +46,22 @@ const MyCoursesScreen = ({
           con estos cursos…
         </Typography>
         <View style={styles.listCourses}>
-          {//courses.map((item, index) => (
+          {
+            coursesItems.map((item:any, index: number) => (
             <TouchableOpacity
               style={styles.itemCourse}
               onPress={() =>
                 navigation.navigate("CourseDetail", {
-                  id_course: 1,
+                  id_course: item.id,
                 })
               }
             >
-              <AntDesign name="play" size={30} color="white" style={{position: "absolute", zIndex: 3, right: 20, top: 20}} />
+              <AntDesign
+                name="play"
+                size={30}
+                color="white"
+                style={{ position: "absolute", zIndex: 3, right: 20, top: 20 }}
+              />
               <ImageBackground
                 style={styles.itemCourseImage}
                 source={require("../../../../assets/images/course.png")}
@@ -74,7 +79,7 @@ const MyCoursesScreen = ({
                       variant="heading2"
                       style={{ lineHeight: 30 }}
                     >
-                      {"Fuerza Mental"}
+                      {item.name_course}
                     </Typography>
                     <View style={styles.beagle}>
                       <Typography
@@ -82,56 +87,17 @@ const MyCoursesScreen = ({
                         textAlign="left"
                         variant="p3"
                       >
-                        Módulo 4 - min 4:30
+                        Módulo {item.num_modulos} - min 4:30
                       </Typography>
                     </View>
                   </View>
                 </LinearGradient>
               </ImageBackground>
             </TouchableOpacity>
-          /*))*/}
+            ))
+          }
 
-<TouchableOpacity
-              style={styles.itemCourse}
-              onPress={() =>
-                navigation.navigate("CourseDetail", {
-                  id_course: 1,
-                })
-              }
-            >
-              <AntDesign name="play" size={30} color="white" style={{position: "absolute", zIndex: 3, right: 20, top: 20}} />
-              <ImageBackground
-                style={styles.itemCourseImage}
-                source={require("../../../../assets/images/cocina.png")}
-              >
-                <LinearGradient
-                  start={{ x: 0.5, y: 1 }}
-                  end={{ x: 0.5, y: 0 }}
-                  style={styles.itemCourseContent}
-                  colors={paletteGradient.gradientOpacity2}
-                >
-                  <View style={{ marginRight: 10, width: "70%" }}>
-                    <Typography
-                      color="ligth"
-                      textAlign="left"
-                      variant="heading2"
-                      style={{ lineHeight: 30 }}
-                    >
-                      {"Cocina de lujo"}
-                    </Typography>
-                    <View style={styles.beagle}>
-                      <Typography
-                        color="grayText"
-                        textAlign="left"
-                        variant="p3"
-                      >
-                        Módulo 4 - min 4:30
-                      </Typography>
-                    </View>
-                  </View>
-                </LinearGradient>
-              </ImageBackground>
-            </TouchableOpacity>
+          
         </View>
       </View>
     </Layout>

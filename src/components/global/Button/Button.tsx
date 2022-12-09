@@ -68,14 +68,10 @@ const Button = (props: ButtonAttributes) => {
           ...styles[variant],
           ...parseStyle,
           backgroundColor: palette[color],
-          ...(iconRed || iconLeft || iconRight
-            ? {
-                flexDirection: "row",
-                justifyContent: iconRed ? "flex-start" : "flex-end",
-                alignItems: "center",
-                paddingLeft: iconRed ? "14%" : "0%",
-              }
-            : {}),
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: iconRed ? "flex-start" : "center",
+          paddingLeft: iconRed ? 45 : 18
         }}
       >
         {iconLeft && (
@@ -86,19 +82,17 @@ const Button = (props: ButtonAttributes) => {
             name={iconRed}
             size={22}
             color={palette[colorText]}
-            style={{ marginRight: 10, marginBottom:  padding }}
+            style={{ marginRight: 10 }}
           />
         )}
         {loadingActive ? (
-          <ActivityIndicator size="large" color={palette[colorText]} />
+          <ActivityIndicator size="small" color={palette[colorText]} />
         ) : (
           <Text
             style={{
               ...stylesText[variant],
               color: palette[colorText],
-              fontFamily: "poppins",
-              marginTop: !iconRed && variant == "sm" ? 0 : "0%",
-              marginBottom: !iconRed && variant == "sm" ? 4 : "0%"
+              fontFamily: "Inter"
             }}
           >
             {text}

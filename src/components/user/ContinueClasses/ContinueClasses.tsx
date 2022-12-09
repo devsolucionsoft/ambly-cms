@@ -1,6 +1,5 @@
 import React from "react"
 import { View, ViewProps, TouchableOpacity, Image } from "react-native"
-import Swiper from "react-native-swiper"
 import Slider from "@react-native-community/slider"
 import { MaterialIcons } from "@expo/vector-icons"
 import { navigateUser } from "../../../navigation/actions"
@@ -45,9 +44,9 @@ const ContinueClasses = (props: ContinueClassesAttributes) => {
           </TouchableOpacity>
       </View>
 
-      {items.map((item) => (
+      {items.map((item, index) => (
         <TouchableOpacity
-          key={item}
+          key={index}
           style={styles.swiperItem}
           onPress={() => navigateUser("ModuleDetail")}
         >

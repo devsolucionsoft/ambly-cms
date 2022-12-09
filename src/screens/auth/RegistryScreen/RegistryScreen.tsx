@@ -75,7 +75,6 @@ const RegistryScreen = ({
 
   // Registry login
   const handleRegistry = async () => {
-    console.log("validation", stateInputs);
     const { errors, validation } = getValidation(stateInputs)
     
     if (validation) {

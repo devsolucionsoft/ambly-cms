@@ -4,9 +4,11 @@ import { palette } from "../../../utils/theme"
 export const styles = StyleSheet.create({
   main: {
     backgroundColor: palette["black"],
-    padding: 20,
+    padding: 18,
     borderRadius: 20,
     marginBottom: 15,
+    borderWidth: 2,
+    borderColor: "#000000",
   },
   header: {
     flexDirection: "row",
@@ -22,13 +24,13 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     backgroundColor: palette["ligth"],
-    padding: 10,
-    borderRadius: 15
+    padding: 6,
+    borderRadius: 15,
   },
   image: {
     width: 60,
     height: 50,
     marginRight: 20,
-    borderRadius: 10
+    borderRadius: 10,
   },
 })
