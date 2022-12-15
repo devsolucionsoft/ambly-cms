@@ -35,14 +35,19 @@ const VideoItem = (props: VideoAttributes) => {
   >("PORTRAIT")
 
   useEffect(() => {
-    saved &&
-      (async () => {
+    setCurrentVideoTime(parseInt(startTime))
+  }, [startTime])
+
+  useEffect(() => {
+    if (saved && currentStatus.positionMillis !== 0) {
+      ;(async () => {
         await CourseApiModel.saveVideoTrailer({
           time_seen: currentStatus.positionMillis,
           modules_id: moduleId,
           video_id: videoId,
         })
       })()
+    }
   }, [currentStatus.positionMillis])
 
   useEffect(() => {

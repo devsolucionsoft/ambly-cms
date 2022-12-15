@@ -27,7 +27,7 @@ const ModuleDetailScreen = ({
 }: StackNavigationProps<UserStackParamList, "ModuleDetail">) => {
   // Store
   const courseInfo = useAppSelector((store) => store.User.selectCourse)
-
+  const dispatch = useAppDispatch()
   // Params
   const selectedModule = route.params?.module
   const selectedVideo = route.params?.video
@@ -35,7 +35,6 @@ const ModuleDetailScreen = ({
   const [currentModule, setCurrentModule] = useState(selectedModule)
   const [currentVideo, setCurrentVideo] = useState(selectedVideo)
   const [currentVideoTime, setCurrentVideoTime] = useState(0)
-  console.log("currentVideoTime 2")
 
   const [disableNext, setDisableNext] = useState(false)
   const [disablePrev, setDisablePrev] = useState(false)
@@ -51,21 +50,23 @@ const ModuleDetailScreen = ({
   // Efecto para desactivar los botones prev/next cuando lleguen al primer y ultimo video
   useEffect(() => {
     const idVideo = courseInfo.modules[currentModule].videos[currentVideo].id
+    // Buscar progreso de video seleccionado dentro de las lista de save
     const saved = courseInfo.modules[currentModule].save.find(
       (item: any) => item.videos.id === idVideo
-    )
-
-    saved && setCurrentVideoTime(saved.time_seen)
-  
-
-    if (
-      currentVideo === courseInfo.modules[currentModule].videos.length - 1 &&
-      currentModule === courseInfo.modules.length - 1
-    ) {
+      )
+      // En caso de que encuentre un progreso edita el tiempo de vista cuando se cambia el video
+      saved ? setCurrentVideoTime(saved.time_seen) : setCurrentVideoTime(0)
+      
+      // Condicion para habilitar y desahabilitar el boton de next
+      if (
+        currentVideo === courseInfo.modules[currentModule].videos.length - 1 &&
+        currentModule === courseInfo.modules.length - 1
+        ) {
       setDisableNext(true)
     } else {
       setDisableNext(false)
     }
+    // Condicion para habilitar y desahabilitar el boton de prev
     if (currentVideo === 0 && currentModule === 0) {
       setDisablePrev(true)
     } else {
@@ -73,9 +74,8 @@ const ModuleDetailScreen = ({
     }
   }, [currentModule, currentVideo])
 
-  const dispatch = useAppDispatch()
 
-  //Cambiar modulo actual
+  // Animacion de cambio de modulo
   const setModule = (module: number) => {
     dispatch(onLoader(true))
 

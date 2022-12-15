@@ -32,6 +32,11 @@ const CourseDetail = ({
 
   const userApiModel = new UserApi()
   const [courseModules, setCourseModules] = useState<any>([])
+  const [savedItem, setSavedItem] = useState({
+    saved: false,
+    module: 0,
+    video: 0
+  })
 
   useEffect(() => {
     dispatch(onLoader(true))
@@ -45,6 +50,30 @@ const CourseDetail = ({
       dispatch(onLoader(false))
     })()
   }, [])
+
+  useEffect(() => {
+    courseModules.forEach((element: any) => {
+      
+      if (element.save.length > 0) {
+        
+        const saveOrder = element.save.sort((a:any, b:any) => {
+          const video1 = Date.parse(a.updateAt) // ignore upper and lowercase
+          const video2 = Date.parse(b.updateAt) // ignore upper and lowercase
+          if (video1 < video2) {
+            return -1;
+          }
+          if (video1 > video2) {
+            return 1;
+          }
+          return 0;
+        })
+
+        console.log(saveOrder);
+        setSavedItem
+        
+      }
+    })
+  }, [courseModules])
 
   const handleNavigateVideo = (module: number, video: number) =>
     navigation.navigate("ModuleDetail", {

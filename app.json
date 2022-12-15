@@ -7,6 +7,10 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "scheme": "ambly-app",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "plugins": ["expo-apple-authentication"],
     "extra": {
       "api_url": "http://45.79.166.128:7034"

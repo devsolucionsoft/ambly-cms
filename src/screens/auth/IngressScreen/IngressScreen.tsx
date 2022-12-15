@@ -41,6 +41,7 @@ const GoogleOuth = ({
     scopes: ["email"],
   })
 
+  // Respuesta de useAuthRequest de google
   useEffect(() => {
     setLoading(false)
     if (response?.type === "success") {
@@ -64,14 +65,17 @@ const GoogleOuth = ({
 
     let response = await AuthApiModel.UserLoginGoogle(responseInfo.data.email)
 
+    // condicion de usuario no registrado, se ejecuta cuando el usurio inicio por primera vez
     if (response.status === 204) {
       response = await AuthApiModel.UserRegistryGoogle({
         email: responseInfo.data.email,
       })
     }
 
+    // Respuesta satisfactoria tanto para registro como para login
     if (response.status === 200 || response.status === 201) {
       dispatch(
+        // Creacion de sesion
         createSession({
           id: response.data.id,
           email: responseInfo.data.email,
@@ -109,14 +113,15 @@ const FacebookOuth = ({
   const [loading, setLoading] = useState(false)
   const AuthApiModel = new AuthApi()
   const dispatch = useAppDispatch()
-  // facebook
   const [request, response, promptAsync] = Facebook.useAuthRequest({
     expoClientId: "1324979871671286",
     redirectUri: "https://auth.expo.io/@solucionsoft/ambly-app",
   })
 
+  // Respuesta de useAuthRequest de facebook
   useEffect(() => {
     setLoading(false)
+    // Respuesta satisfactoria
     if (response?.type === "success") {
       const { access_token } = response.params
       fetchUserInfo(access_token)
@@ -125,19 +130,22 @@ const FacebookOuth = ({
 
   const fetchUserInfo = async (token?: string) => {
     setLoading(false)
+    // Consulta infomacion de usuario con token de sesion
     const responseInfo = await axios.get(
       `https://graph.facebook.com/me?fields=email&access_token=${token}`
     )
-
     let response = await AuthApiModel.UserLoginFacebook(responseInfo.data.email)
 
+    // condicion de usuario no registrado, se ejecuta cuando el usurio inicio por primera vez
     if (response.status === 204) {
       response = await AuthApiModel.UserRegistryFacebook({
         email: responseInfo.data.email,
       })
     }
 
+    // Respuesta satisfactoria tanto para registro como para login
     if (response.status === 200 || response.status === 201) {
+      // Creacion de sesion
       dispatch(
         createSession({
           id: response.data.id,
