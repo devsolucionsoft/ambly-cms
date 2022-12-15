@@ -7,6 +7,7 @@ import { Video, ResizeMode } from "expo-av"
 import Slider from "@react-native-community/slider"
 // Api
 import { CourseApi } from "../../../api"
+import { log } from "react-native-reanimated"
 
 interface VideoProps {
   url?: string
@@ -44,8 +45,6 @@ const VideoItem = (props: VideoAttributes) => {
   // Efecto que guarda el progreso del video cada "progressUpdateIntervalMillis" milisegundos
   useEffect(() => {
     if (saved && currentStatus.positionMillis > 0 && currentStatus.isPlaying) {
-      console.log("save", currentStatus.positionMillis);
-      
       ;(async () => {
         await CourseApiModel.saveVideoTrailer({
           time_seen: currentStatus.positionMillis,
@@ -58,7 +57,7 @@ const VideoItem = (props: VideoAttributes) => {
 
   // Funcion para cambiar la orientacion de la pantalla cuando un video se amplia a pantalla completa
   const changeScreenOrientation = async (localStatus: any) => {
-    // Cuando la el video se pone "fullscreen" se inicia automaticamente
+    // Cuando el video se pone "fullscreen" se inicia automaticamente
     if (localStatus.fullscreenUpdate === 1) {
       setTimeout(() => {
         video.current.playAsync()
@@ -67,7 +66,7 @@ const VideoItem = (props: VideoAttributes) => {
         ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT
       )
     }
-    // Cuando la el video deja de estar "fullscreen" se pausa automaticamente
+    // Cuando el video deja de estar "fullscreen" se pausa automaticamente
     if (localStatus.fullscreenUpdate === 2) {
       setOrientationLock("PORTRAIT")
       video.current.pauseAsync()

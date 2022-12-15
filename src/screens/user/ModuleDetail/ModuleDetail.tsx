@@ -20,6 +20,10 @@ import { Layout, AccordionItem, VideoItem } from "../../../components/user"
 // Store
 import { useAppSelector, useAppDispatch } from "../../../store"
 import { onLoader } from "../../../store/Loader/actions"
+// API
+import { UserApi } from "../../../api"
+// Store
+import { selectCourse } from "../../../store/User/actions"
 
 const ModuleDetailScreen = ({
   navigation,
@@ -28,6 +32,7 @@ const ModuleDetailScreen = ({
   // Store
   const courseInfo = useAppSelector((store) => store.User.selectCourse)
   const dispatch = useAppDispatch()
+  const userApiModel = new UserApi()
 
   const [currentModule, setCurrentModule] = useState(0)
   const [currentVideo, setCurrentVideo] = useState(0)
@@ -35,6 +40,14 @@ const ModuleDetailScreen = ({
 
   const [disableNext, setDisableNext] = useState(false)
   const [disablePrev, setDisablePrev] = useState(false)
+
+  // Efecto para consutar a la api los modulos del curso selccionado segun los parametros recibidos
+  useEffect(() => {
+    dispatch(onLoader(true))
+    ;(async () => {
+      dispatch(onLoader(false))
+    })()
+  }, [route.params])
 
   // Efecto para actualizar el state con los parametros recividos
   useEffect(() => {
@@ -44,6 +57,7 @@ const ModuleDetailScreen = ({
 
   // Efecto para desactivar los botones prev/next cuando lleguen al primer y ultimo video
   useEffect(() => {
+    dispatch(onLoader(true))
     const idVideo = courseInfo.modules[currentModule].videos[currentVideo].id
     // Buscar progreso de video seleccionado dentro de las lista de save
     const saved = courseInfo.modules[currentModule].save.find(
@@ -67,23 +81,29 @@ const ModuleDetailScreen = ({
     } else {
       setDisablePrev(false)
     }
+    setTimeout(() => {
+      dispatch(onLoader(false))
+    }, 1000)
   }, [currentModule, currentVideo])
 
   // Animacion de cambio de modulo
   const setModule = (module: number) => {
-    dispatch(onLoader(true))
     setTimeout(() => {
       setCurrentModule(module)
     }, 1000)
     setTimeout(() => {
       dispatch(onLoader(false))
-    }, 2000)
+    }, 1000)
   }
 
   // Cambiar video actual
-  const setVideo = (video: number) => {
+  const setVideo = async (video: number) => {
     // Activar loader
     dispatch(onLoader(true))
+    const response = await userApiModel.GetCourse(courseInfo.id)
+    if (response.status === 200) {
+      dispatch(selectCourse(response.data))
+    }
     // Video proximo
     if (video > currentVideo) {
       // Comprobar si el video es el ultimo del modulo.
@@ -112,10 +132,6 @@ const ModuleDetailScreen = ({
         }, 1000)
       }
     }
-    // Desactivar loader
-    setTimeout(() => {
-      dispatch(onLoader(false))
-    }, 2000)
   }
 
   const handleNavigateVideo = (module: number, video: number) => {

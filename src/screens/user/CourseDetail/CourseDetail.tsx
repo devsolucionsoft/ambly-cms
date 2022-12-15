@@ -51,6 +51,7 @@ const CourseDetail = ({
     })()
   }, [route.params])
 
+
   // Funcion para extraer la informacion del ultimo video visto por el usuario y poder redirigirlo a el
   useEffect(() => {
     if (courseModules.length > 0) {
@@ -98,6 +99,7 @@ const CourseDetail = ({
     <Layout
       headerProps={{
         returnAction: true,
+        action: () => navigation.navigate("MyCourses")
       }}
       buttonAction={{
         text: savedItem.saved ? "Continuar curso" : "Iniciar curso",
