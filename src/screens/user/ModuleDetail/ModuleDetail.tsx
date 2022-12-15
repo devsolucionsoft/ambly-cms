@@ -28,24 +28,19 @@ const ModuleDetailScreen = ({
   // Store
   const courseInfo = useAppSelector((store) => store.User.selectCourse)
   const dispatch = useAppDispatch()
-  // Params
-  const selectedModule = route.params?.module
-  const selectedVideo = route.params?.video
 
-  const [currentModule, setCurrentModule] = useState(selectedModule)
-  const [currentVideo, setCurrentVideo] = useState(selectedVideo)
+  const [currentModule, setCurrentModule] = useState(0)
+  const [currentVideo, setCurrentVideo] = useState(0)
   const [currentVideoTime, setCurrentVideoTime] = useState(0)
 
   const [disableNext, setDisableNext] = useState(false)
   const [disablePrev, setDisablePrev] = useState(false)
 
+  // Efecto para actualizar el state con los parametros recividos
   useEffect(() => {
-    setModule(selectedModule)
-  }, [selectedModule])
-
-  useEffect(() => {
-    setVideo(selectedVideo)
-  }, [selectedVideo])
+    setCurrentModule(route.params?.module)
+    setCurrentVideo(route.params?.video)
+  }, [route.params])
 
   // Efecto para desactivar los botones prev/next cuando lleguen al primer y ultimo video
   useEffect(() => {
@@ -53,15 +48,15 @@ const ModuleDetailScreen = ({
     // Buscar progreso de video seleccionado dentro de las lista de save
     const saved = courseInfo.modules[currentModule].save.find(
       (item: any) => item.videos.id === idVideo
-      )
-      // En caso de que encuentre un progreso edita el tiempo de vista cuando se cambia el video
-      saved ? setCurrentVideoTime(saved.time_seen) : setCurrentVideoTime(0)
-      
-      // Condicion para habilitar y desahabilitar el boton de next
-      if (
-        currentVideo === courseInfo.modules[currentModule].videos.length - 1 &&
-        currentModule === courseInfo.modules.length - 1
-        ) {
+    )
+    // En caso de que encuentre un progreso edita el tiempo de vista cuando se cambia el video
+    saved ? setCurrentVideoTime(saved.time_seen) : setCurrentVideoTime(0)
+
+    // Condicion para habilitar y desahabilitar el boton de next
+    if (
+      currentVideo === courseInfo.modules[currentModule].videos.length - 1 &&
+      currentModule === courseInfo.modules.length - 1
+    ) {
       setDisableNext(true)
     } else {
       setDisableNext(false)
@@ -74,15 +69,12 @@ const ModuleDetailScreen = ({
     }
   }, [currentModule, currentVideo])
 
-
   // Animacion de cambio de modulo
   const setModule = (module: number) => {
     dispatch(onLoader(true))
-
     setTimeout(() => {
       setCurrentModule(module)
     }, 1000)
-
     setTimeout(() => {
       dispatch(onLoader(false))
     }, 2000)
@@ -90,37 +82,40 @@ const ModuleDetailScreen = ({
 
   // Cambiar video actual
   const setVideo = (video: number) => {
+    // Activar loader
+    dispatch(onLoader(true))
+    // Video proximo
     if (video > currentVideo) {
-      dispatch(onLoader(true))
+      // Comprobar si el video es el ultimo del modulo.
       if (video === courseInfo.modules[currentModule].videos.length) {
+        // En caso de que sí se pasa al siguiente modulo en el video 0
         setCurrentVideo(0)
         setModule(currentModule + 1)
       } else {
+        // En caso de que no se pasa el siguiente video del modulo
         setTimeout(() => {
           setCurrentVideo(video)
         }, 1000)
-
-        setTimeout(() => {
-          dispatch(onLoader(false))
-        }, 2000)
       }
     }
-
+    // Video previo
     if (video < currentVideo) {
-      dispatch(onLoader(true))
+      // Comprobar si el video es el primero del modulo.
       if (video < 0) {
+        // En caso de que sí se pasa al modulo anterior en su ultimo video
         setCurrentVideo(0)
         setModule(currentModule - 1)
       } else {
+        // En caso de que no se pasa el video anterior del modulo
         setTimeout(() => {
           setCurrentVideo(video)
         }, 1000)
-
-        setTimeout(() => {
-          dispatch(onLoader(false))
-        }, 2000)
       }
     }
+    // Desactivar loader
+    setTimeout(() => {
+      dispatch(onLoader(false))
+    }, 2000)
   }
 
   const handleNavigateVideo = (module: number, video: number) => {
@@ -169,7 +164,9 @@ const ModuleDetailScreen = ({
     <Layout
       headerProps={{
         action: () => {
-          navigation.goBack()
+          navigation.navigate("CourseDetail", {
+            id_course: courseInfo.id,
+          })
         },
         returnAction: false,
         variant: "information",

@@ -26,22 +26,22 @@ const CourseDetail = ({
   navigation,
   route,
 }: StackNavigationProps<UserStackParamList, "CourseDetail">) => {
-  const { id_course } = route.params
   const dispatch = useAppDispatch()
   const courseInfo = useAppSelector((store) => store.User.selectCourse)
-
   const userApiModel = new UserApi()
+
   const [courseModules, setCourseModules] = useState<any>([])
   const [savedItem, setSavedItem] = useState({
     saved: false,
     module: 0,
-    video: 0
+    video: 0,
   })
 
+  // Efecto para consutar a la api los modulos del curso selccionado segun los parametros recibidos
   useEffect(() => {
     dispatch(onLoader(true))
     ;(async () => {
-      const response = await userApiModel.GetCourse(id_course)
+      const response = await userApiModel.GetCourse(route.params.id_course)
       if (response.status === 200) {
         dispatch(selectCourse(response.data))
         Array.isArray(response.data?.modules) &&
@@ -49,32 +49,45 @@ const CourseDetail = ({
       }
       dispatch(onLoader(false))
     })()
-  }, [])
+  }, [route.params])
 
+  // Funcion para extraer la informacion del ultimo video visto por el usuario y poder redirigirlo a el
   useEffect(() => {
-    courseModules.forEach((element: any) => {
-      
-      if (element.save.length > 0) {
-        
-        const saveOrder = element.save.sort((a:any, b:any) => {
-          const video1 = Date.parse(a.updateAt) // ignore upper and lowercase
-          const video2 = Date.parse(b.updateAt) // ignore upper and lowercase
-          if (video1 < video2) {
-            return -1;
-          }
-          if (video1 > video2) {
-            return 1;
-          }
-          return 0;
-        })
-
-        console.log(saveOrder);
-        setSavedItem
-        
-      }
-    })
+    if (courseModules.length > 0) {
+      let savedItems: Array<any> = []
+      // Se concatenan todos los "save" (progresos de videos) de cada modulo
+      courseModules.forEach((element: any, index: number) => {
+        savedItems = savedItems.concat(
+          element.save.map((item: any) => ({ ...item, module: index }))
+        )
+      })
+      // Ordeno los "save" por fecha de modificacion
+      const sortItems = savedItems.sort((a: any, b: any) => {
+        const video1 = Date.parse(a.updateAt) // ignore upper and lowercase
+        const video2 = Date.parse(b.updateAt) // ignore upper and lowercase
+        if (video1 < video2) {
+          return -1
+        }
+        if (video1 > video2) {
+          return 1
+        }
+        return 0
+      })
+      // Se toma el ultimo video modificado y se extraen los indices del modulo y del video
+      const lastItem = sortItems[sortItems.length - 1]
+      const indexVideo = courseModules[lastItem.module].videos.findIndex(
+        (item: any) => item.id === lastItem.videos.id
+      )
+      // Se guarda la informacion del ultimo video visto por el usuario
+      setSavedItem({
+        saved: true,
+        module: lastItem.module,
+        video: indexVideo,
+      })
+    }
   }, [courseModules])
 
+  // Funcion para redirigir a modulo y video especificos
   const handleNavigateVideo = (module: number, video: number) =>
     navigation.navigate("ModuleDetail", {
       module: module,
@@ -86,10 +99,9 @@ const CourseDetail = ({
       headerProps={{
         returnAction: true,
       }}
-      // navCourse={<NavCourse page={route.name}  />}
       buttonAction={{
-        text: "Iniciar curso",
-        onPress: () => handleNavigateVideo(0, 0),
+        text: savedItem.saved ? "Continuar curso" : "Iniciar curso",
+        onPress: () => handleNavigateVideo(savedItem.module, savedItem.video),
       }}
       navCourse={true}
     >

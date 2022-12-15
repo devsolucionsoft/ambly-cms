@@ -16,6 +16,8 @@ interface VideoProps {
   startTime?: any
 }
 
+const progressUpdateIntervalMillis = 3000
+
 const defaultUrl =
   "https://joy.videvo.net/videvo_files/video/free/video0455/large_watermarked/_import_6091143fc4c4b6.26692621_preview.mp4"
 
@@ -28,18 +30,22 @@ const VideoItem = (props: VideoAttributes) => {
 
   const parseStyle = typeof style === "object" ? style : {}
 
-  const [currentVideoTime, setCurrentVideoTime] = useState(startTime)
+  const [currentVideoTime, setCurrentVideoTime] = useState(0)
   const [currentStatus, setCurrentStatus] = useState<any>({})
   const [orientationLock, setOrientationLock] = useState<
     "PORTRAIT" | "LANDSCAPE_RIGHT"
   >("PORTRAIT")
 
+  // Efecto que inicializa "currentVideoTime" cuando se recibe un tiempo por defecto
   useEffect(() => {
     setCurrentVideoTime(parseInt(startTime))
   }, [startTime])
 
+  // Efecto que guarda el progreso del video cada "progressUpdateIntervalMillis" milisegundos
   useEffect(() => {
-    if (saved && currentStatus.positionMillis !== 0) {
+    if (saved && currentStatus.positionMillis > 0 && currentStatus.isPlaying) {
+      console.log("save", currentStatus.positionMillis);
+      
       ;(async () => {
         await CourseApiModel.saveVideoTrailer({
           time_seen: currentStatus.positionMillis,
@@ -50,34 +56,26 @@ const VideoItem = (props: VideoAttributes) => {
     }
   }, [currentStatus.positionMillis])
 
-  useEffect(() => {
-    if (currentStatus.isPlaying) {
-      setCurrentVideoTime(currentStatus.positionMillis)
-    }
-  }, [currentStatus.isPlaying])
-
+  // Funcion para cambiar la orientacion de la pantalla cuando un video se amplia a pantalla completa
   const changeScreenOrientation = async (localStatus: any) => {
+    // Cuando la el video se pone "fullscreen" se inicia automaticamente
     if (localStatus.fullscreenUpdate === 1) {
-      setOrientationLock("LANDSCAPE_RIGHT")
+      setTimeout(() => {
+        video.current.playAsync()
+      }, 500)
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT
       )
     }
+    // Cuando la el video deja de estar "fullscreen" se pausa automaticamente
     if (localStatus.fullscreenUpdate === 2) {
       setOrientationLock("PORTRAIT")
+      video.current.pauseAsync()
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.PORTRAIT
       )
     }
   }
-
-  useEffect(() => {
-    currentStatus.isPlaying && setCurrentVideoTime(currentStatus.positionMillis)
-    orientationLock === "PORTRAIT" && video.current.pauseAsync()
-    setTimeout(() => {
-      orientationLock === "LANDSCAPE_RIGHT" && video.current.playAsync()
-    }, 500)
-  }, [orientationLock])
 
   return (
     <View style={{ ...styles.main }}>
@@ -88,7 +86,7 @@ const VideoItem = (props: VideoAttributes) => {
           uri: url ? url : defaultUrl,
         }}
         isLooping={false}
-        progressUpdateIntervalMillis={3000}
+        progressUpdateIntervalMillis={progressUpdateIntervalMillis}
         resizeMode={
           orientationLock === "PORTRAIT" ? ResizeMode.COVER : ResizeMode.CONTAIN
         }
@@ -116,11 +114,7 @@ const VideoItem = (props: VideoAttributes) => {
           minimumValue={0}
           maximumValue={currentStatus.durationMillis}
           disabled={true}
-          value={
-            currentStatus.isPlaying
-              ? currentStatus.positionMillis
-              : currentVideoTime
-          }
+          value={currentStatus.positionMillis}
           minimumTrackTintColor="#FF3437"
           maximumTrackTintColor="#FFFFFF"
           thumbTintColor="#FF3437"
