@@ -168,16 +168,16 @@ export class UserApi {
 
 export class CourseApi {
   async saveVideoTrailer(data: {
-    time_seen: number,
-    modules_id: number,
+    time_seen: number
+    modules_id: number
     video_id: number
-}) {
+  }) {
     try {
       return await axios.post(`${url}/modules/save/video`, {
-        "time_seen": data.time_seen,
-        "modules_id": data.modules_id,
-        "video_id": data.video_id
-    })
+        time_seen: data.time_seen,
+        modules_id: data.modules_id,
+        video_id: data.video_id,
+      })
     } catch (error: any) {
       return error.response
     }

@@ -29,7 +29,7 @@ const LayoutApp = () => {
 export default function App() {
   useFonts({
     Poppins: require("./assets/fonts/Poppins/Poppins-Regular.ttf"),
-    Inter: require("./assets/fonts/Inter/static/Inter-Medium.ttf"),
+    Inter: require("./assets/fonts/Inter/static/Inter-Regular.ttf"),
   })
 
   return (

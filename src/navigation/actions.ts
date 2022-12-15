@@ -4,7 +4,7 @@ import {
   AppStackParamList,
   AuthStackParamList,
   UserStackParamList,
-} from "../navigation/types"
+} from "./types"
 
 export const navigationRef: React.RefObject<
   NavigationContainerRef<AppStackParamList>

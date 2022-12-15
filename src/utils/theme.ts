@@ -23,7 +23,7 @@ export const palette = {
   yellowPrimary: "#FBBC02",
   yellowSecondary: "#F8E84B",
   blueText: "#8FDDFE",
-  blueRed: "#435B9A"
+  blueRed: "#435B9A",
 }
 
 export const paletteGradient = {
