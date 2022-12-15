@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   topicImage: {
     width: 150,
     height: 150,
-    borderRadius: 60,
+    borderRadius: 75,
     shadowOffset: {
       width: 0,
       height: 12,

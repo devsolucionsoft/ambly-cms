@@ -69,7 +69,7 @@ const HomeScreen = ({
       {/* Popular courses */}
       <Tutors handlePress={(id:any) => navigation.navigate("ProfessorDetail")} />
       <View style={styles.content}>
-        <FavoriteTopics />
+        <FavoriteTopics handlePress={(id:any) => navigation.navigate("CategoryDetail")} />
         <ContinueClasses />
       </View>
     </Layout>

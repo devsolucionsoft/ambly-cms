@@ -11,22 +11,23 @@ import {
 import Swiper from "react-native-swiper"
 import { LinearGradient } from "expo-linear-gradient"
 import { navigateUser, navigateAuth } from "../../../navigation/actions"
-import { FontAwesome5 } from "@expo/vector-icons"
+import { FontAwesome5, AntDesign, MaterialIcons } from "@expo/vector-icons"
 // Styles
-import { styles, stylesNew } from "./SliderCourses.styles"
+import { styles, stylesNew, stylesCategory } from "./SliderCourses.styles"
 import { palette, paletteGradient } from "../../../utils/theme"
 // COmponents
-import { Typography, Button } from "../../global"
+import { Typography, Button, Divider } from "../../global"
 // Store
 import { useAppSelector } from "../../../store"
 import Carousel from "react-native-snap-carousel"
 
 interface SliderCoursesProps {
-  variant?: "popular" | "new" | "next"
+  variant?: "popular" | "new" | "next" | "category" | "categoryList"
   header?: boolean
   title?: string
   arrayItems?: Array<any>
   navigateToCourse?: any
+  hideSeeAll?: boolean
 }
 
 type SliderCoursesAttributes = SliderCoursesProps & ViewProps
@@ -39,6 +40,7 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
     title,
     arrayItems = [],
     navigateToCourse,
+    hideSeeAll,
   } = props
 
   const auth = useAppSelector((store) => store.Auth)
@@ -75,7 +77,7 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
     )
   }
 
-  const itemSlider = ({ item, index }: { item: any; index: any }) => {
+  const itemSliderNew = ({ item, index }: { item: any; index: any }) => {
     return (
       <TouchableOpacity
         key={item}
@@ -103,7 +105,7 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
     )
   }
 
-  const itemSliderPopu = ({ item, index }: { item: any; index: any }) => {
+  const itemSliderPopular = ({ item, index }: { item: any; index: any }) => {
     return (
       <TouchableOpacity
         key={item}
@@ -159,8 +161,80 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
     )
   }
 
+  const itemSliderCategory = ({ item, index }: { item: any; index: any }) => {
+    return (
+      <TouchableOpacity
+        key={item}
+        style={stylesCategory.category}
+        onPress={() => false}
+      >
+        <ImageBackground
+          style={stylesCategory.categoryImage}
+          resizeMode="cover"
+          source={require("../../../../assets/images/pintura.jpg")}
+        >
+          <View style={stylesCategory.overlay}></View>
+          <View style={stylesCategory.content}>
+            <View
+              style={{
+                position: "relative",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <View style={stylesCategory.beagle}>
+                <Typography variant="p12" color="ligth" textAlign="left">
+                  {"Artes"}
+                </Typography>
+              </View>
+              <AntDesign name="play" size={24} color="white" />
+            </View>
+            <View style={{ position: "relative", marginTop: 20 }}>
+              <Typography variant="p20" textAlign="left" color="ligth">
+                {"Pintura al Oleo"}
+              </Typography>
+              <Typography variant="p12" textAlign="left" color="ligth">
+                {"8 Modulos - 12 Horas"}
+              </Typography>
+              <Divider
+                color="grayText"
+                width={"100%"}
+                boder={1}
+                align="left"
+                marginTop={3}
+                marginBottom={3}
+              />
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginLeft: 3,
+                }}
+              >
+                <FontAwesome5
+                  name="user-alt"
+                  size={10}
+                  color={palette["ligth"]}
+                />
+                <Typography
+                  variant="p12"
+                  color="ligth"
+                  textAlign="left"
+                  style={{ marginLeft: 9, marginTop: 3 }}
+                >
+                  Jorge Enrique Avello
+                </Typography>
+              </View>
+            </View>
+          </View>
+        </ImageBackground>
+      </TouchableOpacity>
+    )
+  }
+
   return (
-    <View style={{ ...parseStyle, ...styles.main, height: getHeigth() }}>
+    <View style={[parseStyle, styles.main, { height: getHeigth() }]}>
+      {/* Header de sliders */}
       {header && (
         <View
           style={{
@@ -177,19 +251,24 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
           >
             {title}
           </Typography>
-          <TouchableOpacity style={{ justifyContent: "center", marginTop: 5 }}>
-            <Typography
-              variant="p3"
-              textAlign="left"
-              color="redPrimary"
-              style={{ fontWeight: "bold" }}
+          {!hideSeeAll && (
+            <TouchableOpacity
+              style={{ justifyContent: "center", marginTop: 5 }}
             >
-              Ver todos
-            </Typography>
-          </TouchableOpacity>
+              <Typography
+                variant="p3"
+                textAlign="left"
+                color="redPrimary"
+                style={{ fontWeight: "bold" }}
+              >
+                Ver todos
+              </Typography>
+            </TouchableOpacity>
+          )}
         </View>
       )}
 
+      {/* Sliders de tipo next hecho con la libreria react-native-swiper */}
       {variant === "next" && (
         <Pressable style={styles.swiper}>
           {({ pressed }) => (
@@ -260,10 +339,11 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
         </Pressable>
       )}
 
+      {/* Sliders de tipo new y popular hechos con la libreria react-native-snap-carousel */}
       {variant === "new" && (
         <Carousel
           data={[1, 2, 3, 4, 5]}
-          renderItem={itemSlider}
+          renderItem={itemSliderNew}
           sliderWidth={Dimensions.get("screen").width}
           itemWidth={Dimensions.get("screen").width * 0.6}
           vertical={false}
@@ -274,12 +354,56 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
       {variant === "popular" && (
         <Carousel
           data={[1, 2, 3, 4, 5]}
-          renderItem={itemSliderPopu}
+          renderItem={itemSliderPopular}
           sliderWidth={Dimensions.get("screen").width}
           itemWidth={Dimensions.get("screen").width * 0.7}
           vertical={false}
           loop={true}
         />
+      )}
+
+      {variant === "category" && (
+        <Carousel
+          data={[1, 2, 3, 4, 5]}
+          renderItem={itemSliderCategory}
+          sliderWidth={Dimensions.get("screen").width}
+          itemWidth={Dimensions.get("screen").width * 0.7}
+          vertical={false}
+          loop={true}
+        />
+      )}
+
+      {variant === "categoryList" && (
+        <View style={stylesCategory.contentItems}>
+          {[1, 2, 3].map((items: any) => (
+            <TouchableOpacity onPress={() => false}>
+              <View style={stylesCategory.itemsCourse}>
+                <Image
+                  style={stylesCategory.categoryImageList}
+                  source={require("../../../../assets/images/pintura.jpg")}
+                />
+                <View style={{ flex: 2, marginHorizontal: 10 }}>
+                  <Typography
+                    variant="p18"
+                    textAlign="left"
+                    color="ligth"
+                    style={{ fontWeight: "bold" }}
+                  >
+                    {"Ilustración a mano con colores"}
+                  </Typography>
+                  <Typography variant="p13" textAlign="left" color="ligth">
+                    {"8 Modulos - 12 Horas"}
+                  </Typography>
+                </View>
+                <MaterialIcons
+                  name="keyboard-arrow-right"
+                  size={40}
+                  color="white"
+                />
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
       )}
     </View>
   )

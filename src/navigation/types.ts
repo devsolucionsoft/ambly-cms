@@ -36,7 +36,6 @@ export type UserStackParamList = {
   ManyCourses: undefined
   ChooseCourses: undefined
   CheckIn: undefined
-  ProfessorDetail: undefined
   CourseDetail: {
     id_course: number
   }
@@ -46,6 +45,8 @@ export type UserStackParamList = {
     video?: any
   }
   MyAccount: undefined
+  ProfessorDetail: undefined
+  CategoryDetail: undefined
 }
 
 export type AppStackParamList = {

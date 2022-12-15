@@ -35,7 +35,8 @@ import {
   MyCourses,
   ModuleDetail,
   MyAccount,
-  ProfessorDetail
+  ProfessorDetail,
+  CategoryDetail
 } from "../screens/user"
 // Drawer
 import { DrawerNatigation } from "../components/user"
@@ -167,6 +168,11 @@ const UserNavigator = () => {
       <UserStack.Screen
         name="ProfessorDetail"
         component={ProfessorDetail}
+        options={{ headerShown: false }}
+      />
+      <UserStack.Screen
+        name="CategoryDetail"
+        component={CategoryDetail}
         options={{ headerShown: false }}
       />
     </UserStack.Navigator>

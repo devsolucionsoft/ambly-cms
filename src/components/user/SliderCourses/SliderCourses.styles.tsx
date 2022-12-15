@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   main: {
     width: "100%",
     marginBottom: 40,
-    position: "relative"
+    position: "relative",
   },
   swiper: {
     flex: 1,
@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     overflow: "hidden",
     position: "relative",
-    marginBottom: 10
+    marginBottom: 10,
   },
   swiperImagePopular: {
     flex: 1,
@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
   },
   swiperSvgPopular: {
     width: "60%",
-    maxHeight: 100
+    maxHeight: 100,
   },
   swiperItemPopularContent: {
     width: "100%",
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 30,
     position: "absolute",
     alignItems: "flex-start",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   swiperItemNew: {
     flex: 1,
@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
     backgroundColor: palette["ligth"],
     borderRadius: 30,
     overflow: "hidden",
-    marginBottom: 25
+    marginBottom: 25,
   },
   swiperImageNew: {
     width: "100%",
@@ -95,10 +95,9 @@ export const styles = StyleSheet.create({
   swiperPaginationItem: {
     height: 8,
     marginHorizontal: 2,
-    borderRadius: 5
+    borderRadius: 5,
   },
 })
-
 
 export const stylesNew = StyleSheet.create({
   swiperItemNew: {
@@ -124,7 +123,6 @@ export const stylesNew = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: "center",
     justifyContent: "flex-end",
-
   },
   swiperItemNext: {
     flex: 1,
@@ -143,3 +141,45 @@ export const stylesNew = StyleSheet.create({
   },
 })
 
+export const stylesCategory = StyleSheet.create({
+  category: {
+    borderRadius: 20,
+    overflow: "hidden",
+    position: "relative"
+  },
+  categoryImage: {
+    width: "100%",
+  },
+  content: {
+    padding: 15
+  },
+  overlay: {
+    position: "absolute",
+    backgroundColor: "rgba(0,0,0,0.3)",
+    height: "100%",
+    width: "100%",
+    top: 0,
+  },
+  beagle: {
+    backgroundColor: "rgba(0,0,0,0.7)",
+    paddingVertical: 3,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+  },
+  contentItems:  {
+    paddingHorizontal: 25,
+  },
+  itemsCourse: {
+    flexDirection: "row",
+    backgroundColor: "#454545",
+    borderRadius: 10,
+    padding: 10,
+    alignItems: "center",
+    marginBottom: 15
+  },
+  categoryImageList: {
+    height: 70,
+    width: 90,
+    borderRadius: 8
+  }
+})
