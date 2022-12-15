@@ -6,6 +6,7 @@ import CourseDetail from "./CourseDetail"
 import MyCourses from "./MyCourses"
 import ModuleDetail from "./ModuleDetail"
 import MyAccount from "./MyAccount"
+import ProfessorDetail from "./ProfessorDetail"
 
 export {
   HomeScreen,
@@ -15,5 +16,6 @@ export {
   CourseDetail,
   MyCourses,
   ModuleDetail,
-  MyAccount
+  MyAccount,
+  ProfessorDetail,
 }

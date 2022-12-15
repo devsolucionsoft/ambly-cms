@@ -242,14 +242,16 @@ const SliderCourses = (props: SliderCoursesAttributes) => {
                         Jorge Enrique Avello
                       </Typography>
                     </View>
-                    <Button
-                      text={auth.session ? "Acceder" : "Ver curso"}
-                      variant="sm"
-                      color="redPrimary"
-                      colorText="ligth"
-                      style={{ marginTop: 15, paddingHorizontal: 60 }}
-                      onPress={() => navigateToCourse(1)}
-                    />
+                    <View>
+                      <Button
+                        text={auth.session ? "Acceder" : "Ver curso"}
+                        variant="sm"
+                        color="redPrimary"
+                        colorText="ligth"
+                        style={{ marginTop: 15 }}
+                        onPress={() => navigateToCourse(1)}
+                      />
+                    </View>
                   </LinearGradient>
                 </View>
               ))}

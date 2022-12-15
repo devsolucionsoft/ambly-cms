@@ -9,11 +9,13 @@ import { UserApi } from "../../../api"
 
 const Topics = [1, 2, 3, 4]
 
-interface TutorsProps {}
+interface TutorsProps {
+  handlePress: any
+}
 type TutorsAttributes = TutorsProps & ViewProps
 
 const Tutors = (props: TutorsAttributes) => {
-  const { style } = props
+  const { style, handlePress } = props
   const parseStyle = typeof style === "object" ? style : {}
 
   const UserApiModel = new UserApi()
@@ -58,7 +60,7 @@ const Tutors = (props: TutorsAttributes) => {
 
       <View style={styles.topicsList}>
         {[1, 2].map((item: any, index) => (
-          <TouchableOpacity key={index} style={styles.topicsItem}>
+          <TouchableOpacity key={index} style={styles.topicsItem} onPress={() => handlePress(index)}>
             <Image
               style={styles.topicImage}
               source={require("../../../../assets/images/course.png")}
