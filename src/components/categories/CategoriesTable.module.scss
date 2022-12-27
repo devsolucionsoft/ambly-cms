@@ -90,6 +90,11 @@
                 svg {
 
                     width: 30px;
+
+                    &:hover {
+                        color: #b61a1d;
+                        cursor: pointer;
+                    }
                 }
             }
         }
