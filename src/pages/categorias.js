@@ -17,9 +17,8 @@ const Page = () => {
   const closeModal = () => setModalOpen(false);
   const openModal = () => setModalOpen(true);
   const [isEditing, setIsEditing] = useState(false)
-  const editingCategory = () => {
-    setIsEditing(true)
-  }
+  const editingCategory = () => {setIsEditing(true)}
+  const stopEditingCategory = () => {setIsEditing(false)}
 
   const [itemsCategories, setItemsCategories] = useState([]);
 
@@ -34,13 +33,16 @@ const Page = () => {
     getCategories();
   }, []);
 
-  console.log(isEditing)
+
 
   return (
     <div className="container" style={{ paddingBottom: "2em" }}>
+
+      
+
       <CategoriesTable itemsCategories={itemsCategories} getCategories={getCategories} editingCategory={editingCategory} modalOpen={modalOpen} closeModal={closeModal} openModal={openModal}/>
 
-      <GButton text={"Agregar Categoria"} onClick={() => (modalOpen ? closeModal() : openModal())}>
+      <GButton text={"Agregar Categoria"} onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingCategory())}>
         {" "}
         Abrir
       </GButton>

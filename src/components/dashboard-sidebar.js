@@ -17,6 +17,7 @@ import { Users as UsersIcon } from '../icons/users';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
+import AddToHomeScreenIcon from '@mui/icons-material/AddToHomeScreen';
 
 const items = [
   {
@@ -38,6 +39,11 @@ const items = [
     href: '/agregar-cursos',
     icon: (<SchoolIcon fontSize="small" />),
     title: 'Cursos'
+  },
+  {
+    href: '/splash',
+    icon: (<AddToHomeScreenIcon fontSize="small" />),
+    title: 'Splash'
   },
   {
     href: '/settings',
