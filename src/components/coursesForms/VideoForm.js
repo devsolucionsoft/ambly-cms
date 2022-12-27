@@ -5,14 +5,12 @@ import styles from './CoursesForms.module.scss'
 import GButton from '../buttons/GButton';
 
 const SUPPORTED_FORMATS = [
-    "video/jpg",
-    "video/jpeg",
-    "video/png"
+    "video/mp4",
 ];
 
 const videoSchema = Yup.object().shape({
     name: Yup.string()
-        .required('Nombre de la categoria requerido'),
+        .required('Nombre del video '),
     description: Yup.string()
         .required('Descripcion de la categoria requerida'),
     image: Yup.mixed()
@@ -26,14 +24,13 @@ const videoSchema = Yup.object().shape({
 const VideoForm = () => {
     return (
         <div className={styles.categoryFormContainer}>
-
             <div>
                 <h1>Nuevo Video</h1>
                 <Formik
                     initialValues={{
                         name: '',
                         description: '',
-                        image: ''
+                        video: ''
                     }}
                     validationSchema={videoSchema}
                     onSubmit={values => {
@@ -45,9 +42,7 @@ const VideoForm = () => {
                         <Form>
 
                             <div className={styles.form}>
-
                                 <div>
-
                                     <Field className={`fieldShadow ${styles.field}`} name="name" placeholder="Nombre del video" />
                                     {errors.name && touched.name ? (
                                         <div className="fieldErrors" >{errors.name}</div>

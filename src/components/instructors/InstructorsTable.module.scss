@@ -84,13 +84,26 @@
 
             .actionIcons {
 
-                width: 150px;
-                // // background-color: red;
-                // margin: 0 auto;
-                svg {
+        
+                .icon {
+                    margin: 0 auto;
+                    width: 100px;
+                    display: flex;
+                    justify-content: space-between;
 
-                    width: 30px;
+
+                    svg {
+    
+                        width: 30px;
+
+                        &:hover {
+                            color: #d41f22;
+                            transition: .2s;
+                            cursor: pointer;
+                        }
+                    }
                 }
+
             }
         }
     }
