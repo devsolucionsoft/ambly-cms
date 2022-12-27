@@ -28,8 +28,6 @@ const SplashEditForm = (props) => {
 
   const [formvalues, setFromValues] = useState(false);
 
-  console.log(formvalues);
-
   useEffect(() => {
     setFromValues(itemsSplash.find((item) => item.id === isEditing));
   }, [isEditing]);
@@ -53,15 +51,14 @@ const SplashEditForm = (props) => {
               };
 
               if (values.image) {
-                const responseImg = await SettingApiModel.uploadImage(values.image_instructor);
+                const responseImg = await SettingApiModel.uploadImage(values.image);
+
                 if (responseImg.status === 201) {
                   data = { ...data, image: responseImg.data.imageUrl };
                 }
               }
 
               const response = await SplashApiModel.EditeSplash(data, isEditing);
-
-              console.log(response);
 
               switch (response.status) {
                 case 201:

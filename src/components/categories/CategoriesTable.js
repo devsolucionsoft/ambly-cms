@@ -47,7 +47,6 @@ const CategoriesTable = (props) => {
   return (
     <div>
       <div className={styles.tHeader}>
-        <h1 className={styles.tableHeading}>Categorias</h1>
 
         {/* <GButton text={"Agregar Instructor"} /> */}
       </div>
@@ -93,7 +92,7 @@ const CategoriesTable = (props) => {
                       strokeWidth={1.5}
                       stroke="currentColor"
                       className="w-6 h-6"
-                      onClick={() => (modalOpen ? closeModal() : openModal(), editingCategory())}
+                      onClick={() => (modalOpen ? closeModal() : openModal(), editingCategory(item.id))}
                     >
                       <path
                         strokeLinecap="round"

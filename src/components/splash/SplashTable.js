@@ -47,7 +47,7 @@ const SplashTable = ({ editingSplash, modalOpen, openModal, itemsSplash, getSpla
   return (
     <div>
       <div className={styles.tHeader}>
-        <h1 className={styles.tableHeading}>Splash</h1>
+     
 
         {/* <GButton text={"Agregar Instructor"} /> */}
       </div>
@@ -71,7 +71,7 @@ const SplashTable = ({ editingSplash, modalOpen, openModal, itemsSplash, getSpla
                         objectFit="cover"
                         layout="fill"
                         alt="Picture of the author"
-                        //src={item.image}
+                        src={item.image}
                       />
                     </div>
 

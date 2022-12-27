@@ -47,6 +47,20 @@ export class CategoriesApi {
     }
   }
 
+  async EditeCategorie(data, id) {
+
+    try {
+      const response = await axios({
+        method: "patch",
+        url: `${api_url}/category/edit/${id}`,
+        data: data,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
+
   async deleteCategory(id) {
     try {
       const response = await axios({

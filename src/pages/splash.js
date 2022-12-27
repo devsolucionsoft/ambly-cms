@@ -23,7 +23,7 @@ const Page = () => {
   };
   const stopEditingSplash = () => {
     setIsEditing({
-      active: true,
+      active: false,
       id: 0,
     });
   };
@@ -45,6 +45,16 @@ const Page = () => {
 
   return (
     <div className={`container`}>
+      <div className="table-header-container">
+        <h1 className="">Splash</h1>
+        <GButton
+          text={"Agregar Splash"}
+          onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingSplash())}
+        >
+          {" "}
+          Abrir
+        </GButton>
+      </div>
       <SplashTable
         editingSplash={editingSplash}
         modalOpen={modalOpen}
@@ -53,14 +63,6 @@ const Page = () => {
         itemsSplash={itemsSplash}
         getSplash={getSplash}
       />
-
-      <GButton
-        text={"Agregar Splash"}
-        onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingSplash())}
-      >
-        {" "}
-        Abrir
-      </GButton>
       <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
         {modalOpen &&
           (isEditing.active ? (

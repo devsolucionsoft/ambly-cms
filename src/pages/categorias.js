@@ -17,11 +17,17 @@ const Page = () => {
   const closeModal = () => setModalOpen(false);
   const openModal = () => setModalOpen(true);
   const [isEditing, setIsEditing] = useState(false);
-  const editingCategory = () => {
-    setIsEditing(true);
+  const editingCategory = (id) => {
+    setIsEditing({
+      active: true,
+      id: id,
+    });
   };
   const stopEditingCategory = () => {
-    setIsEditing(false);
+    setIsEditing({
+      active: false,
+      id: 0,
+    });
   };
 
   const [itemsCategories, setItemsCategories] = useState([]);
@@ -39,6 +45,17 @@ const Page = () => {
 
   return (
     <div className="container" style={{ paddingBottom: "2em" }}>
+      <div className="table-header-container">
+        <h1 className="">Categorias</h1>
+        <GButton
+          text={"Agregar Categoria"}
+          onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingCategory())}
+        >
+          {" "}
+          Abrir
+        </GButton>
+      </div>
+
       <CategoriesTable
         itemsCategories={itemsCategories}
         getCategories={getCategories}
@@ -48,19 +65,16 @@ const Page = () => {
         openModal={openModal}
       />
 
-      <GButton
-        text={"Agregar Categoria"}
-        onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingCategory())}
-      >
-        {" "}
-        Abrir
-      </GButton>
-
       <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
         {modalOpen &&
-          (isEditing ? (
+          (isEditing.active ? (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <CategoriesEditForm getCategories={getCategories} />
+              <CategoriesEditForm
+                getCategories={getCategories}
+                isEditing={isEditing.id}
+                closeModal={closeModal}
+                itemsCategories={itemsCategories}
+              />
             </Modal>
           ) : (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
