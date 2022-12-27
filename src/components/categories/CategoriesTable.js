@@ -47,7 +47,6 @@ const CategoriesTable = (props) => {
   return (
     <div>
       <div className={styles.tHeader}>
-        <h1 className={styles.tableHeading}>Categorias</h1>
 
         {/* <GButton text={"Agregar Instructor"} /> */}
       </div>

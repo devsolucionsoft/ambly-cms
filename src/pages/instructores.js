@@ -62,6 +62,18 @@ const Page = () => {
   return (
     <div className={`container`} style={{ paddingBottom: "2em" }}>
       <div className={styles.instructorsContainer}>
+
+      <div className="table-header-container">
+        <h1 className="">Instrcutores</h1>
+        <GButton
+          text={"Agregar Instructor"}
+          onClick={() => (modalOpen ? closeModal() : openModal(), addInstrcutor())}
+        >
+          {" "}
+          Abrir
+        </GButton>
+      </div>
+
         <InstructorsTable
           modalOpen={modalOpen}
           itemsInstructors={itemsInstructors}
@@ -72,13 +84,7 @@ const Page = () => {
           openReviewForm={openReviewForm}
         />
 
-        <GButton
-          text={"Agregar Instructor"}
-          onClick={() => (modalOpen ? closeModal() : openModal(), addInstrcutor())}
-        >
-          {" "}
-          Abrir
-        </GButton>
+  
 
         <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
           {modalOpen ? (

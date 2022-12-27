@@ -28,7 +28,7 @@ const CategoriesForm = (props) => {
   return (
     <div className={styles.categoryFormContainer}>
       <div>
-        <h1>Nuevo Categoria</h1>
+        <h1>Nueva Categoria</h1>
         <Formik
           initialValues={{
             name: "",

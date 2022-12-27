@@ -11,7 +11,7 @@ const SplashTable = ({editingSplash, modalOpen, openModal}) => {
   return (
     <div>
       <div className={styles.tHeader}>
-        <h1 className={styles.tableHeading}>Splash</h1>
+     
 
         {/* <GButton text={"Agregar Instructor"} /> */}
       </div>

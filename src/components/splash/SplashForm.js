@@ -115,7 +115,7 @@ const SplashForm = () => {
                     <div className="fieldErrors">{errors.description}</div>
                   ) : null}
                 </div>
-
+                
                 <GButton type="submit" text={"Agregar"}>
                   Submit
                 </GButton>
