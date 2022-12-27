@@ -28,13 +28,24 @@ const Page = () => {
   };
 
   const [isEditing, setIsEditing] = useState(false);
-  const enableEdit = () => setIsEditing(true);
-  const disableEdit = () => setIsEditing(false);
+  const enableEdit = (id) =>
+    setIsEditing({
+      active: true,
+      id: id,
+    });
+  const disableEdit = () =>
+    setIsEditing({
+      active: false,
+      id: 0,
+    });
 
   const [isAddReview, setAddReview] = useState(false);
 
-  const openReviewForm = () => {
-    setAddReview(true);
+  const openReviewForm = (id) => {
+    setAddReview({
+      active: true,
+      id: id,
+    });
     closeAddInstrcutor();
     disableEdit();
   };
@@ -63,7 +74,7 @@ const Page = () => {
 
         <GButton
           text={"Agregar Instructor"}
-          onClick={() => (modalOpen ? closeModal() : openModal())}
+          onClick={() => (modalOpen ? closeModal() : openModal(), addInstrcutor())}
         >
           {" "}
           Abrir
@@ -71,9 +82,14 @@ const Page = () => {
 
         <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
           {modalOpen ? (
-            isEditing ? (
+            isEditing.active ? (
               <Modal modalOpen={modalOpen} text={""} handleClose={closeModal}>
-                <InstructorEditForm />
+                <InstructorEditForm
+                  itemsInstructors={itemsInstructors}
+                  isEditing={isEditing.id}
+                  handleClose={closeModal}
+                  getInstructors={getInstructors}
+                />
               </Modal>
             ) : isAddInstrcutor ? (
               <Modal modalOpen={modalOpen} text={""} handleClose={closeModal}>
@@ -81,11 +97,16 @@ const Page = () => {
               </Modal>
             ) : (
               <Modal modalOpen={modalOpen} text={""} handleClose={closeModal}>
-                <InstructorReviewForm />
+                <InstructorReviewForm
+                  itemsInstructors={itemsInstructors}
+                  isAddReview={isAddReview.id}
+                  handleClose={closeModal}
+                  getInstructors={getInstructors}
+                />
               </Modal>
             )
           ) : (
-            (isEditing && disableEdit(), isAddReview && closeReviewForm())
+            (isEditing.active && disableEdit(), isAddReview.active && closeReviewForm())
           )}
         </AnimatePresence>
       </div>
