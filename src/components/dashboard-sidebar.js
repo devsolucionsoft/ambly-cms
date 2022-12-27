@@ -9,6 +9,8 @@ import { Cog as CogIcon } from '../icons/cog';
 import { Lock as LockIcon } from '../icons/lock';
 import { Selector as SelectorIcon } from '../icons/selector';
 import { ShoppingBag as ShoppingBagIcon } from '../icons/shopping-bag';
+import SchoolIcon from '@mui/icons-material/School';
+import CategoryIcon from '@mui/icons-material/Category';
 import { User as UserIcon } from '../icons/user';
 import { UserAdd as UserAddIcon } from '../icons/user-add';
 import { Users as UsersIcon } from '../icons/users';
@@ -23,19 +25,19 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/customers',
+    href: '/instructores',
     icon: (<UsersIcon fontSize="small" />),
-    title: 'Customers'
+    title: 'Instructores'
   },
   {
-    href: '/products',
-    icon: (<ShoppingBagIcon fontSize="small" />),
-    title: 'Products'
+    href: '/categorias',
+    icon: (<CategoryIcon fontSize="small" />),
+    title: 'Categorias'
   },
   {
-    href: '/account',
-    icon: (<UserIcon fontSize="small" />),
-    title: 'Account'
+    href: '/agregar-cursos',
+    icon: (<SchoolIcon fontSize="small" />),
+    title: 'Cursos'
   },
   {
     href: '/settings',

@@ -26,6 +26,7 @@
     "chart.js": "3.9.1",
     "date-fns": "2.29.3",
     "formik": "2.2.9",
+    "framer-motion": "^8.0.2",
     "next": "12.3.0",
     "nprogress": "0.2.0",
     "prop-types": "15.8.1",
@@ -33,6 +34,8 @@
     "react-chartjs-2": "4.3.1",
     "react-dom": "18.2.0",
     "react-perfect-scrollbar": "1.5.8",
+    "sass": "^1.57.1",
+    "sweetalert2": "^11.6.16",
     "uuid": "9.0.0",
     "yup": "0.32.11"
   },
