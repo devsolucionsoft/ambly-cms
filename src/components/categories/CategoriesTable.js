@@ -6,7 +6,7 @@ import { CategoriesApi } from "../../api/CategoriesApi";
 import Swal from "sweetalert2";
 
 const CategoriesTable = (props) => {
-  const { itemsCategories, getCategories } = props;
+  const { itemsCategories, getCategories, editingCategory, openModal, modalOpen, closeModal } = props;
 
   const CategoriesApiModel = new CategoriesApi();
 
@@ -93,6 +93,7 @@ const CategoriesTable = (props) => {
                       strokeWidth={1.5}
                       stroke="currentColor"
                       className="w-6 h-6"
+                      onClick={() => (modalOpen ? closeModal() : openModal(), editingCategory())}
                     >
                       <path
                         strokeLinecap="round"
