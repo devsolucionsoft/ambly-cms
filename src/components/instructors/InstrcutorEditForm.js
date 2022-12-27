@@ -28,27 +28,26 @@ const InstrcutorSchema = Yup.object().shape({
         .test(
             "fileFormat",
             "Formato no soportado, suba unicamente .png .jpeg, o jpg",
-            value => value && SUPPORTED_FORMATS.includes(value.type))
-
+            value => value && SUPPORTED_FORMATS.includes(value.type)),
+    
 });
 
 
 
-const InstructorForm = () => {
+const InstructorEditForm = () => {
     return (
         <div className={styles.instructorFormContainer}>
 
             <div>
-                <h1>Nuevo Instructor</h1>
+                <h1>Editar Instructor</h1>
                 <Formik
                     initialValues={{
                         name_instructor: '',
                         description_instructor: '',
                         description_secondary: '',
                         image_instructor: '',
-                        image_secondary: ''
-
-
+                        image_secondary: '',
+            
                     }}
                     validationSchema={InstrcutorSchema}
                     onSubmit={values => {
@@ -102,12 +101,13 @@ const InstructorForm = () => {
 
 
                                 <div className={styles.description2}>
-
                                     <Field className={` fieldShadow ${styles.field} `} name="description_secondary" placeholder="Descripcion secundaria" as="textarea" />
                                     {errors.description_secondary && touched.description_secondary ? (
                                         <div className="fieldErrors" >{errors.description_secondary}</div>
                                     ) : null}
                                 </div>
+
+                      
 
                                 <GButton type="submit" text={"Agregar"}>Submit</GButton>
                             </div>
@@ -119,4 +119,4 @@ const InstructorForm = () => {
     )
 }
 
-export default InstructorForm
+export default InstructorEditForm
