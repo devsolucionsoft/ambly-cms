@@ -51,6 +51,7 @@ const InstructorsTable = (props) => {
         break;
     }
   };
+  
   return (
     <div>
       <div className={styles.tHeader}>
@@ -71,7 +72,7 @@ const InstructorsTable = (props) => {
           </thead>
           <tbody>
             {itemsInstructors.map((item) => (
-              <tr className={styles.instrcutorInfo}>
+              <tr className={styles.instrcutorInfo} key={item.id}>
                 <td>
                   <div className={styles.instructorName}>
                     <div className={styles.imgContainer}>
@@ -97,7 +98,7 @@ const InstructorsTable = (props) => {
                     <div className={styles.icon}>
                       <div
                         onClick={() => {
-                          modalOpen ? closeModal() : openModal(), enableEdit();
+                          modalOpen ? closeModal() : openModal(), enableEdit(item.id);
                         }}
                       >
                         <svg
@@ -136,7 +137,7 @@ const InstructorsTable = (props) => {
 
                       <div
                         onClick={() => {
-                          modalOpen ? closeModal() : openModal(), openReviewForm();
+                          modalOpen ? closeModal() : openModal(), openReviewForm(item.id);
                         }}
                       >
                         <svg
