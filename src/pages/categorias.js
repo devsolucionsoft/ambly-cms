@@ -1,52 +1,54 @@
-import CategoriesTable from "../components/categories/CategoriesTable"
+import CategoriesTable from "../components/categories/CategoriesTable";
 import { DashboardLayout } from "../components/dashboard-layout";
 import GButton from "../components/buttons/GButton";
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import Modal from "../components/modal/Modal";
-import InstructorForm from "../components/instructors/InstructorForm";
 import CategoriesForm from "../components/categories/CategoriesForm";
-
+// Api
+import { CategoriesApi } from "../api/CategoriesApi";
 
 const Page = () => {
+  const [modalOpen, setModalOpen] = useState(false);
 
+  const CategoriesApiModel = new CategoriesApi();
 
-    const [modalOpen, setModalOpen] = useState(false)
+  const closeModal = () => setModalOpen(false);
+  const openModal = () => setModalOpen(true);
 
-    const closeModal = () => setModalOpen(false)
-    const openModal = () => setModalOpen(true)
-    return (
+  const [itemsCategories, setItemsCategories] = useState([]);
 
-        <div className="container" >
-            <CategoriesTable />
+  const getCategories = async () => {
+    const response = await CategoriesApiModel.GetCategories();
+    if (response.status === 200) {
+      setItemsCategories(response.data);
+    }
+  };
 
-            <GButton
-                text={"Agregar Categoria"}
-                onClick={() => (modalOpen ? closeModal() : openModal())}
-            > Abrir
-            </GButton>
+  useEffect(() => {
+    getCategories();
+  }, []);
 
-            <AnimatePresence
-                initial={false}
-                mode={"wait"}
-                onExitComplete={() => null}
-            >
+  return (
+    <div className="container" style={{ paddingBottom: "2em" }}>
+      <CategoriesTable itemsCategories={itemsCategories} getCategories={getCategories} />
 
-                {modalOpen &&
-                    <Modal modalOpen={modalOpen} text={"asdasdasdasd"} handleClose={closeModal}>
-                        <CategoriesForm />
-                    </Modal>}
+      <GButton text={"Agregar Categoria"} onClick={() => (modalOpen ? closeModal() : openModal())}>
+        {" "}
+        Abrir
+      </GButton>
 
-            </AnimatePresence>
+      <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
+        {modalOpen && (
+          <Modal modalOpen={modalOpen} text={"asdasdasdasd"} closeModal={closeModal}>
+            <CategoriesForm closeModal={closeModal} getCategories={getCategories} />
+          </Modal>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
-        </div >
-    )
-}
+Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-Page.getLayout = (page) => (
-    <DashboardLayout>
-        {page}
-    </DashboardLayout>
-);
-
-export default Page
+export default Page;

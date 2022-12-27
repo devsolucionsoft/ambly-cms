@@ -1,36 +1,66 @@
-import Head from 'next/head';
-import NextLink from 'next/link';
-import Router from 'next/router';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Facebook as FacebookIcon } from '../icons/facebook';
-import { Google as GoogleIcon } from '../icons/google';
+import { useEffect } from "react";
+import Head from "next/head";
+import NextLink from "next/link";
+import Router from "next/router";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Box, Button, Container, Grid, Link, TextField, Typography } from "@mui/material";
+import Swal from "sweetalert2";
+// API
+import { AuthApi } from "../api/AutApi";
 
 const Login = () => {
+  const AuthApiModel = new AuthApi();
+
   const formik = useFormik({
     initialValues: {
-      email: 'demo@devias.io',
-      password: 'Password123'
+      email: "",
+      password: "",
     },
     validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email('Must be a valid email')
-        .max(255)
-        .required('Email is required'),
-      password: Yup
-        .string()
-        .max(255)
-        .required('Password is required')
+      email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
+      password: Yup.string().max(255).required("Password is required"),
     }),
-    onSubmit: () => {
-      Router
-        .push('/')
-        .catch(console.error);
-    }
+    onSubmit: async (values) => {
+      const response = await AuthApiModel.UserLogin(values);
+
+      switch (response.status) {
+        case 200:
+          localStorage.setItem(
+            "token_session",
+            JSON.stringify({
+              id: response.data.id,
+              email: values.email,
+              token: response.data.token,
+            })
+          );
+          Router.push("/").catch(console.error)
+          break;
+        case 403:
+          Swal.fire({
+            title: `Este email está asociado a una cuenta de ${response.data?.message}`,
+            text: `Inicia sesión con ${response.data?.message}`,
+            icon: "error",
+          });
+          break;
+        default:
+          Swal.fire({
+            title: "No pudimos iniciar sesíon",
+            text: "Revisa tu email o tu contraseña",
+            icon: "error",
+          });
+          break;
+      }
+    },
   });
+
+  useEffect(() => {
+    const session = JSON.parse(localStorage.getItem("token_session"))
+
+    if(session?.token) {
+      Router.push("/").catch(console.error)
+    }
+  }, []);
 
   return (
     <>
@@ -40,96 +70,33 @@ const Login = () => {
       <Box
         component="main"
         sx={{
-          alignItems: 'center',
-          display: 'flex',
+          alignItems: "center",
+          display: "flex",
           flexGrow: 1,
-          minHeight: '100%'
+          minHeight: "100%",
         }}
+        style={{}}
       >
         <Container maxWidth="sm">
-          <NextLink
-            href="/"
-            passHref
-          >
-            <Button
-              component="a"
-              startIcon={<ArrowBackIcon fontSize="small" />}
-            >
-              Dashboard
-            </Button>
-          </NextLink>
           <form onSubmit={formik.handleSubmit}>
-            <Box sx={{ my: 3 }}>
+            <Box
+              sx={{ my: 3 }}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+            >
               <Typography
                 color="textPrimary"
-                variant="h4"
-              >
-                Sign in
-              </Typography>
-              <Typography
-                color="textSecondary"
-                gutterBottom
-                variant="body2"
-              >
-                Sign in on the internal platform
-              </Typography>
-            </Box>
-            <Grid
-              container
-              spacing={3}
-            >
-              <Grid
-                item
-                xs={12}
-                md={6}
-              >
-                <Button
-                  color="info"
-                  fullWidth
-                  startIcon={<FacebookIcon />}
-                  onClick={() => formik.handleSubmit()}
-                  size="large"
-                  variant="contained"
-                >
-                  Login with Facebook
-                </Button>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                md={6}
-              >
-                <Button
-                  color="error"
-                  fullWidth
-                  onClick={() => formik.handleSubmit()}
-                  size="large"
-                  startIcon={<GoogleIcon />}
-                  variant="contained"
-                >
-                  Login with Google
-                </Button>
-              </Grid>
-            </Grid>
-            <Box
-              sx={{
-                pb: 1,
-                pt: 3
-              }}
-            >
-              <Typography
+                variant="h3"
                 align="center"
-                color="textSecondary"
-                variant="body1"
+                style={{ marginBottom: "20px" }}
               >
-                or login with email address
+                Inicia sesión Ambly
               </Typography>
             </Box>
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
               helperText={formik.touched.email && formik.errors.email}
-              label="Email Address"
+              label="Email"
               margin="normal"
               name="email"
               onBlur={formik.handleBlur}
@@ -142,7 +109,7 @@ const Login = () => {
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
               helperText={formik.touched.password && formik.errors.password}
-              label="Password"
+              label="Contraseña"
               margin="normal"
               name="password"
               onBlur={formik.handleBlur}
@@ -150,6 +117,7 @@ const Login = () => {
               type="password"
               value={formik.values.password}
               variant="outlined"
+              color="info"
             />
             <Box sx={{ py: 2 }}>
               <Button
@@ -160,30 +128,9 @@ const Login = () => {
                 type="submit"
                 variant="contained"
               >
-                Sign In Now
+                Iniciar sesión
               </Button>
             </Box>
-            <Typography
-              color="textSecondary"
-              variant="body2"
-            >
-              Don&apos;t have an account?
-              {' '}
-              <NextLink
-                href="/register"
-              >
-                <Link
-                  to="/register"
-                  variant="subtitle2"
-                  underline="hover"
-                  sx={{
-                    cursor: 'pointer'
-                  }}
-                >
-                  Sign Up
-                </Link>
-              </NextLink>
-            </Typography>
           </form>
         </Container>
       </Box>
