@@ -4,9 +4,45 @@ import Image from "next/image";
 // Api
 import { CategoriesApi } from "../../api/CategoriesApi";
 import Swal from "sweetalert2";
+// Api
+import { SplashApi } from "../../api/SplashApi";
 
-const SplashTable = ({editingSplash, modalOpen, openModal}) => {
+const SplashTable = ({ editingSplash, modalOpen, openModal, itemsSplash, getSplash }) => {
+  const SplashApiModel = new SplashApi();
 
+  const removeTask = (id) => {
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: "¡Una vez eliminado, no podrá recuperar esta categoria!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "cancel",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.value) {
+        handleDelete(id);
+      }
+    });
+  };
+
+  // DELETE ITEM
+  const handleDelete = async (id) => {
+    const response = await SplashApiModel.deleteSplash(id);
+    switch (response.status) {
+      case 201:
+        getSplash();
+        Swal.fire("¡Eliminado!", "Su categoría ha sido eliminado.", "success");
+        break;
+      default:
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ha ocurrido un problema, intentalo mas tarde",
+        });
+        break;
+    }
+  };
 
   return (
     <div>
@@ -26,7 +62,7 @@ const SplashTable = ({editingSplash, modalOpen, openModal}) => {
             </tr>
           </thead>
           <tbody>
-        
+            {itemsSplash.map((item) => (
               <tr className={styles.categoryInfo}>
                 <td>
                   <div className={styles.categoryName}>
@@ -35,16 +71,16 @@ const SplashTable = ({editingSplash, modalOpen, openModal}) => {
                         objectFit="cover"
                         layout="fill"
                         alt="Picture of the author"
-                        // src={item.image}
+                        //src={item.image}
                       />
                     </div>
 
-                    <span style={{ padding: "0px 20px" }}>{"nombre"}</span>
+                    <span style={{ padding: "0px 20px" }}>{item.title}</span>
                   </div>
                 </td>
 
                 <td>
-                  <div className={styles.description}>{"desripcion"}</div>
+                  <div className={styles.description}>{item.description}</div>
                 </td>
 
                 <td>
@@ -56,7 +92,7 @@ const SplashTable = ({editingSplash, modalOpen, openModal}) => {
                       strokeWidth={1.5}
                       stroke="currentColor"
                       className="w-6 h-6"
-                      onClick={() => (modalOpen ? closeModal() : openModal(), editingSplash())}
+                      onClick={() => (modalOpen ? closeModal() : openModal(), editingSplash(item.id))}
                     >
                       <path
                         strokeLinecap="round"
@@ -72,7 +108,7 @@ const SplashTable = ({editingSplash, modalOpen, openModal}) => {
                       strokeWidth={1.5}
                       stroke="currentColor"
                       className="w-6 h-6"
-                      // onClick={() => removeTask(item.id)}
+                      onClick={() => removeTask(item.id)}
                       style={{ cursor: "pointer" }}
                     >
                       <path
@@ -84,7 +120,7 @@ const SplashTable = ({editingSplash, modalOpen, openModal}) => {
                   </div>
                 </td>
               </tr>
-   
+            ))}
           </tbody>
         </table>
       </div>

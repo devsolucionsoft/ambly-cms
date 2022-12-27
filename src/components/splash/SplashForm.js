@@ -5,7 +5,8 @@ import * as Yup from "yup";
 import GButton from "../buttons/GButton";
 import Swal from "sweetalert2";
 // Api
-import { CategoriesApi } from "../../api/CategoriesApi";
+import { SettingApi } from "../../api/SettingApi";
+import { SplashApi } from "../../api/SplashApi";
 
 const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
 
@@ -21,8 +22,10 @@ const SplashSchema = Yup.object().shape({
     ),
 });
 
-const SplashForm = () => {
-
+const SplashForm = (props) => {
+  const { getSplash, closeModal } = props;
+  const SettingApiModel = new SettingApi();
+  const SplashApiModel = new SplashApi();
 
   return (
     <div className={styles.splashFormContainer}>
@@ -36,42 +39,41 @@ const SplashForm = () => {
           }}
           validationSchema={SplashSchema}
           onSubmit={async (values) => {
+            console.log(values);
             // same shape as initial values
-            // const responseImage = await CategoriesApiModel.uploadImage(values.image);
+            const responseImage = await SettingApiModel.uploadImage(values.image);
 
-            // if (responseImage.status === 201) {
-            //   const response = await CategoriesApiModel.CreateCategorie({
-            //     ...values,
-            //     image: responseImage.data.imageUrl,
-            //   });
+            if (responseImage.status === 201) {
+              const response = await SplashApiModel.CreateSplash({
+                ...values,
+                image: responseImage.data.imageUrl,
+              });
 
-            //   switch (response.status) {
-            //     case 201:
-            //       getCategories();
-            //       Swal.fire({
-            //         title: "Categoria creada",
-            //         icon: "success",
-            //       }).then(() => {
-            //         closeModal();
-            //       });
-            //       break;
-            //     default:
-            //       Swal.fire({
-            //         title: "Ha ocurrido un error",
-            //         text: "Intentalo mas tarde",
-            //         icon: "error",
-            //       });
-            //       break;
-            //   }
-            // } else {
-            //   Swal.fire({
-            //     title: "Ha ocurrido un error",
-            //     text: "Intentalo mas tarde",
-            //     icon: "error",
-            //   });
-            // }
-
-            console.log(values)
+              switch (response.status) {
+                case 201:
+                  getSplash();
+                  Swal.fire({
+                    title: "Splash creado",
+                    icon: "success",
+                  }).then(() => {
+                    closeModal();
+                  });
+                  break;
+                default:
+                  Swal.fire({
+                    title: "Ha ocurrido un error",
+                    text: "Intentalo mas tarde",
+                    icon: "error",
+                  });
+                  break;
+              }
+            } else {
+              Swal.fire({
+                title: "Ha ocurrido un error",
+                text: "Intentalo mas tarde",
+                icon: "error",
+              });
+            }
           }}
         >
           {({ errors, touched, setFieldValue }) => (

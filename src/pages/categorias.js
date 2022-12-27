@@ -16,9 +16,13 @@ const Page = () => {
 
   const closeModal = () => setModalOpen(false);
   const openModal = () => setModalOpen(true);
-  const [isEditing, setIsEditing] = useState(false)
-  const editingCategory = () => {setIsEditing(true)}
-  const stopEditingCategory = () => {setIsEditing(false)}
+  const [isEditing, setIsEditing] = useState(false);
+  const editingCategory = () => {
+    setIsEditing(true);
+  };
+  const stopEditingCategory = () => {
+    setIsEditing(false);
+  };
 
   const [itemsCategories, setItemsCategories] = useState([]);
 
@@ -33,36 +37,38 @@ const Page = () => {
     getCategories();
   }, []);
 
-
-
   return (
     <div className="container" style={{ paddingBottom: "2em" }}>
+      <CategoriesTable
+        itemsCategories={itemsCategories}
+        getCategories={getCategories}
+        editingCategory={editingCategory}
+        modalOpen={modalOpen}
+        closeModal={closeModal}
+        openModal={openModal}
+      />
 
-      
-
-      <CategoriesTable itemsCategories={itemsCategories} getCategories={getCategories} editingCategory={editingCategory} modalOpen={modalOpen} closeModal={closeModal} openModal={openModal}/>
-
-      <GButton text={"Agregar Categoria"} onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingCategory())}>
+      <GButton
+        text={"Agregar Categoria"}
+        onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingCategory())}
+      >
         {" "}
         Abrir
       </GButton>
 
       <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
-        {modalOpen && (
-
-          isEditing ? (
-            (<Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <CategoriesEditForm  getCategories={getCategories}/>
-            </Modal>)
-          ) :
-            (<Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
+        {modalOpen &&
+          (isEditing ? (
+            <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
+              <CategoriesEditForm getCategories={getCategories} />
+            </Modal>
+          ) : (
+            <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
               <CategoriesForm closeModal={closeModal} getCategories={getCategories} />
-            </Modal>)
-
-
-        )}
+            </Modal>
+          ))}
       </AnimatePresence>
-    </div >
+    </div>
   );
 };
 

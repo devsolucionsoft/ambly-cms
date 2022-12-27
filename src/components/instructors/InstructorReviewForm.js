@@ -13,7 +13,7 @@ const ReviewSchema = Yup.object().shape({
 });
 
 const InstrcutorReviewForm = (props) => {
-  const { isAddReview, itemsInstructors, getInstructors, handleClose } = props;
+  const { isAddReview, itemsInstructors, getInstructors } = props;
   const InstructorsApiModel = new InstructorsApi();
 
   const [reviews, setReviews] = useState([]);
