@@ -3,9 +3,9 @@ import axios from "axios";
 const api_url = "http://45.79.166.128:7034";
 
 export class CoursesApi {
-  async GetCategories() {
+  async GetCourses() {
     try {
-      return await axios.get(`${api_url}/category/all`);
+      return await axios.get(`${api_url}/course`);
     } catch (error) {
       return error.response;
     }
@@ -13,24 +13,16 @@ export class CoursesApi {
 
   async CreateCourse(inputs) {
     const data = {
-      name_course: "juan",
-      description: "A través ",
-      image_course: "link",
-      num_modulos: 3,
-      image_name:
-        "https://app-ambly.s3.amazonaws.com/static/uploads/0f4538bd56fbc96a7280-ambly-los-pilares-para-una-vida-saludable-2.png",
-      time_course: "03:32",
+      ...inputs,     
+      dateTime: new Date(),
+      num_modulos: 0,
+      characteristic1: inputs.time_course,
+      characteristic3: 0,
       popular_course: [false],
-      next_course: true,
-      price: "30000",
-      dateTime: "1970-01-01T00:00:00.000Z",
-      characteristic1: "2",
-      characteristic2: "2",
-      characteristic3: "2",
-      characteristic4: "2",
-      instructor: "id",
-      categories: "id",
+      next_course: [false],
     };
+
+    console.log("data", data);
 
     try {
       const response = await axios({

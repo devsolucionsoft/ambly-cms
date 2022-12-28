@@ -1,23 +1,19 @@
-import CategoriesTable from "../components/categories/CategoriesTable";
+import CoursesTable from "../components/Courses/CoursesTable";
 import { DashboardLayout } from "../components/dashboard-layout";
 import GButton from "../components/buttons/GButton";
 import { useEffect, useState } from "react";
-import Link from 'next/link'
+import Link from "next/link";
 // Api
-import { CategoriesApi } from "../api/CategoriesApi";
-import CoursesTable from '../components/courses/CoursesTable';
-import Modal from '../components/modal/Modal';
-import CategoriesEditForm from '../components/categories/CategoriesEditForm';
-import CategoriesForm from '../components/categories/CategoriesForm';
-import { AnimatePresence } from 'framer-motion';
-import CoursesForm from '../components/coursesForms/CourseForm';
-import CourseEditForm from '../components/coursesForms/CourseEditForm';
-
+import { CoursesApi } from "../api/CoursesApi";
+import Modal from "../components/modal/Modal";
+import { AnimatePresence } from "framer-motion";
+import CoursesForm from "../components/coursesForms/CourseForm";
+import CourseEditForm from "../components/coursesForms/CourseEditForm";
 
 const Page = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const CoursesApiModel = new CoursesApi();
 
-  const CategoriesApiModel = new CategoriesApi();
   const closeModal = () => setModalOpen(false);
   const openModal = () => setModalOpen(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -34,17 +30,17 @@ const Page = () => {
     });
   };
 
-  const [itemsCategories, setItemsCategories] = useState([]);
+  const [itemsCourses, setItemsCourses] = useState([]);
 
-  const getCategories = async () => {
-    const response = await CategoriesApiModel.GetCategories();
+  const getCourses = async () => {
+    const response = await CoursesApiModel.GetCourses();
     if (response.status === 200) {
-      setItemsCategories(response.data);
+      setItemsCourses(response.data);
     }
   };
 
   useEffect(() => {
-    getCategories();
+    getCourses();
   }, []);
 
   return (
@@ -52,37 +48,35 @@ const Page = () => {
       <div className="table-header-container">
         <h1 className="">Cursos</h1>
 
-          <GButton
-            text={"Agregar Curso"}
-            onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingCourse())}
-          >
-            {" "}
-            Abrir
-          </GButton>
-
+        <GButton
+          text={"Agregar Curso"}
+          onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingCourse())}
+        >
+          {" "}
+          Abrir
+        </GButton>
       </div>
 
       <CoursesTable
-
         editingCategory={editingCourse}
         modalOpen={modalOpen}
         closeModal={closeModal}
         openModal={openModal}
+        itemsCourses={itemsCourses}
       />
 
       <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
         {modalOpen &&
           (isEditing.active ? (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <CourseEditForm/>
+              <CourseEditForm />
             </Modal>
           ) : (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <CoursesForm closeModal={closeModal} getCategories={getCategories} />
+              <CoursesForm closeModal={closeModal} getCourses={getCourses} />
             </Modal>
           ))}
       </AnimatePresence>
-
     </div>
   );
 };
