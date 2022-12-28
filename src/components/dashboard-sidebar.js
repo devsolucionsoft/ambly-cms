@@ -46,6 +46,11 @@ const items = [
     title: 'Splash'
   },
   {
+    href: '/trailers',
+    icon: (<AddToHomeScreenIcon fontSize="small" />),
+    title: 'Trailers'
+  },
+  {
     href: '/settings',
     icon: (<CogIcon fontSize="small" />),
     title: 'Settings'

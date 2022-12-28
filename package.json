@@ -38,6 +38,7 @@
     "sass": "^1.57.1",
     "sweetalert2": "^11.6.16",
     "uuid": "9.0.0",
+    "video-react": "^0.16.0",
     "yup": "0.32.11"
   },
   "devDependencies": {

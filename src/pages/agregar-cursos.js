@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import ModuleForm from '../components/coursesForms/ModuleForm';
 import VideoForm from '../components/coursesForms/VideoForm';
 
+
 const Page = () => {
 
   const [modalOpen, setModalOpen] = useState(false)
