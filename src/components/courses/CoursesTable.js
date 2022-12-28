@@ -6,8 +6,7 @@ import { CategoriesApi } from "../../api/CategoriesApi";
 import Swal from "sweetalert2";
 import Link from "next/link";
 
-const CoursesTable = ({ editingCategory, openModal, modalOpen, closeModal, itemsCourses }) => {
-  console.log(itemsCourses);
+const CoursesTable = ({ editingCourse, openModal, modalOpen, closeModal, itemsCourses }) => {
   return (
     <div>
       <div className={styles.tHeader}></div>
@@ -55,7 +54,7 @@ const CoursesTable = ({ editingCategory, openModal, modalOpen, closeModal, items
                       strokeWidth={1.5}
                       stroke="currentColor"
                       className="w-6 h-6"
-                      onClick={() => (modalOpen ? closeModal() : openModal(), editingCategory())}
+                      onClick={() => (modalOpen ? closeModal() : openModal(), editingCourse(item.id))}
                     >
                       <path
                         strokeLinecap="round"
