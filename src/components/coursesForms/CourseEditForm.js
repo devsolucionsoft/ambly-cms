@@ -60,6 +60,17 @@ const CoursesEditForm = ({ itemsCourses, isEditing }) => {
           }}
           validationSchema={newCourseSchema}
           onSubmit={(values) => {
+            const data = {
+              name_course: values.name_course,
+              instructor: values.instructor,
+              category: values.category,
+              description: values.description,
+              price: values.price_course,
+              time_course: values.time_course,
+              characteristic2: values.characteristic2,
+              characteristic4: values.characteristic4,
+            };
+
             // same shape as initial values
             console.log(values);
           }}
