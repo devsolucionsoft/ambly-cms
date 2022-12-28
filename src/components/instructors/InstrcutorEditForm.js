@@ -56,8 +56,6 @@ const InstructorEditForm = (props) => {
             }}
             validationSchema={InstrcutorSchema}
             onSubmit={async (values) => {
-                console.log(values);
-              // same shape as initial values
               let data = {
                 name_instructor: values.name_instructor,
                 description_instructor: values.description_instructor,

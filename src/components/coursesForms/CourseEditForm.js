@@ -4,14 +4,14 @@ import * as Yup from "yup";
 import styles from "./CoursesForms.module.scss";
 import ModuleForm from "./ModuleForm";
 import GButton from "../buttons/GButton";
-import Link from "next/link";
+import Swal from "sweetalert2";
 // Api
 import { CoursesApi } from "../../api/CoursesApi";
 import { CategoriesApi } from "../../api/CategoriesApi";
 import { InstructorsApi } from "../../api/InstructorsApi";
 import { SettingApi } from "../../api/SettingApi";
 
-const CoursesEditForm = ({ itemsCourses, isEditing }) => {
+const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) => {
   const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
 
   const CoursesApiModel = new CoursesApi();
@@ -20,6 +20,8 @@ const CoursesEditForm = ({ itemsCourses, isEditing }) => {
   const SettingApiModel = new SettingApi();
 
   const [formvalues, setFromValues] = useState(false);
+
+  console.log("formvalues", formvalues);
 
   useEffect(() => {
     setFromValues(itemsCourses.find((item) => item.id === isEditing));
@@ -56,8 +58,6 @@ const CoursesEditForm = ({ itemsCourses, isEditing }) => {
     price: Yup.string().required("El precio es requerido"),
     instructor: Yup.string().required("Seleccione un instrcutor"),
     category: Yup.string().required("Seleccione una categoria"),
-    // characteristic1: Yup.string()
-    //     .required('Required'),
     characteristic2: Yup.string().required("Este campo es requerido"),
     characteristic4: Yup.string().required("Este campo es requerido"),
   });
@@ -70,8 +70,8 @@ const CoursesEditForm = ({ itemsCourses, isEditing }) => {
         <Formik
           initialValues={{
             name_course: formvalues.name_course,
-            instructor: formvalues.instructor,
-            category: formvalues.category,
+            instructor: formvalues.instructor.id,
+            category: formvalues.categories?.id,
             description: formvalues.description,
             image_course: false,
             image_name: false,
@@ -81,20 +81,54 @@ const CoursesEditForm = ({ itemsCourses, isEditing }) => {
             characteristic4: formvalues.characteristic4,
           }}
           validationSchema={newCourseSchema}
-          onSubmit={(values) => {
-            const data = {
+          onSubmit={async (values) => {
+            let data = {
               name_course: values.name_course,
               instructor: values.instructor,
-              category: values.category,
+              categories: values.category,
               description: values.description,
-              price: values.price_course,
+              price_course: values.price,
               time_course: values.time_course,
               characteristic2: values.characteristic2,
               characteristic4: values.characteristic4,
+              image_course: formvalues.image_course,
+              image_name: formvalues.image_name,
+              dateTime: new Date(),
             };
 
-            // same shape as initial values
-            console.log(values);
+            if (values.image_course) {
+              const responseImg1 = await SettingApiModel.uploadImage(values.image_course);
+              if (responseImg1.status === 201) {
+                data = { ...data, image_course: responseImg1.data.imageUrl };
+              }
+            }
+            if (values.image_name) {
+              const responseImg2 = await SettingApiModel.uploadImage(values.image_name);
+              if (responseImg2.status === 201) {
+                data = { ...data, image_name: responseImg2.data.imageUrl };
+              }
+            }
+
+            const response = await CoursesApiModel.EditeCourse(data, isEditing);
+
+            switch (response.status) {
+              case 201:
+                getCourses();
+                Swal.fire({
+                  title: "Curso editado",
+                  icon: "success",
+                }).then(() => {
+                  closeModal();
+                });
+                break;
+              default:
+                Swal.fire({
+                  title: "Ha ocurrido un error",
+                  text: "Intentalo mas tarde",
+                  icon: "error",
+                });
+                break;
+            }
           }}
         >
           {({ errors, touched, isSubmitting, handleChange, event, setFieldValue }) => (

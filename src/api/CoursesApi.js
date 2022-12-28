@@ -13,7 +13,7 @@ export class CoursesApi {
 
   async CreateCourse(inputs) {
     const data = {
-      ...inputs,     
+      ...inputs,
       dateTime: new Date(),
       num_modulos: 0,
       characteristic1: inputs.time_course,
@@ -22,8 +22,7 @@ export class CoursesApi {
       next_course: [false],
     };
 
-    console.log("data", data);
-
+    
     try {
       const response = await axios({
         method: "post",
@@ -36,11 +35,12 @@ export class CoursesApi {
     }
   }
 
-  async EditeCategorie(data, id) {
+  async EditeCourse(data, id) {
+    console.log("EditeCourse",data);
     try {
       const response = await axios({
         method: "patch",
-        url: `${api_url}/category/edit/${id}`,
+        url: `${api_url}/course/edite/${id}`,
         data: data,
       });
       return response;

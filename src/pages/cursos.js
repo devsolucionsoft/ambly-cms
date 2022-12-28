@@ -69,7 +69,12 @@ const Page = () => {
         {modalOpen &&
           (isEditing.active ? (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <CourseEditForm itemsCourses={itemsCourses} isEditing={isEditing.id} />
+              <CourseEditForm
+                itemsCourses={itemsCourses}
+                isEditing={isEditing.id}
+                getCourses={getCourses}
+                closeModal={closeModal}
+              />
             </Modal>
           ) : (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
