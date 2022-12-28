@@ -84,7 +84,7 @@ const VideoForm = () => {
                                     ) : null}
                                 </div>
 
-                                <GButton type="submit" text={"Agregar"}>Submit</GButton>
+                                <GButton type="submit" text={"Guardar"}>Submit</GButton>
                             </div>
                         </Form>
                     )}

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import ModuleForm from "../components/coursesForms/ModuleForm"
+import ModuleEditForm from "../components/coursesForms/ModuleEditForm"
 import { DashboardLayout } from "../components/dashboard-layout";
 import { AnimatePresence } from "framer-motion";
-import VideoForm from "../components/coursesForms/VideoForm";
+import VideoEditForm from "../components/coursesForms/VideoEditForm";
 import Modal from '../components/modal/Modal';
 import styles from '../styles/ModulesPage.module.scss'
 import {VideoList} from '../components/coursesForms/VideoForm';
@@ -16,7 +16,7 @@ const Page = () => {
     return (
         <>
             <div className={"container"}>
-              <ModuleForm
+              <ModuleEditForm
                 modalOpen={modalOpen}
                 closeModal={closeModal}
                 openModal={openModal}
@@ -28,7 +28,7 @@ const Page = () => {
                     <div className={styles.videoModal} >
 
                       <div>
-                      <h3 style={{textAlign: "center"}}>Videos del modulo</h3>
+                      <h3 style={{textAlign: "center"}}>Selecciona un video para editar</h3>
 
                         <VideoList titulo={"Titulo del video"}/>
                         <VideoList titulo={"Titulo del video"}/>
@@ -36,7 +36,7 @@ const Page = () => {
                         <VideoList titulo={"Titulo del video"}/>
                         <VideoList titulo={"Titulo del video"}/>
                       </div>
-                      <VideoForm/>
+                      <VideoEditForm/>
                     </div>
 
                   </Modal>
