@@ -195,7 +195,7 @@ const CoursesForm = ({ getCourses, closeModal }) => {
                   ) : null}
                 </div>
 
-                <div className={`fieldShadow ${styles.field} ${styles.imgInput}`}>
+                <div className={`fieldShadow ${styles.field} ${styles.imgInput2}`}>
                   <span>Imagen del nombre</span>
                   <input
                     className="uploadButton"
