@@ -5,9 +5,19 @@ import styles from "./CoursesForms.module.scss";
 import ModuleForm from "./ModuleForm";
 import GButton from "../buttons/GButton";
 import Link from "next/link";
+// Api
+import { CoursesApi } from "../../api/CoursesApi";
+import { CategoriesApi } from "../../api/CategoriesApi";
+import { InstructorsApi } from "../../api/InstructorsApi";
+import { SettingApi } from "../../api/SettingApi";
 
 const CoursesEditForm = ({ itemsCourses, isEditing }) => {
   const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
+
+  const CoursesApiModel = new CoursesApi();
+  const CategoriesApiModel = new CategoriesApi();
+  const InstructorsApiModel = new InstructorsApi();
+  const SettingApiModel = new SettingApi();
 
   const [formvalues, setFromValues] = useState(false);
 
@@ -15,7 +25,19 @@ const CoursesEditForm = ({ itemsCourses, isEditing }) => {
     setFromValues(itemsCourses.find((item) => item.id === isEditing));
   }, [isEditing]);
 
-  console.log(formvalues);
+  const [categories, setCategories] = useState([]);
+  const [instructors, setInstructors] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await CategoriesApiModel.GetCategories();
+      response.status === 200 && setCategories(response.data);
+    })();
+    (async () => {
+      const response = await InstructorsApiModel.GetInstructors();
+      response.status === 200 && setInstructors(response.data);
+    })();
+  }, []);
 
   const newCourseSchema = Yup.object().shape({
     name_course: Yup.string().required("El nombre del curso es requerido"),
@@ -95,9 +117,11 @@ const CoursesEditForm = ({ itemsCourses, isEditing }) => {
                       <option defaultValue disabled value="">
                         Selecciona un instructor
                       </option>
-                      <option value="1">Instructor 1</option>
-                      <option value="2">Instructor 2</option>
-                      <option value="3">Instructor 3</option>
+                      {instructors.map((item) => (
+                        <option key={item.id} value={item.id} style={{ display: "flex" }}>
+                          {item.name_instructor}
+                        </option>
+                      ))}
                     </Field>
                     {errors.instructor && touched.instructor ? (
                       <div className="fieldErrors">{errors.instructor}</div>
@@ -109,9 +133,11 @@ const CoursesEditForm = ({ itemsCourses, isEditing }) => {
                       <option defaultValue disabled value="">
                         Selecciona una categoria
                       </option>
-                      <option value="1">categoria 1</option>
-                      <option value="2">categoria 2</option>
-                      <option value="3">categoria 3</option>
+                      {categories.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
                     </Field>
                     {errors.category && touched.category ? (
                       <div className="fieldErrors">{errors.category}</div>
