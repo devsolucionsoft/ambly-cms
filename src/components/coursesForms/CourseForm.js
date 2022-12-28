@@ -7,9 +7,9 @@ import GButton from '../buttons/GButton';
 
 
 
-const CoursesForm = ({setModalOpen}) => {
+const CoursesForm = () => {
 
-    const [showModuleForm, setShowModuleForm] = useState(false)
+  
 
 
     const SUPPORTED_FORMATS = [
@@ -42,7 +42,7 @@ const CoursesForm = ({setModalOpen}) => {
         //     .required('Required'),
         characteristic2: Yup.string()
             .required('Este campo es requerido'),
-        characteristic3: Yup.string()
+        characteristic4: Yup.string()
             .required('Este campo es requerido')
     });
 
@@ -58,14 +58,15 @@ const CoursesForm = ({setModalOpen}) => {
                     image_course: '',
                     price: '',
                     time_course: '',
+                    characteristic1: '',
                     characteristic2: '',
-                    characteristic3: ''
+                    characteristic4: ''
                 }}
                 validationSchema={newCourseSchema}
                 onSubmit={values => {
                     // same shape as initial values
                     console.log(values);
-                    setShowModuleForm(true)
+             
 
                 }}
             >
@@ -143,7 +144,6 @@ const CoursesForm = ({setModalOpen}) => {
                                 </div>
 
                                 <div>
-
                                     <Field className={`fieldShadow ${styles.field}`} name="time_course" placeholder="Duración" />
                                     {errors.time_course && touched.time_course ? (
                                         <div className="fieldErrors" >{errors.time_course}</div>
@@ -161,9 +161,9 @@ const CoursesForm = ({setModalOpen}) => {
 
                                 <div>
 
-                                    <Field className={`fieldShadow ${styles.field}`} name="characteristic3" placeholder="Estructura" />
-                                    {errors.characteristic3 && touched.characteristic3 ? (
-                                        <div className="fieldErrors" >{errors.characteristic3}</div>
+                                    <Field className={`fieldShadow ${styles.field}`} name="characteristic4" placeholder="Estructura" />
+                                    {errors.characteristic4 && touched.characteristic4 ? (
+                                        <div className="fieldErrors" >{errors.characteristic4}</div>
                                     ) : null}
                                 </div>
                             </div>
@@ -171,7 +171,7 @@ const CoursesForm = ({setModalOpen}) => {
 
                         </div>
 
-                        <GButton text={"Agregar Modulos"} type="submit" disabled={isSubmitting}  >
+                        <GButton text={"Agregar Curso"} type="submit" disabled={isSubmitting}  >
                             Agregar Modulos
                         </GButton>
 
@@ -181,9 +181,6 @@ const CoursesForm = ({setModalOpen}) => {
                 )}
             </Formik>
 
-            {showModuleForm && (<ModuleForm
-                setModalOpen={setModalOpen}
-            />)}
         </div>
     )
 }
