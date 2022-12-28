@@ -4,12 +4,11 @@ import * as Yup from 'yup';
 import styles from './CoursesForms.module.scss'
 import ModuleForm from './ModuleForm'
 import GButton from '../buttons/GButton';
+import Link from 'next/link';
 
 
 
 const CoursesForm = () => {
-
-  
 
 
     const SUPPORTED_FORMATS = [
@@ -48,7 +47,9 @@ const CoursesForm = () => {
 
     return (
         <div className={`${styles.courseFormContainer} ${styles.formContainer}`}>
-            < h1>Nuevo Curso</h1>
+
+              < h1>Nuevo Curso</h1>
+
             <Formik
                 initialValues={{
                     name_course: '',
@@ -66,7 +67,7 @@ const CoursesForm = () => {
                 onSubmit={values => {
                     // same shape as initial values
                     console.log(values);
-             
+
 
                 }}
             >

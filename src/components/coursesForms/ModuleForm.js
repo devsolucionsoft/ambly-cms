@@ -2,14 +2,11 @@ import React, { useState } from 'react'
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import styles from './CoursesForms.module.scss'
+import GButton from '../buttons/GButton';
 
 
 
-
-
-
-
-const ModuleForm = ({setModalOpen}) => {
+const ModuleForm = ({ modalOpen, closeModal, openModal }) => {
 
 
   const newCourseSchema = Yup.object().shape({
@@ -32,7 +29,7 @@ const ModuleForm = ({setModalOpen}) => {
             name_module: '',
             description: '',
             time_module: '',
-            modules: ''
+
 
           }}
           validationSchema={newCourseSchema}
@@ -49,20 +46,20 @@ const ModuleForm = ({setModalOpen}) => {
               <div className={styles.moduleForm} >
 
                 <Field className={`fieldShadow ${styles.field}`} name="name_module" placeholder="Nombre del modulo" />
-                {errors.characteristic2 && touched.characteristic2 ? (
-                  <div>{errors.characteristic2}</div>
+                {errors.name_module && touched.name_module ? (
+                  <div>{errors.name_module}</div>
                 ) : null}
 
 
 
                 <Field className={`fieldShadow ${styles.field}`} name="time_module" placeholder="Duracion del modulo" />
-                {errors.characteristic2 && touched.characteristic2 ? (
-                  <div>{errors.characteristic2}</div>
+                {errors.time_module && touched.time_module ? (
+                  <div>{errors.time_module}</div>
                 ) : null}
 
                 <Field className={`${`fieldShadow ${styles.field}`} ${styles.moduleDescription}`} name="description" placeholder="Descripcion" as="textarea" />
-                {errors.characteristic2 && touched.characteristic2 ? (
-                  <div>{errors.characteristic2}</div>
+                {errors.description && touched.description ? (
+                  <div>{errors.description}</div>
                 ) : null}
 
                 <div className={`${`fieldShadow ${styles.field}`} ${styles.videoInput}`} >
@@ -90,7 +87,7 @@ const ModuleForm = ({setModalOpen}) => {
 
   return (
     <div className={`${styles.moduleFormContainer} ${styles.formContainer}`}>
-      <h2>Nuevo modulo</h2>
+      <h1>Nuevo modulo</h1>
 
       <Formik
         initialValues={{
@@ -112,44 +109,56 @@ const ModuleForm = ({setModalOpen}) => {
 
             <div className={styles.moduleForm} >
 
-              <Field className={`fieldShadow ${styles.field}`} name="name_module" placeholder="Nombre del modulo" />
-              {errors.characteristic2 && touched.characteristic2 ? (
-                <div>{errors.characteristic2}</div>
-              ) : null}
+              <div>
+                <Field className={`fieldShadow ${styles.field}`} name="name_module" placeholder="Nombre del modulo" />
+                {errors.name_module && touched.name_module ? (
+                  <div className="fieldErrors" >{errors.name_module}</div>
+                ) : null}
+              </div>
 
 
+              <div>
+                <Field className={`fieldShadow ${styles.field}`} name="time_module" placeholder="Duracion del modulo" />
+                {errors.time_module && touched.time_module ? (
+                  <div className={"fieldErrors"} >{errors.time_module}</div>
+                ) : null}
+              </div>
 
-              <Field className={`fieldShadow ${styles.field}`} name="time_module" placeholder="Duracion del modulo" />
-              {errors.characteristic2 && touched.characteristic2 ? (
-                <div>{errors.characteristic2}</div>
-              ) : null}
+              <div className={styles.moduleDescription}>
+                <Field className={`fieldShadow ${styles.field}`} name="description" placeholder="Descripcion" as="textarea" />
+                {errors.description && touched.description ? (
+                  <div className={"fieldErrors"} >{errors.description}</div>
+                ) : null}
+              </div>
 
-              <Field className={`fieldShadow ${styles.field} ${styles.moduleDescription}`} name="description" placeholder="Descripcion" as="textarea" />
-              {errors.characteristic2 && touched.characteristic2 ? (
-                <div>{errors.characteristic2}</div>
-              ) : null}
+
 
 
               <div className={`fieldShadow ${styles.field} ${styles.videoInput}`} >
 
-             <span>Videos del modulo </span>
-                <div
-                  onClick={() => setModalOpen(true)}
-                >Agregar...</div>
 
-                {/*
-                <input className='uploadButton' id="modules" name="modules" type="file" onChange={(event) => {
-                  setFieldValue("modules", event.currentTarget.files[0]);
-                }} />
-                {errors.modules && touched.modules ? (
-                  <div className="fieldErrors" >{errors.modules}</div>
-                ) : null} */}
+                <span>Videos del modulo </span>
+                  <div className={styles.addVideoBtn}
+                    onClick={() => (modalOpen ? closeModal() : openModal())}
+                  >Agregar videos
+                </div>
+
+
 
               </div>
 
             </div>
 
+            <GButton
+              text={"Agregar Modulo"}
+            >
+              {" "}
+              Abrir
+            </GButton>
+
           </Form>
+
+
         )}
       </Formik>
     </div>

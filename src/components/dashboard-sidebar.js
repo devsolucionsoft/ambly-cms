@@ -36,7 +36,7 @@ const items = [
     title: 'Categorias'
   },
   {
-    href: '/agregar-cursos',
+    href: '/cursos',
     icon: (<SchoolIcon fontSize="small" />),
     title: 'Cursos'
   },

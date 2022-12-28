@@ -1,11 +1,13 @@
 import Head from 'next/head';
 import CoursesForm from '../components/coursesForms/CourseForm';
 import { DashboardLayout } from '../components/dashboard-layout';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Modal from "../components/modal/Modal";
 import { AnimatePresence, motion } from 'framer-motion';
 import ModuleForm from '../components/coursesForms/ModuleForm';
 import VideoForm from '../components/coursesForms/VideoForm';
+import Link from 'next/link';
+import GButton from '../components/buttons/GButton';
 
 const Page = () => {
 
@@ -14,12 +16,22 @@ const Page = () => {
   const openModal = () => setModalOpen(true)
 
   return (
-    <div className={modalOpen ? 'no-scroll': ''}>
+
+
+    <div className={"pRelative"}>
       <Head>
         <title>
           Agregar cursos
         </title>
       </Head>
+
+
+      <div className={"backButton"}>
+        <Link  href="cursos">
+          <GButton text={"Ir a cursos"}/>
+        </Link>
+      </div>
+
 
       <div  >
         <CoursesForm

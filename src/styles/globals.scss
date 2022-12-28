@@ -1,6 +1,6 @@
 html {
     box-sizing: border-box;
-   
+
 }
 
 .no-scroll {
@@ -39,12 +39,12 @@ html {
     justify-content: center;
     overflow-y: hidden;
   }
-  
+
   .modal {
     width: clamp(50%, 700px, 90%);
     height: auto;
     background-color: white;
-  
+
     margin: auto;
     padding: 14px 40px;
     border-radius: 12px;
@@ -59,7 +59,7 @@ html {
       background-color: transparent;
       color: #575757;
       cursor: pointer;
-   
+
     }
   }
 
@@ -88,4 +88,14 @@ html {
     border-radius: 5px;
     color: rgb(251, 251, 251);
     border: none;
+  }
+
+  .pRelative {
+    position: relative;
+  }
+
+  .backButton {
+    position: absolute;
+    top: 0;
+    left: 34px;
   }
