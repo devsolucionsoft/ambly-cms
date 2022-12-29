@@ -16,8 +16,6 @@ const Page = () => {
   const [itemsCourses, setItemsCourses] = useState([]);
   const [courseInfo, setCourseInfo] = useState({});
 
-  console.log("courseInfo", courseInfo);
-
   const getCourses = async () => {
     const response = await CoursesApiModel.GetCourses();
     if (response.status === 200) {
@@ -34,6 +32,7 @@ const Page = () => {
       setCourseInfo(itemsCourses.find((item) => item.id === parseInt(id)));
     }
   }, [id, itemsCourses]);
+
   return (
     <>
       <div className={"container"}>
@@ -43,7 +42,7 @@ const Page = () => {
             <h2 className="">Modulos</h2>
           </div>
 
-          <Link href="/agregar-modulos">
+          <Link href={`/agregar-modulos?id=${id}`}>
             <GButton text={"Agregar Modulo"}> Abrir</GButton>
           </Link>
         </div>
