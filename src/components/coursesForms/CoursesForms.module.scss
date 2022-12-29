@@ -1,8 +1,6 @@
 .formContainer {
   width: 100%;
   margin: 0 auto;
-
- 
 }
 
 // .descriptionField {
@@ -56,19 +54,18 @@
 
     .formGroup2 {
       display: grid;
-    
+
       row-gap: 20px;
 
       .imgInput {
         background-color: white;
         height: auto;
-       
+
         span {
           display: block;
         }
       }
       .imgInput2 {
-      
         height: auto;
       }
     }
@@ -102,139 +99,124 @@
     .field {
       height: 100%;
     }
-
-
   }
 }
 
 .moduleForm {
+  display: grid;
+  grid-template-columns: repeat(2, 2fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 20px;
 
-    display: grid;
-    grid-template-columns: repeat(2, 2fr);
-    grid-template-rows: repeat(5, 1fr);
-    gap: 20px;
+  .moduleDescription {
+    grid-column: 1/2;
+    grid-row: 6/8;
+    height: auto;
 
-    .moduleDescription {
-        grid-column: 1/2;
-        grid-row: 6/8;
-        height: auto;
-
-        .field {
-          height: 100% ;
-        }
-    }
-
-    .videoList {
-      max-height: 320px;
-      overflow-y: auto;
-    }
-
-    .videoInput {
-
-        grid-row: 1/6;
-        grid-column: 2/3;
-        height: auto;
-   
-        background-color: white;
-        display: flex;
-        gap: 20px;
-      flex-direction: column;
-
-        .videoListHeader {
-
-          span {
-            font-size: 19px;
-            font-weight: bold;
-          }
-          display: flex;
-          justify-content: space-between;
-        }
-
-        .addVideoBtn {
-          height: 30px;
-          display: inline-block;
-          background-color: #5b83d8;
-          padding: 2px 10px;
-          border-radius: 5px;
-          color: white;
-          &:hover {
-            background-color: #356bde;
-            cursor: pointer;
-
-          }
-        }
-        input {
-            display: block;
-        }
-    }
-
-    .fileInput {
-
-      grid-row: 1/6;
-        grid-column: 1/2;
-        height: auto;
-        background-color: white;
-        display: flex;
-        gap: 20px;
-      flex-direction: column;
-
-        .videoListHeader {
-
-          span {
-            font-size: 19px;
-            font-weight: bold;
-          }
-          display: flex;
-          justify-content: space-between;
-        }
-
-        .addVideoBtn {
-          height: 30px;
-          display: inline-block;
-          background-color: #5b83d8;
-          padding: 2px 10px;
-          border-radius: 5px;
-          color: white;
-          &:hover {
-            background-color: #356bde;
-            cursor: pointer;
-
-          }
-        }
-        input {
-            display: block;
-        }
-
+    .field {
+      height: 100%;
     }
   }
 
+  .videoList {
+    max-height: 320px;
+    overflow-y: auto;
+  }
 
-  .videoComponentContainer {
-    height: 50px;
-    width: 100%;
+  .videoInput {
+    grid-row: 1/6;
+    grid-column: 2/3;
+    height: auto;
+
+    background-color: white;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid gray;
-    padding: 0 10px;
-    border-radius: 5px;
-    &:hover {
-      background-color: #efefef;
-  
+    gap: 20px;
+    flex-direction: column;
+
+    .videoListHeader {
+      span {
+        font-size: 19px;
+        font-weight: bold;
+      }
+      display: flex;
+      justify-content: space-between;
     }
-  
-    h4 {
-      font-weight: 500;
-      max-width: 300px;
-    }
-    svg {
-      width: 20px;
+
+    .addVideoBtn {
+      height: 30px;
+      display: inline-block;
+      background-color: #5b83d8;
+      padding: 2px 10px;
+      border-radius: 5px;
+      color: white;
       &:hover {
-        color: #b61a1d;
+        background-color: #356bde;
         cursor: pointer;
       }
     }
+    input {
+      display: block;
+    }
   }
-  
 
-  
+  .fileInput {
+    grid-row: 1/6;
+    grid-column: 1/2;
+    height: auto;
+    background-color: white;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+
+    .videoListHeader {
+      span {
+        font-size: 19px;
+        font-weight: bold;
+      }
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .addVideoBtn {
+      height: 30px;
+      display: inline-block;
+      background-color: #5b83d8;
+      padding: 2px 10px;
+      border-radius: 5px;
+      color: white;
+      &:hover {
+        background-color: #356bde;
+        cursor: pointer;
+      }
+    }
+    input {
+      display: block;
+    }
+  }
+}
+
+.videoComponentContainer {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  padding: 0 10px;
+  border-radius: 5px;
+  &:hover {
+    background-color: #efefef;
+  }
+
+  h4 {
+    font-weight: 500;
+    max-width: 300px;
+  }
+  svg {
+    width: 20px;
+    &:hover {
+      color: #b61a1d;
+      cursor: pointer;
+    }
+  }
+}
