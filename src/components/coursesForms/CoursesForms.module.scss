@@ -110,7 +110,7 @@
 .moduleForm {
 
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 40% 60%;
     grid-template-rows: repeat(5, 1fr);
     gap: 20px;
 
@@ -125,12 +125,25 @@
     }
 
     .videoInput {
-        grid-row: 1/3;
+
+
+        grid-row: 1/17;
         grid-column: 2/3;
         height: auto;
         background-color: white;
         display: flex;
-      justify-content: space-between;
+        gap: 20px;
+      flex-direction: column;
+
+        .videoListHeader {
+
+          span {
+            font-size: 19px;
+            font-weight: bold;
+          }
+          display: flex;
+          justify-content: space-between;
+        }
 
         .addVideoBtn {
           height: 30px;
@@ -150,5 +163,34 @@
         }
     }
   }
+
+
+  .videoComponentContainer {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid gray;
+    padding: 0 10px;
+    border-radius: 5px;
+    &:hover {
+      background-color: #efefef;
+  
+    }
+  
+    h4 {
+      font-weight: 500;
+      max-width: 300px;
+    }
+    svg {
+      width: 20px;
+      &:hover {
+        color: #b61a1d;
+        cursor: pointer;
+      }
+    }
+  }
+  
 
   
