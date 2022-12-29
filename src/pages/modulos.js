@@ -10,6 +10,7 @@ import { CoursesApi } from "../api/CoursesApi";
 import ModuleForm from "../components/coursesForms/ModuleForm";
 import Modal from "../components/modal/Modal";
 import { AnimatePresence, motion } from "framer-motion";
+import BackButton from "../components/buttons/BackButton";
 
 const Page = () => {
   const CoursesApiModel = new CoursesApi();
@@ -41,7 +42,8 @@ const Page = () => {
   const openModal = () => setModalOpen(true);
 
   return (
-    <>
+    <div style={{ position: 'relative' }} >
+     <BackButton/>
       <div className={"container"}>
         <div className="table-header-container">
           <div>
@@ -69,7 +71,7 @@ const Page = () => {
           )}
         </AnimatePresence>
       </div>
-    </>
+    </div>
   );
 };
 

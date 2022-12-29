@@ -8,6 +8,7 @@ import Modal from "../components/modal/Modal";
 // Api
 import { CoursesApi } from "../api/CoursesApi";
 import { useRouter } from "next/router";
+import BackButton from "../components/buttons/BackButton";
 
 const Page = () => {
   const CoursesApiModel = new CoursesApi();
@@ -47,7 +48,10 @@ const Page = () => {
   console.log(courseInfo.modules[module]);
 
   return (
-    <>
+    <div style={{position: 'relative'}}>
+
+      <BackButton/>
+
       <div className={"container"}>
         {courseInfo?.modules && (
           <React.Fragment>
@@ -105,7 +109,7 @@ const Page = () => {
           </React.Fragment>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

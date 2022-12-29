@@ -52,9 +52,7 @@ html {
     flex-direction: column;
     align-items: center;
 
-    @media(max-width: 1500px) {
-      scale: .8;
-    }
+  
 
     .modalExitBtn {
       margin-top: 30px;
@@ -100,6 +98,16 @@ html {
 
   .backButton {
     position: absolute;
-    top: 0;
+    top: 8px;
     left: 34px;
+
+    svg {
+      width: 40px;
+      color: #aa282a;
+
+      &:hover {
+        color: #ff3437;
+        cursor: pointer;
+      }
+    }
   }

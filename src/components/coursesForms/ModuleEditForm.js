@@ -166,6 +166,8 @@ const ModuleForm = ({
                 ) : null}
               </div>
 
+              
+
               <div className={styles.moduleDescription}>
                 <Field
                   className={`fieldShadow ${styles.field}`}
@@ -178,6 +180,8 @@ const ModuleForm = ({
                 ) : null}
               </div>
 
+              <GButton text={"Aceptar"}> Abrir</GButton>
+
               <div className={`fieldShadow ${styles.field} ${styles.videoInput}`}>
                 <div className={styles.videoListHeader}>
                   <span>Videos del modulo </span>
@@ -189,6 +193,8 @@ const ModuleForm = ({
                   </div>
                 </div>
 
+                
+
                 <div className={styles.videoList}>
                   {infoModule.videos.map((item) => (
                     <VideoComponent titulo={item.name_video} idVideo={item.id} key={item.id} />
@@ -197,7 +203,7 @@ const ModuleForm = ({
               </div>
             </div>
 
-            <GButton text={"Aceptar"}> Abrir</GButton>
+            
           </Form>
         )}
       </Formik>
