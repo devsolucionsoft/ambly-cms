@@ -45,7 +45,6 @@ const Page = () => {
     }
   }, [course, itemsCourses]);
 
-  console.log(courseInfo.modules[module]);
 
   return (
     <div style={{position: 'relative'}}>

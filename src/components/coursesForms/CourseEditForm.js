@@ -70,7 +70,7 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
         <Formik
           initialValues={{
             name_course: formvalues.name_course,
-            instructor: formvalues.instructor.id,
+            instructor: formvalues.instructor?.id,
             category: formvalues.categories?.id,
             description: formvalues.description,
             image_course: false,
