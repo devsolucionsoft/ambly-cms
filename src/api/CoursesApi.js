@@ -22,7 +22,6 @@ export class CoursesApi {
       next_course: [false],
     };
 
-    
     try {
       const response = await axios({
         method: "post",
@@ -36,7 +35,6 @@ export class CoursesApi {
   }
 
   async EditeCourse(data, id) {
-    console.log("EditeCourse",data);
     try {
       const response = await axios({
         method: "patch",
@@ -49,11 +47,31 @@ export class CoursesApi {
     }
   }
 
-  async deleteCategory(id) {
+  async deleteCourse(id) {
     try {
       const response = await axios({
         method: "delete",
         url: `${api_url}/category/delete/${id}`,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
+
+  async AddModule(inputs, module) {
+    const data = {
+      name_module: inputs.name_module,
+      description: inputs.description,
+      time_module: inputs.time_module,
+      course: module,
+    };
+
+    try {
+      const response = await axios({
+        method: "post",
+        url: `${api_url}/modules/create`,
+        data: data,
       });
       return response;
     } catch (error) {

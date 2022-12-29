@@ -42,8 +42,8 @@ const Page = () => {
   return (
     <>
       <div className={"container"}>
-        <ModuleForm modalOpen={modalOpen} closeModal={closeModal} openModal={openModal} />
-        <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
+        <ModuleForm modalOpen={modalOpen} closeModal={closeModal} openModal={openModal} id={id} />
+        <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null} idCourse={id}>
           {modalOpen && (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
               <div className={styles.videoModal}>
