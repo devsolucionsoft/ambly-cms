@@ -47,7 +47,7 @@ const Page = () => {
           </Link>
         </div>
 
-        <ModulesTable modulesItems={courseInfo?.modules ? courseInfo.modules : []} />
+        <ModulesTable modulesItems={courseInfo?.modules ? courseInfo.modules : []} idCourse={id} />
       </div>
     </>
   );

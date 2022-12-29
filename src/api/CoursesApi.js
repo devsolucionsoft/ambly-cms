@@ -59,18 +59,37 @@ export class CoursesApi {
     }
   }
 
-  async AddModule(inputs, module) {
+  async AddModule(inputs, course) {
     const data = {
       name_module: inputs.name_module,
       description: inputs.description,
       time_module: inputs.time_module,
-      course: module,
+      course: course,
     };
 
     try {
       const response = await axios({
         method: "post",
         url: `${api_url}/modules/create`,
+        data: data,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
+
+  async EditeModule(inputs, module) {
+    const data = {
+      name_module: inputs.name_module,
+      description: inputs.description,
+      time_module: inputs.time_module,
+    };
+
+    try {
+      const response = await axios({
+        method: "patch",
+        url: `${api_url}/modules/edit/${module}`,
         data: data,
       });
       return response;

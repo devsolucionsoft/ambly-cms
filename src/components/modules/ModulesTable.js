@@ -6,7 +6,7 @@ import { CategoriesApi } from "../../api/CategoriesApi";
 import Swal from "sweetalert2";
 import Link from "next/link";
 
-const ItemTable = ({ item, index }) => {
+const ItemTable = ({ item, index, idCourse }) => {
   const [open, SetOpen] = useState();
 
   return (
@@ -25,7 +25,7 @@ const ItemTable = ({ item, index }) => {
       <td>{item.time_module}</td>
       <td>
         <div className={styles.actionIcons}>
-          <Link href="/editar-modulo">
+          <Link href={`/editar-modulo?course=${idCourse}&module=${index}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -66,7 +66,7 @@ const ItemTable = ({ item, index }) => {
   );
 };
 
-const ModulesTable = ({ modulesItems }) => {
+const ModulesTable = ({ modulesItems, idCourse }) => {
   return (
     <div>
       <div className={styles.tHeader}></div>
@@ -84,7 +84,7 @@ const ModulesTable = ({ modulesItems }) => {
           </thead>
           <tbody>
             {modulesItems.map((item, index) => (
-              <ItemTable item={item} index={index} key={item.id} />
+              <ItemTable item={item} index={index} key={item.id} idCourse={idCourse} />
             ))}
           </tbody>
         </table>

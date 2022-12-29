@@ -7,7 +7,7 @@ import { CoursesApi } from "../../api/CoursesApi";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 
-const ModuleForm = ({ modalOpen, closeModal, openModal, id }) => {
+const ModuleForm = ({ id }) => {
   const newCourseSchema = Yup.object().shape({
     name_module: Yup.string().required("Required"),
     description: Yup.string().required("Required"),
@@ -34,7 +34,7 @@ const ModuleForm = ({ modalOpen, closeModal, openModal, id }) => {
           switch (response.status) {
             case 201:
               Swal.fire({
-                title: "Splash creado",
+                title: "Modulo creado",
                 icon: "success",
               }).then(() => {
                 router.push(`/modulos?id=${id}`);
