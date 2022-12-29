@@ -51,7 +51,7 @@ export class CoursesApi {
     try {
       const response = await axios({
         method: "delete",
-        url: `${api_url}/category/delete/${id}`,
+        url: `${api_url}/course/delete/${id}`,
       });
       return response;
     } catch (error) {
@@ -91,6 +91,18 @@ export class CoursesApi {
         method: "patch",
         url: `${api_url}/modules/edit/${module}`,
         data: data,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
+
+  async deleteModule(id) {
+    try {
+      const response = await axios({
+        method: "delete",
+        url: `${api_url}/modules/delete/${id}`,
       });
       return response;
     } catch (error) {

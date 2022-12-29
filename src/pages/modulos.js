@@ -55,7 +55,11 @@ const Page = () => {
           </GButton>
         </div>
 
-        <ModulesTable modulesItems={courseInfo?.modules ? courseInfo.modules : []} idCourse={id} />
+        <ModulesTable
+          modulesItems={courseInfo?.modules ? courseInfo.modules : []}
+          idCourse={id}
+          getCourses={getCourses}
+        />
 
         <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
           {modalOpen && (

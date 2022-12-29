@@ -2,7 +2,6 @@ import CoursesTable from "../components/Courses/CoursesTable";
 import { DashboardLayout } from "../components/dashboard-layout";
 import GButton from "../components/buttons/GButton";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 // Api
 import { CoursesApi } from "../api/CoursesApi";
 import Modal from "../components/modal/Modal";
@@ -17,6 +16,7 @@ const Page = () => {
   const closeModal = () => setModalOpen(false);
   const openModal = () => setModalOpen(true);
   const [isEditing, setIsEditing] = useState(false);
+  
   const editingCourse = (id) => {
     setIsEditing({
       active: true,
@@ -63,6 +63,7 @@ const Page = () => {
         closeModal={closeModal}
         openModal={openModal}
         itemsCourses={itemsCourses}
+        getCourses={getCourses}
       />
 
       <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>

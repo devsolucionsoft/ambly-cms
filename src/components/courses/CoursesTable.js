@@ -1,12 +1,49 @@
 import React from "react";
 import styles from "./CoursesTable.module.scss";
 import Image from "next/image";
-// Api
-import { CategoriesApi } from "../../api/CategoriesApi";
 import Swal from "sweetalert2";
 import Link from "next/link";
+// Api
+import { CoursesApi } from "../../api/CoursesApi";
 
-const CoursesTable = ({ editingCourse, openModal, modalOpen, closeModal, itemsCourses }) => {
+const CoursesTable = ({ editingCourse, openModal, modalOpen, closeModal, itemsCourses, getCourses }) => {
+
+  const CoursesApiModel = new CoursesApi();
+
+  const removeTask = (id) => {
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: "¡Una vez eliminado, no podrá recuperar este curso!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "cancel",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.value) {
+        handleDelete(id);
+      }
+    });
+  };
+
+  // DELETE ITEM
+  const handleDelete = async (id) => {
+    const response = await CoursesApiModel.deleteCourse(id);
+    switch (response.status) {
+      case 201:
+        getCourses();
+        Swal.fire("¡Eliminado!", "Su curso ha sido eliminado.", "success");
+        break;
+      default:
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ha ocurrido un problema, intentalo mas tarde",
+        });
+        break;
+    }
+  };
+
   return (
     <div>
       <div className={styles.tHeader}></div>
@@ -54,7 +91,9 @@ const CoursesTable = ({ editingCourse, openModal, modalOpen, closeModal, itemsCo
                       strokeWidth={1.5}
                       stroke="currentColor"
                       className="w-6 h-6"
-                      onClick={() => (modalOpen ? closeModal() : openModal(), editingCourse(item.id))}
+                      onClick={() => (
+                        modalOpen ? closeModal() : openModal(), editingCourse(item.id)
+                      )}
                     >
                       <path
                         strokeLinecap="round"
@@ -70,7 +109,7 @@ const CoursesTable = ({ editingCourse, openModal, modalOpen, closeModal, itemsCo
                       strokeWidth={1.5}
                       stroke="currentColor"
                       className="w-6 h-6"
-                      // onClick={() => removeTask(item.id)}
+                      onClick={() => removeTask(item.id)}
                       style={{ cursor: "pointer" }}
                     >
                       <path
