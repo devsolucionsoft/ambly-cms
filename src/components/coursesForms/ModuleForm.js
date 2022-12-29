@@ -53,7 +53,7 @@ const ModuleForm = ({ id }) => {
       >
         {({ errors, touched, isSubmitting, setFieldValue }) => (
           <Form>
-            <div className={styles.moduleForm}>
+            <div className={styles.moduleAddForm}>
               <div>
                 <Field
                   className={`fieldShadow ${styles.field}`}

@@ -82,7 +82,29 @@
 }
 
 .moduleFormContainer {
-  margin-top: 50px;
+  margin-top: 20px;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+
+.moduleAddForm {
+  max-width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 20px;
+
+  .moduleDescription {
+    grid-row: 3/6;
+    .field {
+      height: 100%;
+    }
+
+
+  }
 }
 
 .moduleForm {
