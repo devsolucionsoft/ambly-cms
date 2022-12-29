@@ -44,6 +44,8 @@ const ModulesTable = ({ modulesItems, idCourse, getCourses }) => {
     }
   };
 
+  console.log(modulesItems);
+
   return (
     <div>
       <div className={styles.tHeader}></div>
@@ -61,7 +63,7 @@ const ModulesTable = ({ modulesItems, idCourse, getCourses }) => {
           </thead>
           <tbody>
             {modulesItems.map((item, index) => (
-              <tr className={styles.categoryInfo}>
+              <tr className={styles.categoryInfo} key={index}>
                 <td>
                   <h3>{index}</h3>
                 </td>

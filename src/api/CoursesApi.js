@@ -109,4 +109,49 @@ export class CoursesApi {
       return error.response;
     }
   }
+
+  async AddVideo(inputs, module) {
+    const data = {
+      name_video: inputs.name,
+      description_video: inputs.description,
+      video: inputs.video,
+      modules: module,
+    };
+
+    try {
+      const response = await axios({
+        method: "post",
+        url: `${api_url}/videos`,
+        data: data,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
+
+  async EditeVideo(data, video) {
+    try {
+      const response = await axios({
+        method: "patch",
+        url: `${api_url}/videos/edit/${video} `,
+        data: data,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
+
+  async deleteVideo(id) {
+    try {
+      const response = await axios({
+        method: "delete",
+        url: `${api_url}/videos/delete/${id}`,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
 }
