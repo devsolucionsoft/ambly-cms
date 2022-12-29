@@ -3,6 +3,7 @@ import ModuleEditForm from "../components/coursesForms/ModuleEditForm";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { AnimatePresence } from "framer-motion";
 import VideoEditForm from "../components/coursesForms/VideoEditForm";
+import VideoForm from "../components/coursesForms/VideoForm";
 import Modal from "../components/modal/Modal";
 import styles from "../styles/ModulesPage.module.scss";
 import { VideoList } from "../components/coursesForms/VideoForm";
@@ -30,6 +31,8 @@ const Page = () => {
     }
   };
 
+  const [isEditing, setIsEditing] = useState(false);
+
   useEffect(() => {
     getCourses();
   }, []);
@@ -48,6 +51,8 @@ const Page = () => {
             modalOpen={modalOpen}
             closeModal={closeModal}
             openModal={openModal}
+            editing={() => setIsEditing(true)}
+            stopEditing={() => setIsEditing(false)}
             infoModule={courseInfo.modules[module]}
             course={course}
           />
@@ -55,20 +60,17 @@ const Page = () => {
 
         <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
           {modalOpen && (
-            <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <div className={styles.videoModal}>
-                <div>
-                  <h3 style={{ textAlign: "center" }}>Selecciona un video para editar</h3>
 
-                  <VideoList titulo={"Titulo del video"} />
-                  <VideoList titulo={"Titulo del video"} />
-                  <VideoList titulo={"Titulo del video"} />
-                  <VideoList titulo={"Titulo del video"} />
-                  <VideoList titulo={"Titulo del video"} />
-                </div>
-                <VideoEditForm />
-              </div>
-            </Modal>
+            isEditing? (
+            <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
+              <VideoEditForm />
+          </Modal>
+            ): (
+              <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
+              <VideoForm />
+          </Modal>
+            )
+          
           )}
         </AnimatePresence>
       </div>
