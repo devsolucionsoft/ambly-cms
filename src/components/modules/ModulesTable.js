@@ -44,8 +44,6 @@ const ModulesTable = ({ modulesItems, idCourse, getCourses }) => {
     }
   };
 
-  console.log(modulesItems);
-
   return (
     <div>
       <div className={styles.tHeader}></div>

@@ -53,8 +53,6 @@ const VideoForm = ({ idModule, getCourses, closeModal }) => {
                   idModule
                 );
 
-                console.log(response, idModule);
-
                 switch (response.status) {
                   case 201:
                     getCourses();

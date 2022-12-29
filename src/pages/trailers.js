@@ -34,7 +34,6 @@ const Page = () => {
 
   const getTrailers = async () => {
     const response = await TrailersApiModel.GetTrailers();
-    console.log(response);
     if (response.status === 200) {
       setItemsTrailers(response.data);
     }

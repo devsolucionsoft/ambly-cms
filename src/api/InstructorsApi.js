@@ -61,10 +61,8 @@ export class InstructorsApi {
     const data = {
       review: inputs.review,
       author: inputs.author,
-      instructor_id: id
-  };  
-
-  console.log("data", data);
+      instructor_id: id,
+    };
 
     try {
       const response = await axios({

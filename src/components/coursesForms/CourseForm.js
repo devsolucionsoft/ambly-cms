@@ -88,8 +88,6 @@ const CoursesForm = ({ getCourses, closeModal }) => {
               image_name: responseImg2.data.imageUrl,
             });
 
-            console.log("CreateCourse", response);
-
             switch (response.status) {
               case 201:
                 getCourses();

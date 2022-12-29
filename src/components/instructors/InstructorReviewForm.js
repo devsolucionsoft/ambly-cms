@@ -41,7 +41,6 @@ const InstrcutorReviewForm = (props) => {
   // DELETE ITEM
   const handleDelete = async (id) => {
     const response = await InstructorsApiModel.deleteReviewInstructor(id);
-    console.log(response, id);
     switch (response.status) {
       case 201:
         getInstructors();
@@ -107,7 +106,6 @@ const InstrcutorReviewForm = (props) => {
                   values,
                   isAddReview
                 );
-                console.log(response);
                 switch (response.status) {
                   case 201:
                     getInstructors();
