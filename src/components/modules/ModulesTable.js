@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./ModulesTable.module.scss";
 import Image from "next/image";
 // Api
@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import Link from "next/link";
 
 const ItemTable = ({item, index}) => {
+  const [open, SetOpen] = useState()
+
   return (
     <tr className={styles.categoryInfo}>
       <td>
@@ -30,7 +32,7 @@ const ItemTable = ({item, index}) => {
             strokeWidth={1.5}
             stroke="currentColor"
             className="w-6 h-6"
-            //onClick={() => (modalOpen ? closeModal() : openModal(), editingCategory(item.id))}
+            onClick={() => Link()}
           >
             <path
               strokeLinecap="round"
