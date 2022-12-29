@@ -195,6 +195,7 @@ const ModuleForm = ({
           <Form>
             <div className={styles.moduleForm}>
               <div>
+              <label>Nombre del modulo</label>
                 <Field
                   className={`fieldShadow ${styles.field}`}
                   name="name_module"
@@ -206,6 +207,7 @@ const ModuleForm = ({
               </div>
 
               <div>
+                <label>Duracion del modulo</label>
                 <Field
                   className={`fieldShadow ${styles.field}`}
                   name="time_module"
@@ -219,6 +221,7 @@ const ModuleForm = ({
               
 
               <div className={styles.moduleDescription}>
+              <label>Descripcion</label>
                 <Field
                   className={`fieldShadow ${styles.field}`}
                   name="description"
@@ -250,6 +253,13 @@ const ModuleForm = ({
                 <VideoComponent/>
                   <VideoComponent/>
                   <VideoComponent/>
+                  <VideoComponent/>
+                  <VideoComponent/>
+                  <VideoComponent/>
+                  <VideoComponent/>
+                  <VideoComponent/>
+                  <VideoComponent/>
+                  <VideoComponent/>
              
                   {infoModule.videos.map((item) => (
                     <VideoComponent titulo={item.name_video} idVideo={item.id} key={item.id} />
@@ -274,6 +284,11 @@ const ModuleForm = ({
 
                 <div className={styles.videoList}>
 
+                  <FileComponent/>
+                  <FileComponent/>
+                  <FileComponent/>
+                  <FileComponent/>
+                  <FileComponent/>
                   <FileComponent/>
                   <FileComponent/>
                   <FileComponent/>
