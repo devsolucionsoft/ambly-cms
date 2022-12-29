@@ -105,6 +105,8 @@ const ModuleForm = ({ modalOpen, closeModal, openModal, infoModule, course, edit
                 ) : null}
               </div>
 
+              
+
               <div className={styles.moduleDescription}>
                 <Field
                   className={`fieldShadow ${styles.field}`}
@@ -116,6 +118,8 @@ const ModuleForm = ({ modalOpen, closeModal, openModal, infoModule, course, edit
                   <div className={"fieldErrors"}>{errors.description}</div>
                 ) : null}
               </div>
+
+              <GButton text={"Aceptar"}> Abrir</GButton>
 
               <div className={`fieldShadow ${styles.field} ${styles.videoInput}`}>
 
@@ -130,6 +134,8 @@ const ModuleForm = ({ modalOpen, closeModal, openModal, infoModule, course, edit
                   </div>
                 </div>
 
+                
+
                 <div className={styles.videoList}>
                   <VideoComponent titulo={"Titulo del video"}/>
                   <VideoComponent titulo={"Titulo del video"}/>
@@ -138,7 +144,7 @@ const ModuleForm = ({ modalOpen, closeModal, openModal, infoModule, course, edit
               </div>
             </div>
 
-            <GButton text={"Aceptar"}> Abrir</GButton>
+            
           </Form>
         )}
       </Formik>

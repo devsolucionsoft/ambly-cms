@@ -190,7 +190,7 @@ const CoursesForm = ({ getCourses, closeModal }) => {
                     }}
                   />
                   {errors.image_course && touched.image_course ? (
-                    <div className="fieldErrors">{errors.image_course}</div>
+                    <div className="fieldErrors fieldErrorsFix">{errors.image_course}</div>
                   ) : null}
                 </div>
 
@@ -206,7 +206,7 @@ const CoursesForm = ({ getCourses, closeModal }) => {
                     }}
                   />
                   {errors.image_name && touched.image_name ? (
-                    <div className="fieldErrors">{errors.image_name}</div>
+                    <div className="fieldErrors fieldErrorsFix">{errors.image_name}</div>
                   ) : null}
                 </div>
 

@@ -7,9 +7,11 @@ import VideoForm from "../components/coursesForms/VideoForm";
 import Modal from "../components/modal/Modal";
 import styles from "../styles/ModulesPage.module.scss";
 import { VideoList } from "../components/coursesForms/VideoForm";
+
 // Api
 import { CoursesApi } from "../api/CoursesApi";
 import { useRouter } from "next/router";
+import BackButton from "../components/buttons/BackButton";
 
 const Page = () => {
   const CoursesApiModel = new CoursesApi();
@@ -44,7 +46,10 @@ const Page = () => {
   }, [course, itemsCourses]);
 
   return (
-    <>
+    <div style={{position: 'relative'}}>
+
+      <BackButton/>
+
       <div className={"container"}>
         {courseInfo?.modules && (
           <ModuleEditForm
@@ -61,20 +66,20 @@ const Page = () => {
         <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
           {modalOpen && (
 
-            isEditing? (
-            <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <VideoEditForm />
-          </Modal>
-            ): (
+            isEditing ? (
               <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <VideoForm />
-          </Modal>
+                <VideoEditForm />
+              </Modal>
+            ) : (
+              <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
+                <VideoForm />
+              </Modal>
             )
-          
+
           )}
         </AnimatePresence>
       </div>
-    </>
+    </div>
   );
 };
 
