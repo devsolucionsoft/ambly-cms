@@ -7,13 +7,12 @@ import { CoursesApi } from "../../api/CoursesApi";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 
-const ModuleForm = ({ id }) => {
+const ModuleForm = ({ id, closeModal, getCourses }) => {
   const newCourseSchema = Yup.object().shape({
     name_module: Yup.string().required("Required"),
     description: Yup.string().required("Required"),
     time_module: Yup.string().required("Required"),
   });
-  const router = useRouter();
 
   const CoursesApiModel = new CoursesApi();
 
@@ -33,11 +32,12 @@ const ModuleForm = ({ id }) => {
 
           switch (response.status) {
             case 201:
+              getCourses();
               Swal.fire({
                 title: "Modulo creado",
                 icon: "success",
               }).then(() => {
-                router.push(`/modulos?id=${id}`);
+                closeModal();
               });
               break;
             default:

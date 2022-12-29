@@ -49,25 +49,21 @@ const Page = () => {
             <h2 className="">Modulos</h2>
           </div>
 
-          <GButton
-          text={"Agregar Modulo"}
-          onClick={() => (modalOpen ? closeModal() : openModal())}
-        >
-          {" "}
-          Abrir
-        </GButton>
+          <GButton text={"Agregar Modulo"} onClick={() => (modalOpen ? closeModal() : openModal())}>
+            {" "}
+            Abrir
+          </GButton>
         </div>
 
-        <ModulesTable modulesItems={courseInfo?.modules ? courseInfo.modules : []} />
-
+        <ModulesTable modulesItems={courseInfo?.modules ? courseInfo.modules : []} idCourse={id} />
 
         <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
-        {modalOpen && (
+          {modalOpen && (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <ModuleForm/>
+              <ModuleForm id={id} closeModal={closeModal} getCourses={getCourses} />
             </Modal>
-          ) }
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );
