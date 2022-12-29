@@ -7,6 +7,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 // Api
 import { CoursesApi } from "../api/CoursesApi";
+import ModuleForm from "../components/coursesForms/ModuleForm";
+import Modal from "../components/modal/Modal";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Page = () => {
   const CoursesApiModel = new CoursesApi();
@@ -33,6 +36,10 @@ const Page = () => {
     }
   }, [id, itemsCourses]);
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const closeModal = () => setModalOpen(false);
+  const openModal = () => setModalOpen(true);
+
   return (
     <>
       <div className={"container"}>
@@ -42,12 +49,25 @@ const Page = () => {
             <h2 className="">Modulos</h2>
           </div>
 
-          <Link href={`/agregar-modulos?id=${id}`}>
-            <GButton text={"Agregar Modulo"}> Abrir</GButton>
-          </Link>
+          <GButton
+          text={"Agregar Modulo"}
+          onClick={() => (modalOpen ? closeModal() : openModal())}
+        >
+          {" "}
+          Abrir
+        </GButton>
         </div>
 
         <ModulesTable modulesItems={courseInfo?.modules ? courseInfo.modules : []} />
+
+
+        <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
+        {modalOpen && (
+            <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
+              <ModuleForm/>
+            </Modal>
+          ) }
+      </AnimatePresence>
       </div>
     </>
   );
