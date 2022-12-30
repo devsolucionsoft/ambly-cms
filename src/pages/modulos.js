@@ -5,6 +5,7 @@ import ModulesTable from "../components/modules/ModulesTable";
 import GButton from "../components/buttons/GButton";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
 // Api
 import { CoursesApi } from "../api/CoursesApi";
 import ModuleForm from "../components/coursesForms/ModuleForm";
@@ -44,6 +45,12 @@ const Page = () => {
   return (
     <div style={{ position: 'relative' }} >
      <BackButton/>
+
+     <Head>
+        <title>
+          Ambly CMS - Modulos
+        </title>
+      </Head>
       <div className={"container"}>
         <div className="table-header-container">
           <div>

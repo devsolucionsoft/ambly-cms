@@ -10,6 +10,7 @@ import GButton from "../components/buttons/GButton";
 import { motion, AnimatePresence } from "framer-motion";
 import InstructorEditForm from "../components/instructors/InstrcutorEditForm";
 import InstructorReviewForm from "../components/instructors/InstructorReviewForm";
+import Head from "next/head";
 
 const Page = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -61,18 +62,24 @@ const Page = () => {
 
   return (
     <div className={`container`} style={{ paddingBottom: "2em" }}>
+
+      <Head>
+        <title>
+          Ambly CMS - Instructores
+        </title>
+      </Head>
       <div className={styles.instructorsContainer}>
 
-      <div className="table-header-container">
-        <h1 className="">Instrcutores</h1>
-        <GButton
-          text={"Agregar Instructor"}
-          onClick={() => (modalOpen ? closeModal() : openModal(), addInstrcutor())}
-        >
-          {" "}
-          Abrir
-        </GButton>
-      </div>
+        <div className="table-header-container">
+          <h1 className="">Instrcutores</h1>
+          <GButton
+            text={"Agregar Instructor"}
+            onClick={() => (modalOpen ? closeModal() : openModal(), addInstrcutor())}
+          >
+            {" "}
+            Abrir
+          </GButton>
+        </div>
 
         <InstructorsTable
           modalOpen={modalOpen}
@@ -84,7 +91,7 @@ const Page = () => {
           openReviewForm={openReviewForm}
         />
 
-  
+
 
         <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
           {modalOpen ? (

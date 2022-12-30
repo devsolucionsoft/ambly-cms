@@ -8,6 +8,7 @@ import Modal from "../components/modal/Modal";
 import { AnimatePresence } from "framer-motion";
 import CoursesForm from "../components/coursesForms/CourseForm";
 import CourseEditForm from "../components/coursesForms/CourseEditForm";
+import Head from "next/head";
 
 const Page = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -16,7 +17,7 @@ const Page = () => {
   const closeModal = () => setModalOpen(false);
   const openModal = () => setModalOpen(true);
   const [isEditing, setIsEditing] = useState(false);
-  
+
   const editingCourse = (id) => {
     setIsEditing({
       active: true,
@@ -45,6 +46,13 @@ const Page = () => {
 
   return (
     <div className="container" style={{ paddingBottom: "2em" }}>
+
+      <Head>
+        <title>
+          Ambly CMS - Cursos
+        </title>
+      </Head>
+
       <div className="table-header-container">
         <h1 className="">Cursos</h1>
 

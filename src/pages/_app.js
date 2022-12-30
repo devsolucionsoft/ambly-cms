@@ -24,7 +24,7 @@ const App = (props) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <title>
-          Material Kit Pro
+          Ambly CMS
         </title>
         <meta
           name="viewport"

@@ -7,6 +7,7 @@ import Modal from "../components/modal/Modal";
 import TrailersTable from "../components/Trailers/TrailersTable";
 import TrailersForm from "../components/Trailers/TrailersForm";
 import TrailersEditForm from "../components/Trailers/TrailersEditForm";
+import Head from "next/head";
 // Api
 import { TrailersApi } from "../api/TrailersApi";
 
@@ -45,6 +46,13 @@ const Page = () => {
 
   return (
     <div className={`container`}>
+
+      <Head>
+        <title>
+          Ambly CMS - Trailers
+        </title>
+      </Head>
+
       <div className="table-header-container">
         <h1 className="">Trailers</h1>
         <GButton

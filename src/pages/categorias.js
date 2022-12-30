@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import Modal from "../components/modal/Modal";
 import CategoriesForm from "../components/categories/CategoriesForm";
+import Head from "next/head";
 // Api
 import { CategoriesApi } from "../api/CategoriesApi";
 import CategoriesEditForm from "../components/categories/CategoriesEditForm";
@@ -45,6 +46,13 @@ const Page = () => {
 
   return (
     <div className="container" style={{ paddingBottom: "2em" }}>
+
+      <Head>
+        <title>
+          Ambly CMS - Categorias
+        </title>
+      </Head>
+
       <div className="table-header-container">
         <h1 className="">Categorias</h1>
         <GButton

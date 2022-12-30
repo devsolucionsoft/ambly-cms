@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import VideoEditForm from "../components/coursesForms/VideoEditForm";
 import VideoForm from "../components/coursesForms/VideoForm";
 import Modal from "../components/modal/Modal";
+import Head from "next/head";
 // Api
 import { CoursesApi } from "../api/CoursesApi";
 import { useRouter } from "next/router";
@@ -56,6 +57,13 @@ const Page = () => {
 
   return (
     <div style={{ position: "relative" }}>
+
+      <Head>
+        <title>
+          Ambly CMS - Editar Modulo
+        </title>
+      </Head>
+
       <BackButton />
 
       <div className={"container"}>
@@ -134,7 +142,7 @@ const Page = () => {
                     handleClose={closeModal}
                   >
                     <FileEditForm
-                    filesItems={courseInfo.modules[module].file}
+                      filesItems={courseInfo.modules[module].file}
                       idFile={isEditingFile.id}
                       closeModal={closeModal}
                       getCourses={getCourses}

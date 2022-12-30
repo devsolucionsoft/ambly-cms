@@ -7,6 +7,7 @@ import GButton from "../components/buttons/GButton";
 import Modal from "../components/modal/Modal";
 import SplashForm from "../components/splash/SplashForm";
 import SplashEditForm from "../components/splash/SplashEditForm";
+import Head from "next/head";
 // Api
 import { SplashApi } from "../api/SplashApi";
 
@@ -45,6 +46,12 @@ const Page = () => {
 
   return (
     <div className={`container`}>
+
+      <Head>
+        <title>
+          Ambly CMS - Splash
+        </title>
+      </Head>
       <div className="table-header-container">
         <h1 className="">Splash</h1>
         <GButton
