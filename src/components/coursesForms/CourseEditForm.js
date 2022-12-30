@@ -189,6 +189,21 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
                       <div className="fieldErrors">{errors.description}</div>
                     ) : null}
                   </div>
+
+                  <div className={styles.checkBoxGroup}>
+                    <label>
+                      <Field
+                        name="popular_course"
+                        type="checkbox"
+                      /> Marcar como popular
+                    </label>
+                    <label>
+                      <Field
+                        name="next_course"
+                        type="checkbox"
+                      /> Marcar como proximo
+                    </label>
+                  </div>
                 </div>
 
                 <div className={styles.formGroup2}>
