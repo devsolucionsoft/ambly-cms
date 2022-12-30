@@ -20,7 +20,7 @@ const ModuleForm = ({
   enableAddVideo,
   disableAddVideo,
   enableEditingFile,
-  disableEditingFile
+  disableEditingFile,
 }) => {
   const newCourseSchema = Yup.object().shape({
     name_module: Yup.string().required("Required"),
@@ -65,6 +65,40 @@ const ModuleForm = ({
     }
   };
 
+  const removeTaskFile = (id) => {
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: "¡Una vez eliminado, no podrá recuperar este archivo!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "cancel",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.value) {
+        handleDeleteFile(id);
+      }
+    });
+  };
+
+  // DELETE ITEM
+  const handleDeleteFile = async (id) => {
+    const response = await CoursesApiModel.deleteFile(id);
+    switch (response.status) {
+      case 201:
+        getCourses();
+        Swal.fire("¡Eliminado!", "Su archivo ha sido eliminado.", "success");
+        break;
+      default:
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ha ocurrido un problema, intentalo mas tarde",
+        });
+        break;
+    }
+  };
+
   // Componente para  listar Videos
   const VideoComponent = ({ titulo, idVideo }) => {
     return (
@@ -74,7 +108,9 @@ const ModuleForm = ({
 
           <div>
             <svg
-              onClick={() => (modalOpen ? closeModal() : openModal(), editing(idVideo), enableAddVideo())}
+              onClick={() => (
+                modalOpen ? closeModal() : openModal(), editing(idVideo), enableAddVideo()
+              )}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -111,7 +147,7 @@ const ModuleForm = ({
   };
 
   // Componente para listar Descargables
-  const FileComponent = ({ titulo }) => {
+  const FileComponent = ({ titulo, idFile }) => {
     return (
       <>
         <div className={styles.videoComponentContainer}>
@@ -119,7 +155,9 @@ const ModuleForm = ({
 
           <div>
             <svg
-              onClick={() => (modalOpen ? closeModal() : openModal(), enableEditingFile(), disableAddVideo())}
+              onClick={() => (
+                modalOpen ? closeModal() : openModal(), enableEditingFile(idFile), disableAddVideo()
+              )}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -141,7 +179,7 @@ const ModuleForm = ({
               strokeWidth={1.5}
               stroke="currentColor"
               className="w-6 h-6"
-              onClick={() => removeTask(idVideo)}
+              onClick={() => removeTaskFile(idFile)}
             >
               <path
                 strokeLinecap="round"
@@ -195,7 +233,7 @@ const ModuleForm = ({
           <Form>
             <div className={styles.moduleForm}>
               <div>
-              <label>Nombre del modulo</label>
+                <label>Nombre del modulo</label>
                 <Field
                   className={`fieldShadow ${styles.field}`}
                   name="name_module"
@@ -218,10 +256,8 @@ const ModuleForm = ({
                 ) : null}
               </div>
 
-              
-
               <div className={styles.moduleDescription}>
-              <label>Descripcion</label>
+                <label>Descripcion</label>
                 <Field
                   className={`fieldShadow ${styles.field}`}
                   name="description"
@@ -233,7 +269,6 @@ const ModuleForm = ({
                 ) : null}
               </div>
 
-
               {/* Videos */}
 
               <div className={`fieldShadow ${styles.field} ${styles.videoInput}`}>
@@ -241,32 +276,20 @@ const ModuleForm = ({
                   <span>Videos del modulo </span>
                   <div
                     className={styles.addVideoBtn}
-                    onClick={() => (modalOpen ? closeModal() : openModal(), stopEditing(), enableAddVideo())}
+                    onClick={() => (
+                      modalOpen ? closeModal() : openModal(), stopEditing(), enableAddVideo()
+                    )}
                   >
                     Agregar Video
                   </div>
                 </div>
 
-                
-
                 <div className={styles.videoList}>
-                <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-             
                   {infoModule.videos.map((item) => (
                     <VideoComponent titulo={item.name_video} idVideo={item.id} key={item.id} />
                   ))}
                 </div>
               </div>
-
 
               {/* Descargables */}
               <div className={`fieldShadow ${styles.field} ${styles.fileInput}`}>
@@ -274,34 +297,26 @@ const ModuleForm = ({
                   <span>Archivos del modulo </span>
                   <div
                     className={styles.addVideoBtn}
-                    onClick={() => (modalOpen ? closeModal() : openModal(), stopEditing(), disableAddVideo(), disableEditingFile())}
+                    onClick={() => (
+                      modalOpen ? closeModal() : openModal(),
+                      stopEditing(),
+                      disableAddVideo(),
+                      disableEditingFile()
+                    )}
                   >
                     Agregar Archivos
                   </div>
                 </div>
 
-                
-
                 <div className={styles.videoList}>
-
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-           
-                  {/* {infoModule.videos.map((item) => (
-                    <VideoComponent titulo={item.name_video} idVideo={item.id} key={item.id} />
-                  ))} */}
+                  {infoModule.file.map((item) => (
+                    <FileComponent titulo={item.name_file} idFile={item.id} />
+                  ))}
                 </div>
               </div>
             </div>
 
             <GButton text={"Aceptar"}> Abrir</GButton>
-            
           </Form>
         )}
       </Formik>

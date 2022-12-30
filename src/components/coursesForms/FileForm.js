@@ -8,12 +8,21 @@ import Swal from "sweetalert2";
 import { SettingApi } from "../../api/SettingApi";
 import { CoursesApi } from "../../api/CoursesApi";
 
-const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "image/jpg", "file/pdf", "file/txt", "file/.xlsx", "file/docx"];
+const SUPPORTED_FORMATS = [
+  "image/png",
+  "image/jpeg",
+  "image/jpg",
+  "file/pdf",
+  "file/txt",
+  "file/.xlsx",
+  "file/docx",
+  "file/pdf",
+  "application/pdf",
+];
 
 const videoSchema = Yup.object().shape({
   name: Yup.string().required("Nombre del Archivo "),
-
-  video: Yup.mixed()
+  file: Yup.mixed()
     .required("El archivo es requerido")
     .test(
       "fileFormat",
@@ -41,24 +50,22 @@ const FileForm = ({ idModule, getCourses, closeModal }) => {
           onSubmit={async (values) => {
             if (!loader) {
               setLoader(true);
-              const responseVideo = await SettingApiModel.uploadImage(values.video);
+              const responseFile = await CoursesApiModel.UploadFile(values.file);
 
-              if (responseVideo.status === 201) {
-                const response = await CoursesApiModel.AddVideo(
+              if (responseFile.status === 201) {
+                const response = await CoursesApiModel.AddFile(
                   {
                     ...values,
-                    video: responseVideo.data.imageUrl,
+                    file: responseFile.data.pdfUrl,
                   },
                   idModule
                 );
-
-                console.log(response, idModule);
 
                 switch (response.status) {
                   case 201:
                     getCourses();
                     Swal.fire({
-                      title: "Video creado",
+                      title: "Archivo creado",
                       icon: "success",
                     }).then(() => {
                       closeModal();
@@ -102,18 +109,16 @@ const FileForm = ({ idModule, getCourses, closeModal }) => {
                   <input
                     className="uploadButton"
                     id="modules"
-                    name="video"
+                    name="file"
                     type="file"
                     onChange={(event) => {
-                      setFieldValue("video", event.currentTarget.files[0]);
+                      setFieldValue("file", event.currentTarget.files[0]);
                     }}
                   />
-                  {errors.video && touched.video ? (
-                    <div className="fieldErrors">{errors.video}</div>
+                  {errors.file && touched.file ? (
+                    <div className="fieldErrors">{errors.file}</div>
                   ) : null}
                 </div>
-
-
 
                 <GButton type="submit" text={loader ? "cargando..." : "Agregar"}>
                   Submit

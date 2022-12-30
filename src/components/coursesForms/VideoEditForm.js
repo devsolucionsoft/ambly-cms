@@ -63,7 +63,7 @@ const VideoForm = ({ videosItems, idVideo, getCourses, closeModal }) => {
                   case 201:
                     getCourses();
                     Swal.fire({
-                      title: "Video creado",
+                      title: "Archivo creado",
                       icon: "success",
                     }).then(() => {
                       closeModal();

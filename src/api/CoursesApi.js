@@ -154,4 +154,65 @@ export class CoursesApi {
       return error.response;
     }
   }
+
+  async UploadFile(file) {
+    let form = new FormData();
+    form.append("pdf", file);
+
+    try {
+      const response = await axios({
+        method: "post",
+        headers: { "Content-Type": "multipart/form-data" },
+        url: `${api_url}/files/upload/pdf`,
+        data: form,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
+
+  async AddFile(inputs, module) {
+    const data = {
+      name_file: inputs.name,
+      link_file: inputs.file,
+      modules: module
+    };
+
+    try {
+      const response = await axios({
+        method: "post",
+        url: `${api_url}/files`,
+        data: data,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
+
+  async EditeFile(data, video) {
+    try {
+      const response = await axios({
+        method: "patch",
+        url: `${api_url}/files/${video} `,
+        data: data,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
+
+  async deleteFile(id) {
+    try {
+      const response = await axios({
+        method: "delete",
+        url: `${api_url}/files/remove/${id}`,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
 }

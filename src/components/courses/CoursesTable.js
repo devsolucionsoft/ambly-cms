@@ -63,14 +63,11 @@ const CoursesTable = ({ editingCourse, openModal, modalOpen, closeModal, itemsCo
               <tr className={styles.categoryInfo}>
                 <td>
                   <div className={styles.categoryName}>
-                    <div className={styles.imgContainer}>
-                      <Image
-                        objectFit="cover"
-                        layout="fill"
+                      <img
+                      style={{width: "120px"}}
                         alt="Picture of the author"
                         src={item.image_course}
                       />
-                    </div>
 
                     <span style={{ padding: "0px 20px" }}>{item.name_course}</span>
                   </div>

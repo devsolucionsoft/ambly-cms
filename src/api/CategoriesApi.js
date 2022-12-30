@@ -32,6 +32,7 @@ export class CategoriesApi {
     const data = {
       name: inputs.name,
       image: inputs.image,
+      image_banner: inputs.image_banner,
       description: inputs.description,
     };
 

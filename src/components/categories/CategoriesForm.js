@@ -19,6 +19,13 @@ const CategorySchema = Yup.object().shape({
       "Formato no soportado, suba unicamente: .png .jpeg, o jpg",
       (value) => value && SUPPORTED_FORMATS.includes(value.type)
     ),
+  image_banner: Yup.mixed()
+    .required("La imagen es requerida")
+    .test(
+      "fileFormat",
+      "Formato no soportado, suba unicamente: .png .jpeg, o jpg",
+      (value) => value && SUPPORTED_FORMATS.includes(value.type)
+    ),
 });
 
 const CategoriesForm = (props) => {
@@ -34,17 +41,23 @@ const CategoriesForm = (props) => {
             name: "",
             description: "",
             image: "",
+            image_banner: "",
           }}
           validationSchema={CategorySchema}
           onSubmit={async (values) => {
             // same shape as initial values
             const responseImage = await CategoriesApiModel.uploadImage(values.image);
+            const responseImage2 = await CategoriesApiModel.uploadImage(values.image_banner);
 
-            if (responseImage.status === 201) {
+
+            if (responseImage.status === 201 && responseImage2.status === 201) {
               const response = await CategoriesApiModel.CreateCategorie({
                 ...values,
                 image: responseImage.data.imageUrl,
+                image_banner: responseImage2.data.imageUrl,
               });
+
+              console.log(response);
 
               switch (response.status) {
                 case 201:
@@ -88,7 +101,7 @@ const CategoriesForm = (props) => {
                 </div>
 
                 <div className={`${`fieldShadow ${styles.field}`} ${styles.imgInput}`}>
-                  <span>Imagen del de la categoria</span>
+                  <span>Imagen de la categoria</span>
                   <input
                     className="uploadButton"
                     id="image"
@@ -100,6 +113,22 @@ const CategoriesForm = (props) => {
                   />
                   {errors.image && touched.image ? (
                     <div className="fieldErrors">{errors.image}</div>
+                  ) : null}
+                </div>
+
+                <div className={`${`fieldShadow ${styles.field}`} ${styles.imgInput}`}>
+                  <span>Imagen del banner</span>
+                  <input
+                    className="uploadButton"
+                    id="image_banner"
+                    name="image_banner"
+                    type="file"
+                    onChange={(event) => {
+                      setFieldValue("image_banner", event.currentTarget.files[0]);
+                    }}
+                  />
+                  {errors.image_banner && touched.image_banner ? (
+                    <div className="fieldErrors">{errors.image_banner}</div>
                   ) : null}
                 </div>
 
