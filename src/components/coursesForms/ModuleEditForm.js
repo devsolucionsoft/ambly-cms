@@ -65,6 +65,40 @@ const ModuleForm = ({
     }
   };
 
+  const removeTaskFile = (id) => {
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: "¡Una vez eliminado, no podrá recuperar este archivo!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "cancel",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.value) {
+        handleDeleteFile(id);
+      }
+    });
+  };
+
+  // DELETE ITEM
+  const handleDeleteFile = async (id) => {
+    const response = await CoursesApiModel.deleteFile(id);
+    switch (response.status) {
+      case 201:
+        getCourses();
+        Swal.fire("¡Eliminado!", "Su archivo ha sido eliminado.", "success");
+        break;
+      default:
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ha ocurrido un problema, intentalo mas tarde",
+        });
+        break;
+    }
+  };
+
   // Componente para  listar Videos
   const VideoComponent = ({ titulo, idVideo }) => {
     return (
@@ -113,7 +147,7 @@ const ModuleForm = ({
   };
 
   // Componente para listar Descargables
-  const FileComponent = ({ titulo }) => {
+  const FileComponent = ({ titulo, idFile }) => {
     return (
       <>
         <div className={styles.videoComponentContainer}>
@@ -122,7 +156,7 @@ const ModuleForm = ({
           <div>
             <svg
               onClick={() => (
-                modalOpen ? closeModal() : openModal(), enableEditingFile(), disableAddVideo()
+                modalOpen ? closeModal() : openModal(), enableEditingFile(idFile), disableAddVideo()
               )}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -145,7 +179,7 @@ const ModuleForm = ({
               strokeWidth={1.5}
               stroke="currentColor"
               className="w-6 h-6"
-              onClick={() => removeTask(idVideo)}
+              onClick={() => removeTaskFile(idFile)}
             >
               <path
                 strokeLinecap="round"
@@ -276,7 +310,7 @@ const ModuleForm = ({
 
                 <div className={styles.videoList}>
                   {infoModule.file.map((item) => (
-                    <FileComponent titulo={item.name_file} />
+                    <FileComponent titulo={item.name_file} idFile={item.id} />
                   ))}
                 </div>
               </div>

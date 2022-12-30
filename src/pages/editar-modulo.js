@@ -38,7 +38,10 @@ const Page = () => {
   });
 
   const [isVideo, setIsVideo] = useState(false);
-  const [isEditingFile, setEditingFile] = useState(false);
+  const [isEditingFile, setEditingFile] = useState({
+    active: false,
+    id: 0,
+  });
 
   useEffect(() => {
     getCourses();
@@ -49,6 +52,7 @@ const Page = () => {
       setCourseInfo(itemsCourses.find((item) => item.id === parseInt(course)));
     }
   }, [course, itemsCourses]);
+
 
   return (
     <div style={{ position: "relative" }}>
@@ -64,8 +68,18 @@ const Page = () => {
               getCourses={getCourses}
               enableAddVideo={() => setIsVideo(true)}
               disableAddVideo={() => setIsVideo(false)}
-              enableEditingFile={() => setEditingFile(true)}
-              disableEditingFile={() => setEditingFile(false)}
+              enableEditingFile={(id) =>
+                setEditingFile({
+                  active: true,
+                  id: id,
+                })
+              }
+              disableEditingFile={() =>
+                setEditingFile({
+                  active: false,
+                  id: 0,
+                })
+              }
               editing={(id) =>
                 setIsEditing({
                   active: true,
@@ -112,14 +126,19 @@ const Page = () => {
                       />
                     </Modal>
                   )
-                ) : isEditingFile ? (
+                ) : isEditingFile.active ? (
                   <Modal
                     modalOpen={modalOpen}
                     text={""}
                     closeModal={closeModal}
                     handleClose={closeModal}
                   >
-                    <FileEditForm />
+                    <FileEditForm
+                    filesItems={courseInfo.modules[module].file}
+                      idFile={isEditingFile.id}
+                      closeModal={closeModal}
+                      getCourses={getCourses}
+                    />
                   </Modal>
                 ) : (
                   <Modal

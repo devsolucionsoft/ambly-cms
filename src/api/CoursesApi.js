@@ -195,7 +195,7 @@ export class CoursesApi {
     try {
       const response = await axios({
         method: "patch",
-        url: `${api_url}/videos/edit/${video} `,
+        url: `${api_url}/files/${video} `,
         data: data,
       });
       return response;
@@ -208,7 +208,7 @@ export class CoursesApi {
     try {
       const response = await axios({
         method: "delete",
-        url: `${api_url}/videos/delete/${id}`,
+        url: `${api_url}/files/remove/${id}`,
       });
       return response;
     } catch (error) {
