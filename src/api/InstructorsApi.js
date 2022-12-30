@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const api_url = "http://45.79.166.128:7034";
+import { api_url } from "./config";
 
 export class InstructorsApi {
   async GetInstructors() {
