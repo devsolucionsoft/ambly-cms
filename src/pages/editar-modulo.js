@@ -9,6 +9,8 @@ import Modal from "../components/modal/Modal";
 import { CoursesApi } from "../api/CoursesApi";
 import { useRouter } from "next/router";
 import BackButton from "../components/buttons/BackButton";
+import FileForm from "../components/coursesForms/FileForm";
+import FileEditForm from "../components/coursesForms/FileEditForm";
 
 const Page = () => {
   const CoursesApiModel = new CoursesApi();
@@ -35,6 +37,10 @@ const Page = () => {
     idVideo: 0,
   });
 
+  const [isVideo, setIsVideo] = useState(false)
+  const [isEditingFile, setEditingFile] = useState(false)
+
+
   useEffect(() => {
     getCourses();
   }, []);
@@ -59,6 +65,10 @@ const Page = () => {
               closeModal={closeModal}
               openModal={openModal}
               getCourses={getCourses}
+              enableAddVideo={()=> setIsVideo(true)}
+              disableAddVideo={() => setIsVideo(false)}
+              enableEditingFile={() => setEditingFile(true)}
+              disableEditingFile={() => setEditingFile(false)}
               editing={(id) =>
                 setIsEditing({
                   active: true,
@@ -76,34 +86,63 @@ const Page = () => {
             />
             <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
               {modalOpen &&
-                (isEditing.active ? (
-                  <Modal
-                    modalOpen={modalOpen}
-                    text={""}
-                    closeModal={closeModal}
-                    handleClose={closeModal}
-                  >
-                    <VideoEditForm
-                      videosItems={courseInfo.modules[module].videos}
-                      idVideo={isEditing.idVideo}
-                      getCourses={getCourses}
+
+                (isVideo ? (
+                  (isEditing.active ? (
+                    <Modal
+                      modalOpen={modalOpen}
+                      text={""}
                       closeModal={closeModal}
-                    />
-                  </Modal>
-                ) : (
-                  <Modal
-                    modalOpen={modalOpen}
-                    text={""}
-                    closeModal={closeModal}
-                    handleClose={closeModal}
-                  >
-                    <VideoForm
-                      idModule={courseInfo.modules[module].id}
+                      handleClose={closeModal}
+                    >
+                      <VideoEditForm
+                        videosItems={courseInfo.modules[module].videos}
+                        idVideo={isEditing.idVideo}
+                        getCourses={getCourses}
+                        closeModal={closeModal}
+                      />
+                    </Modal>
+                  ) : (
+                    <Modal
+                      modalOpen={modalOpen}
+                      text={""}
                       closeModal={closeModal}
-                      getCourses={getCourses}
-                    />
-                  </Modal>
-                ))}
+                      handleClose={closeModal}
+                    >
+                      <VideoForm
+                        idModule={courseInfo.modules[module].id}
+                        closeModal={closeModal}
+                        getCourses={getCourses}
+                      />
+                    </Modal>
+                  ))
+                ) 
+                : 
+                (
+                  (isEditingFile ? (
+                    <Modal
+                      modalOpen={modalOpen}
+                      text={""}
+                      closeModal={closeModal}
+                      handleClose={closeModal}
+                      >
+                        <FileEditForm/>
+                      </Modal>
+                  ) :
+                   <Modal
+                      modalOpen={modalOpen}
+                      text={""}
+                      closeModal={closeModal}
+                      handleClose={closeModal}
+                   >
+                    <FileForm/>
+                   </Modal>
+                   
+                   )
+                )
+                )
+
+                }
             </AnimatePresence>
           </React.Fragment>
         )}
