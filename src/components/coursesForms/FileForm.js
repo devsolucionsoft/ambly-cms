@@ -52,8 +52,6 @@ const FileForm = ({ idModule, getCourses, closeModal }) => {
               setLoader(true);
               const responseFile = await CoursesApiModel.UploadFile(values.file);
 
-              console.log(responseFile.data.pdfUrl);
-
               if (responseFile.status === 201) {
                 const response = await CoursesApiModel.AddFile(
                   {
@@ -62,8 +60,6 @@ const FileForm = ({ idModule, getCourses, closeModal }) => {
                   },
                   idModule
                 );
-
-                console.log(response);
 
                 switch (response.status) {
                   case 201:
