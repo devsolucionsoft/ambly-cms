@@ -18,6 +18,11 @@ const CategorySchema = Yup.object().shape({
     "Formato no soportado, suba unicamente: .png .jpeg, o jpg",
     (value) => (value ? SUPPORTED_FORMATS.includes(value.type) : true)
   ),
+  image_banner: Yup.mixed().test(
+    "fileFormat",
+    "Formato no soportado, suba unicamente: .png .jpeg, o jpg",
+    (value) => (value ? SUPPORTED_FORMATS.includes(value.type) : true)
+  ),
 });
 
 const CategoriesEditForm = (props) => {
@@ -41,6 +46,7 @@ const CategoriesEditForm = (props) => {
               name: formvalues.name,
               description: formvalues.description,
               image: false,
+              image_banner: false,
             }}
             validationSchema={CategorySchema}
             onSubmit={async (values) => {
@@ -54,6 +60,14 @@ const CategoriesEditForm = (props) => {
 
                 if (responseImg.status === 201) {
                   data = { ...data, image: responseImg.data.imageUrl };
+                }
+              }
+
+              if (values.image_banner) {
+                const responseImg = await SettingApiModel.uploadImage(values.image_banner);
+
+                if (responseImg.status === 201) {
+                  data = { ...data, image_banner: responseImg.data.imageUrl };
                 }
               }
 
@@ -106,6 +120,22 @@ const CategoriesEditForm = (props) => {
                     />
                     {errors.image && touched.image ? (
                       <div className="fieldErrors">{errors.image}</div>
+                    ) : null}
+                  </div>
+
+                  <div className={`${`fieldShadow ${styles.field}`} ${styles.imgInput}`}>
+                    <span>Imagen del banner</span>
+                    <input
+                      className="uploadButton"
+                      id="image_banner"
+                      name="image_banner"
+                      type="file"
+                      onChange={(event) => {
+                        setFieldValue("image_banner", event.currentTarget.files[0]);
+                      }}
+                    />
+                    {errors.image_banner && touched.image_banner ? (
+                      <div className="fieldErrors">{errors.image_banner}</div>
                     ) : null}
                   </div>
 
