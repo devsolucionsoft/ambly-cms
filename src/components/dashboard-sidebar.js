@@ -13,12 +13,20 @@ import SchoolIcon from '@mui/icons-material/School';
 import CategoryIcon from '@mui/icons-material/Category';
 import { User as UserIcon } from '../icons/user';
 import { UserAdd as UserAddIcon } from '../icons/user-add';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Users as UsersIcon } from '../icons/users';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
 import AddToHomeScreenIcon from '@mui/icons-material/AddToHomeScreen';
+import Router from 'next/router';
 
+
+const handleSignOut = () => {
+  localStorage.clear("token_session");
+  Router.push("/login").catch(console.error);
+  return;
+}
 const items = [
   {
     href: '/',
@@ -49,27 +57,8 @@ const items = [
     href: '/trailers',
     icon: (<AddToHomeScreenIcon fontSize="small" />),
     title: 'Trailers'
-  },
-  {
-    href: '/settings',
-    icon: (<CogIcon fontSize="small" />),
-    title: 'Settings'
-  },
-  {
-    href: '/login',
-    icon: (<LockIcon fontSize="small" />),
-    title: 'Login'
-  },
-  {
-    href: '/register',
-    icon: (<UserAddIcon fontSize="small" />),
-    title: 'Register'
-  },
-  {
-    href: '/404',
-    icon: (<XCircleIcon fontSize="small" />),
-    title: 'Error'
   }
+  
 ];
 
 export const DashboardSidebar = (props) => {
@@ -135,6 +124,16 @@ export const DashboardSidebar = (props) => {
               title={item.title}
             />
           ))}
+            <div onClick={handleSignOut}>
+              <NavItem
+                key={"closeSesion"}
+                icon={(<ExitToAppIcon fontSize="small" />)}
+                href={"/login"}
+                title={"Cerrar sesion"}
+              />
+            </div>
+          
+          
         </Box>
       </Box>
     </>
@@ -161,6 +160,7 @@ export const DashboardSidebar = (props) => {
 
   return (
     <Drawer
+    
       anchor="left"
       onClose={onClose}
       open={open}
@@ -174,6 +174,7 @@ export const DashboardSidebar = (props) => {
       sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
       variant="temporary"
     >
+     
       {content}
     </Drawer>
   );
