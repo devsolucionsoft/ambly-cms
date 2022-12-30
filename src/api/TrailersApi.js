@@ -1,5 +1,5 @@
 import axios from "axios";
-import { api_url } from "./config";
+import { api_url, headers} from "./config";
 
 export class TrailersApi {
   async GetTrailers() {
