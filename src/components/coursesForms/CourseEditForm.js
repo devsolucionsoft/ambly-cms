@@ -79,6 +79,8 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
             time_course: formvalues.time_course,
             characteristic2: formvalues.characteristic2,
             characteristic4: formvalues.characteristic4,
+            popular_course: formvalues.popular_course,
+            next_course: formvalues.next_course,
           }}
           validationSchema={newCourseSchema}
           onSubmit={async (values) => {
@@ -93,6 +95,8 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
               characteristic4: values.characteristic4,
               image_course: formvalues.image_course,
               image_name: formvalues.image_name,
+              popular_course: values.popular_course,
+              next_course: values.next_course,
               dateTime: new Date(),
             };
 
@@ -284,7 +288,7 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
                 </div>
               </div>
 
-              <GButton text={"Agregar Curso"} type="submit" disabled={isSubmitting}>
+              <GButton text={"Aceptar"} type="submit" disabled={isSubmitting}>
                 Agregar Modulos
               </GButton>
             </Form>
