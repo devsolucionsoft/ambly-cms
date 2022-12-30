@@ -16,6 +16,7 @@ import { UserAdd as UserAddIcon } from '../icons/user-add';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Users as UsersIcon } from '../icons/users';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
 import AddToHomeScreenIcon from '@mui/icons-material/AddToHomeScreen';
@@ -55,7 +56,7 @@ const items = [
   },
   {
     href: '/trailers',
-    icon: (<AddToHomeScreenIcon fontSize="small" />),
+    icon: (<OndemandVideoIcon fontSize="small" />),
     title: 'Trailers'
   }
   
@@ -146,7 +147,7 @@ export const DashboardSidebar = (props) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: '#101010',
+            backgroundColor: '#222222',
             color: '#FFFFFF',
             width: 280
           }
