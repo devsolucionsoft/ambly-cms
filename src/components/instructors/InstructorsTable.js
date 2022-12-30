@@ -1,7 +1,6 @@
-import React, { PropTypes } from "react";
+import React from "react";
 import styles from "./InstructorsTable.module.scss";
 import Image from "next/image";
-import GButton from "../buttons/GButton";
 import Swal from "sweetalert2";
 // Api
 import { InstructorsApi } from "../../api/InstructorsApi";
