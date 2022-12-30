@@ -27,6 +27,7 @@ const TrailersForm = (props) => {
   const { getTrailers, closeModal } = props;
   const SettingApiModel = new SettingApi();
   const TrailersApiModel = new TrailersApi();
+  const [loader, setLoader] = useState(false);
 
   const InstructorsApiModel = new InstructorsApi();
 
@@ -51,43 +52,42 @@ const TrailersForm = (props) => {
           }}
           validationSchema={TrailersSchema}
           onSubmit={async (values) => {
-            console.log(values);
-            // same shape as initial values
-            const responseImage = await SettingApiModel.uploadImage(values.video);
-            
+            if (!loader) {
+              setLoader(true);
+              const responseImage = await SettingApiModel.uploadImage(values.video);
 
-            console.log("responseImage", responseImage);
+              if (responseImage.status === 201) {
+                const response = await TrailersApiModel.CreateTrailers({
+                  ...values,
+                  video: responseImage.data.imageUrl,
+                });
 
-            if (responseImage.status === 201) {
-              const response = await TrailersApiModel.CreateTrailers({
-                ...values,
-                video: responseImage.data.imageUrl,
-              });
-
-              switch (response.status) {
-                case 201:
-                  getTrailers();
-                  Swal.fire({
-                    course_name: "Trailer creado",
-                    icon: "success",
-                  }).then(() => {
-                    closeModal();
-                  });
-                  break;
-                default:
-                  Swal.fire({
-                    course_name: "Ha ocurrido un error",
-                    text: "Intentalo mas tarde",
-                    icon: "error",
-                  });
-                  break;
+                switch (response.status) {
+                  case 201:
+                    getTrailers();
+                    Swal.fire({
+                      course_name: "Trailer creado",
+                      icon: "success",
+                    }).then(() => {
+                      closeModal();
+                    });
+                    break;
+                  default:
+                    Swal.fire({
+                      course_name: "Ha ocurrido un error",
+                      text: "Intentalo mas tarde",
+                      icon: "error",
+                    });
+                    break;
+                }
+              } else {
+                Swal.fire({
+                  course_name: "Ha ocurrido un error",
+                  text: "Intentalo mas tarde",
+                  icon: "error",
+                });
               }
-            } else {
-              Swal.fire({
-                course_name: "Ha ocurrido un error",
-                text: "Intentalo mas tarde",
-                icon: "error",
-              });
+              setLoader(false);
             }
           }}
         >
@@ -127,7 +127,11 @@ const TrailersForm = (props) => {
                       Selecciona un instructor
                     </option>
                     {instructors.map((item) => (
-                      <option key={item.id} value={item.name_instructor} style={{ display: "flex" }}>
+                      <option
+                        key={item.id}
+                        value={item.name_instructor}
+                        style={{ display: "flex" }}
+                      >
                         {item.name_instructor}
                       </option>
                     ))}
@@ -137,7 +141,7 @@ const TrailersForm = (props) => {
                   ) : null}
                 </div>
 
-                <GButton type="submit" text={"Agregar"}>
+                <GButton type="submit" text={loader ? "cargando..." : "Agregar"}>
                   Submit
                 </GButton>
               </div>

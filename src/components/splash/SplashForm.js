@@ -39,7 +39,6 @@ const SplashForm = (props) => {
           }}
           validationSchema={SplashSchema}
           onSubmit={async (values) => {
-            console.log(values);
             // same shape as initial values
             const responseImage = await SettingApiModel.uploadImage(values.image);
 

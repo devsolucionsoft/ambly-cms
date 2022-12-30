@@ -73,8 +73,6 @@ const TrailersEditForm = (props) => {
 
               const response = await TrailersApiModel.EditeTrailers(data, isEditing);
 
-              console.log(response);
-
               switch (response.status) {
                 case 201:
                   getTrailers();

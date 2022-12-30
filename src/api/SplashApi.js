@@ -31,7 +31,6 @@ export class SplashApi {
   }
 
   async EditeSplash(data, id) {
-    console.log(data, id);
     try {
       const response = await axios({
         method: "patch",

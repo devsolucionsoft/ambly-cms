@@ -31,7 +31,6 @@ export class TrailersApi {
   }
 
   async EditeTrailers(data, id) {
-    console.log(data, id);
     try {
       const response = await axios({
         method: "patch",

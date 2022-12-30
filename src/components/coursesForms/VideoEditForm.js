@@ -58,7 +58,6 @@ const VideoForm = ({ videosItems, idVideo, getCourses, closeModal }) => {
                 }
 
                 const response = await CoursesApiModel.EditeVideo(data, idVideo);
-                console.log(response);
 
                 switch (response.status) {
                   case 201:
