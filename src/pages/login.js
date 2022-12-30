@@ -65,7 +65,7 @@ const Login = () => {
   return (
     <>
       <Head>
-        <title>Login | Material Kit</title>
+        <title>Login | Ambly CMS</title>
       </Head>
       <Box
         component="main"
