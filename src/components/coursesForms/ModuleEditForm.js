@@ -20,7 +20,7 @@ const ModuleForm = ({
   enableAddVideo,
   disableAddVideo,
   enableEditingFile,
-  disableEditingFile
+  disableEditingFile,
 }) => {
   const newCourseSchema = Yup.object().shape({
     name_module: Yup.string().required("Required"),
@@ -74,7 +74,9 @@ const ModuleForm = ({
 
           <div>
             <svg
-              onClick={() => (modalOpen ? closeModal() : openModal(), editing(idVideo), enableAddVideo())}
+              onClick={() => (
+                modalOpen ? closeModal() : openModal(), editing(idVideo), enableAddVideo()
+              )}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -119,7 +121,9 @@ const ModuleForm = ({
 
           <div>
             <svg
-              onClick={() => (modalOpen ? closeModal() : openModal(), enableEditingFile(), disableAddVideo())}
+              onClick={() => (
+                modalOpen ? closeModal() : openModal(), enableEditingFile(), disableAddVideo()
+              )}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -195,7 +199,7 @@ const ModuleForm = ({
           <Form>
             <div className={styles.moduleForm}>
               <div>
-              <label>Nombre del modulo</label>
+                <label>Nombre del modulo</label>
                 <Field
                   className={`fieldShadow ${styles.field}`}
                   name="name_module"
@@ -218,10 +222,8 @@ const ModuleForm = ({
                 ) : null}
               </div>
 
-              
-
               <div className={styles.moduleDescription}>
-              <label>Descripcion</label>
+                <label>Descripcion</label>
                 <Field
                   className={`fieldShadow ${styles.field}`}
                   name="description"
@@ -233,7 +235,6 @@ const ModuleForm = ({
                 ) : null}
               </div>
 
-
               {/* Videos */}
 
               <div className={`fieldShadow ${styles.field} ${styles.videoInput}`}>
@@ -241,32 +242,20 @@ const ModuleForm = ({
                   <span>Videos del modulo </span>
                   <div
                     className={styles.addVideoBtn}
-                    onClick={() => (modalOpen ? closeModal() : openModal(), stopEditing(), enableAddVideo())}
+                    onClick={() => (
+                      modalOpen ? closeModal() : openModal(), stopEditing(), enableAddVideo()
+                    )}
                   >
                     Agregar Video
                   </div>
                 </div>
 
-                
-
                 <div className={styles.videoList}>
-                <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-                  <VideoComponent/>
-             
                   {infoModule.videos.map((item) => (
                     <VideoComponent titulo={item.name_video} idVideo={item.id} key={item.id} />
                   ))}
                 </div>
               </div>
-
 
               {/* Descargables */}
               <div className={`fieldShadow ${styles.field} ${styles.fileInput}`}>
@@ -274,34 +263,26 @@ const ModuleForm = ({
                   <span>Archivos del modulo </span>
                   <div
                     className={styles.addVideoBtn}
-                    onClick={() => (modalOpen ? closeModal() : openModal(), stopEditing(), disableAddVideo(), disableEditingFile())}
+                    onClick={() => (
+                      modalOpen ? closeModal() : openModal(),
+                      stopEditing(),
+                      disableAddVideo(),
+                      disableEditingFile()
+                    )}
                   >
                     Agregar Archivos
                   </div>
                 </div>
 
-                
-
                 <div className={styles.videoList}>
-
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-                  <FileComponent/>
-           
-                  {/* {infoModule.videos.map((item) => (
-                    <VideoComponent titulo={item.name_video} idVideo={item.id} key={item.id} />
-                  ))} */}
+                  {infoModule.file.map((item) => (
+                    <FileComponent titulo={item.name_file} />
+                  ))}
                 </div>
               </div>
             </div>
 
             <GButton text={"Aceptar"}> Abrir</GButton>
-            
           </Form>
         )}
       </Formik>

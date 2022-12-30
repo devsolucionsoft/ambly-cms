@@ -8,7 +8,15 @@ import Swal from "sweetalert2";
 import { SettingApi } from "../../api/SettingApi";
 import { CoursesApi } from "../../api/CoursesApi";
 
-const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "image/jpg", "file/pdf", "file/txt", "file/.xlsx", "file/docx"];
+const SUPPORTED_FORMATS = [
+  "image/png",
+  "image/jpeg",
+  "image/jpg",
+  "file/pdf",
+  "file/txt",
+  "file/.xlsx",
+  "file/docx",
+];
 
 const videoSchema = Yup.object().shape({
   name: Yup.string().required("Nombre del video "),
@@ -112,8 +120,6 @@ const FileEditForm = ({ idModule, getCourses, closeModal }) => {
                     <div className="fieldErrors">{errors.video}</div>
                   ) : null}
                 </div>
-
-
 
                 <GButton type="submit" text={loader ? "cargando..." : "Agregar"}>
                   Submit

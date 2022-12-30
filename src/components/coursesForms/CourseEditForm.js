@@ -21,6 +21,8 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
 
   const [formvalues, setFromValues] = useState(false);
 
+  console.log(formvalues);
+
   useEffect(() => {
     setFromValues(itemsCourses.find((item) => item.id === isEditing));
   }, [isEditing]);

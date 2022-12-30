@@ -37,9 +37,8 @@ const Page = () => {
     idVideo: 0,
   });
 
-  const [isVideo, setIsVideo] = useState(false)
-  const [isEditingFile, setEditingFile] = useState(false)
-
+  const [isVideo, setIsVideo] = useState(false);
+  const [isEditingFile, setEditingFile] = useState(false);
 
   useEffect(() => {
     getCourses();
@@ -51,11 +50,9 @@ const Page = () => {
     }
   }, [course, itemsCourses]);
 
-
   return (
-    <div style={{position: 'relative'}}>
-
-      <BackButton/>
+    <div style={{ position: "relative" }}>
+      <BackButton />
 
       <div className={"container"}>
         {courseInfo?.modules && (
@@ -65,7 +62,7 @@ const Page = () => {
               closeModal={closeModal}
               openModal={openModal}
               getCourses={getCourses}
-              enableAddVideo={()=> setIsVideo(true)}
+              enableAddVideo={() => setIsVideo(true)}
               disableAddVideo={() => setIsVideo(false)}
               enableEditingFile={() => setEditingFile(true)}
               disableEditingFile={() => setEditingFile(false)}
@@ -86,9 +83,8 @@ const Page = () => {
             />
             <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
               {modalOpen &&
-
                 (isVideo ? (
-                  (isEditing.active ? (
+                  isEditing.active ? (
                     <Modal
                       modalOpen={modalOpen}
                       text={""}
@@ -115,34 +111,30 @@ const Page = () => {
                         getCourses={getCourses}
                       />
                     </Modal>
-                  ))
-                ) 
-                : 
-                (
-                  (isEditingFile ? (
-                    <Modal
-                      modalOpen={modalOpen}
-                      text={""}
+                  )
+                ) : isEditingFile ? (
+                  <Modal
+                    modalOpen={modalOpen}
+                    text={""}
+                    closeModal={closeModal}
+                    handleClose={closeModal}
+                  >
+                    <FileEditForm />
+                  </Modal>
+                ) : (
+                  <Modal
+                    modalOpen={modalOpen}
+                    text={""}
+                    closeModal={closeModal}
+                    handleClose={closeModal}
+                  >
+                    <FileForm
+                      idModule={courseInfo.modules[module].id}
                       closeModal={closeModal}
-                      handleClose={closeModal}
-                      >
-                        <FileEditForm/>
-                      </Modal>
-                  ) :
-                   <Modal
-                      modalOpen={modalOpen}
-                      text={""}
-                      closeModal={closeModal}
-                      handleClose={closeModal}
-                   >
-                    <FileForm/>
-                   </Modal>
-                   
-                   )
-                )
-                )
-
-                }
+                      getCourses={getCourses}
+                    />
+                  </Modal>
+                ))}
             </AnimatePresence>
           </React.Fragment>
         )}
