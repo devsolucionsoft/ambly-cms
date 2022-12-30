@@ -111,7 +111,7 @@ export const DashboardSidebar = (props) => {
         </div>
         <Divider
           sx={{
-            borderColor: '#2D3748',
+            borderColor: '#FF3437',
             my: 3
           }}
         />
@@ -146,7 +146,7 @@ export const DashboardSidebar = (props) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: 'neutral.900',
+            backgroundColor: '#101010',
             color: '#FFFFFF',
             width: 280
           }
