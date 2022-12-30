@@ -60,7 +60,7 @@ const CoursesTable = ({ editingCourse, openModal, modalOpen, closeModal, itemsCo
           </thead>
           <tbody>
             {itemsCourses.map((item) => (
-              <tr className={styles.categoryInfo}>
+              <tr className={styles.categoryInfo} key={item.id}>
                 <td>
                   <div className={styles.categoryName}>
                       <img

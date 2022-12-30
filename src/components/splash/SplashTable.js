@@ -63,7 +63,7 @@ const SplashTable = ({ editingSplash, modalOpen, openModal, itemsSplash, getSpla
           </thead>
           <tbody>
             {itemsSplash.map((item) => (
-              <tr className={styles.categoryInfo}>
+              <tr className={styles.categoryInfo} key={item.id}>
                 <td>
                   <div className={styles.categoryName}>
                     <div className={styles.imgContainer}>

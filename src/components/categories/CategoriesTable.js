@@ -63,7 +63,7 @@ const CategoriesTable = (props) => {
           </thead>
           <tbody>
             {itemsCategories.map((item) => (
-              <tr className={styles.categoryInfo}>
+              <tr className={styles.categoryInfo} key={item.id}>
                 <td>
                   <div className={styles.categoryName}>
                     <div className={styles.imgContainer}>

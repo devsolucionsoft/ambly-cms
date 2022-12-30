@@ -310,7 +310,7 @@ const ModuleForm = ({
 
                 <div className={styles.videoList}>
                   {infoModule.file.map((item) => (
-                    <FileComponent titulo={item.name_file} idFile={item.id} />
+                    <FileComponent titulo={item.name_file} idFile={item.id} key={item.id} />
                   ))}
                 </div>
               </div>

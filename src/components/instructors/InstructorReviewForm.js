@@ -64,7 +64,7 @@ const InstrcutorReviewForm = (props) => {
           <div style={{ width: "48%" }}>
             <div>
               {reviews.map((item) => (
-                <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }} key={item.id}>
                   <div style={{ paddingRight: "5px" }}>
                     <p style={{ fontSize: "14px", fontWeight: "bold" }}>El espectador</p>
                     <p style={{ fontSize: "12px" }}>

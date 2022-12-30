@@ -62,7 +62,7 @@ const TrailersTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, g
           </thead>
           <tbody>
             {itemsTrailers.map((item) => (
-              <tr className={styles.categoryInfo}>
+              <tr className={styles.categoryInfo} key={item.id}>
                 <td>
                   <div className={styles.categoryName}>
                     <div>
