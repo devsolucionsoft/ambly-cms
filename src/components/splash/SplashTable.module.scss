@@ -11,13 +11,13 @@
 }
 
 
-.splashContainer {
+.tableContainer {
 
     border-radius: 10px;
     overflow: hidden;
 
     .table {
-        
+
         width: 100%;
         border-collapse: collapse;
 
@@ -33,7 +33,7 @@
         }
 
         tbody {
-            
+
             max-height: 400px;
             overflow-y: scroll;
 
@@ -48,9 +48,9 @@
 
             .categoryInfo {
 
-               
 
-                .categoryName {
+
+                .splashName {
 
                     display: grid;
                     grid-template-columns: repeat(2, 1fr);
@@ -69,7 +69,7 @@
                         font-weight: bold;
                     }
 
-                  
+
                 }
                 .description {
                     max-height: 100px;

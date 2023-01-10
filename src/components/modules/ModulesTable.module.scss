@@ -48,14 +48,14 @@
         }
       }
 
-      .categoryInfo {
+      .moduleInfo {
 
 
 
-        .categoryName {
+        .moduleName {
 
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
+          // grid-template-columns: repeat(2, 1fr);
           width: 225px;
           align-items: center;
 

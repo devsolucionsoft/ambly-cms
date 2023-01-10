@@ -48,32 +48,37 @@ const CoursesTable = ({ editingCourse, openModal, modalOpen, closeModal, itemsCo
     <div>
       <div className={styles.tHeader}></div>
 
-      <div className={styles.tableContainer}>
+      <div className={`${styles.tableContainer} tableOverflow `}>
         <table className={styles.table}>
           <thead>
             <tr>
               <th>Curso</th>
-              <th>Descripcion</th>
+              <th className="descriptionModifier" >Descripcion</th>
               <th>Precio</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {itemsCourses.map((item) => (
-              <tr className={styles.categoryInfo} key={item.id}>
+              <tr className={styles.courseInfo} key={item.id}>
                 <td>
-                  <div className={styles.categoryName}>
-                      <img
-                      style={{width: "120px"}}
+                  <div className={styles.courseName}>
+                    <div className={styles.imgContainer}>
+                      <Image
+                        objectFit="cover"
+                        objectPosition="-15px"
+                        layout="fill"
                         alt="Picture of the author"
                         src={item.image_course}
                       />
+                    </div>
+                   
 
                     <span style={{ padding: "0px 20px" }}>{item.name_course}</span>
                   </div>
                 </td>
 
-                <td>
+                <td className="descriptionModifier">
                   <div className={styles.description}>{item.description}</div>
                 </td>
 

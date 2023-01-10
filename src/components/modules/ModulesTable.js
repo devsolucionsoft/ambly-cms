@@ -48,29 +48,29 @@ const ModulesTable = ({ modulesItems, idCourse, getCourses }) => {
     <div>
       <div className={styles.tHeader}></div>
 
-      <div className={styles.tableContainer}>
+      <div className={`${styles.tableContainer} tableOverflow `}>
         <table className={styles.table}>
           <thead>
             <tr>
               <th style={{ paddingLeft: "10px" }}>Modulo</th>
               <th>Nombre</th>
-              <th>Descripcion</th>
+              <th className="descriptionModifier" >Descripcion</th>
               <th>Tiempo</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {modulesItems.map((item, index) => (
-              <tr className={styles.categoryInfo} key={index}>
+              <tr className={styles.moduleInfo} key={index}>
                 <td>
                   <h3>{index}</h3>
                 </td>
                 <td>
-                  <div className={styles.categoryName}>
+                  <div className={styles.moduleName}>
                     <span style={{ padding: "0px 20px" }}>{item.name_module}</span>
                   </div>
                 </td>
-                <td>
+                <td className="descriptionModifier">
                   <div className={styles.description}>{item.description}</div>
                 </td>
                 <td>{item.time_module}</td>

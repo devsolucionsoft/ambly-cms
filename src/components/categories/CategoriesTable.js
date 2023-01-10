@@ -51,12 +51,12 @@ const CategoriesTable = (props) => {
         {/* <GButton text={"Agregar Instructor"} /> */}
       </div>
 
-      <div className={styles.tableContainer}>
+      <div className={`${styles.tableContainer} tableOverflow `}>
         <table className={styles.table}>
           <thead>
             <tr>
               <th>Nombre de la categoria</th>
-              <th>Descripcion</th>
+              <th className="descriptionModifier" >Descripcion</th>
 
               <th>Acciones</th>
             </tr>
@@ -79,7 +79,7 @@ const CategoriesTable = (props) => {
                   </div>
                 </td>
 
-                <td>
+                <td className="descriptionModifier">
                   <div className={styles.description}>{item.description}</div>
                 </td>
 

@@ -59,7 +59,7 @@ const CoursesForm = ({ getCourses, closeModal }) => {
   });
 
   return (
-    <div className={`${styles.courseFormContainer} ${styles.formContainer}`}>
+    <div className={`${styles.courseFormContainer} ${styles.formContainer} courseFormModifier`}>
       <h1>Nuevo Curso</h1>
 
       <Formik
