@@ -35,6 +35,7 @@ const Page = () => {
 
   const getSplash = async () => {
     const response = await SplashApiModel.GetSplash();
+    console.log(response.status);
     if (response.status === 200) {
       setItemsSplash(response.data);
     }
@@ -46,11 +47,8 @@ const Page = () => {
 
   return (
     <div className={`container`}>
-
       <Head>
-        <title>
-          Ambly CMS - Splash
-        </title>
+        <title>Ambly CMS - Splash</title>
       </Head>
       <div className="table-header-container">
         <h1 className="">Splash</h1>
