@@ -3,7 +3,7 @@ import { DashboardLayout } from "../components/dashboard-layout";
 import React from "react";
 import ModulesTable from "../components/modules/ModulesTable";
 import GButton from "../components/buttons/GButton";
-import Link from "next/link";
+import styles from '../styles/ModulesPage.module.scss'
 import { useRouter } from "next/router";
 import Head from "next/head";
 // Api
@@ -54,11 +54,11 @@ const Page = () => {
       <div className={"container"}>
         <div className="table-header-container">
           <div>
-            <h1>Curso ({courseInfo?.name_course})</h1>
-            <h2 className="">Modulos</h2>
+            <h1 className={styles.heading}>Curso ({courseInfo?.name_course})</h1>
+            <h2 className={styles.heading2}>Modulos</h2>
           </div>
 
-          <GButton text={"Agregar Modulo"} onClick={() => (modalOpen ? closeModal() : openModal())}>
+          <GButton text={"Agregar"} onClick={() => (modalOpen ? closeModal() : openModal())}>
             {" "}
             Abrir
           </GButton>

@@ -1,6 +1,8 @@
 .reviewFormContainer {
   width: 100%;
 
+  
+
   h1 {
     margin-bottom: 15px;
   }
@@ -23,6 +25,8 @@
       }
     }
 
+    
+
     .imgInput {
       // grid-column: 1/2;
       height: 100px;
@@ -30,6 +34,12 @@
       input {
         display: block;
       }
+    }
+  }
+
+  @media(max-width:768px) {
+    .trashIcon {
+      width: 80px;
     }
   }
 }

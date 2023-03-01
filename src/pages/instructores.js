@@ -71,7 +71,7 @@ const Page = () => {
       <div className={styles.instructorsContainer}>
 
         <div className="table-header-container">
-          <h1 className="">Instrcutores</h1>
+          <h1 className="">Instructores</h1>
           <GButton
             text={"Agregar Instructor"}
             onClick={() => (modalOpen ? closeModal() : openModal(), addInstrcutor())}

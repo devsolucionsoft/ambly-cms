@@ -71,13 +71,14 @@ const InstrcutorReviewForm = (props) => {
                       Lorem Ipsum is simply dummy text of the printing and typesetting industry.{" "}
                     </p>
                   </div>
-                  <svg
+                  <svg 
+
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className={`w-6 h-6 ${styles.trashIcon}`}
                     onClick={() => removeTask(item.id)}
                     height={"30px"}
                     style={{cursor: "pointer"}}

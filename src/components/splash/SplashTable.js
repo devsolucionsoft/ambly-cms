@@ -47,17 +47,17 @@ const SplashTable = ({ editingSplash, modalOpen, openModal, itemsSplash, getSpla
   return (
     <div>
       <div className={styles.tHeader}>
-     
+
 
         {/* <GButton text={"Agregar Instructor"} /> */}
       </div>
 
-      <div className={styles.splashContainer}>
+      <div className={`${styles.tableContainer} tableOverflow `}>
         <table className={styles.table}>
           <thead>
             <tr>
               <th>Splash</th>
-              <th>Descripcion</th>
+              <th className="descriptionModifier" >Descripcion</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -65,7 +65,7 @@ const SplashTable = ({ editingSplash, modalOpen, openModal, itemsSplash, getSpla
             {itemsSplash.map((item) => (
               <tr className={styles.categoryInfo} key={item.id}>
                 <td>
-                  <div className={styles.categoryName}>
+                  <div className={styles.splashName}>
                     <div className={styles.imgContainer}>
                       <Image
                         objectFit="cover"
@@ -79,7 +79,7 @@ const SplashTable = ({ editingSplash, modalOpen, openModal, itemsSplash, getSpla
                   </div>
                 </td>
 
-                <td>
+                <td className="descriptionModifier" >
                   <div className={styles.description}>{item.description}</div>
                 </td>
 

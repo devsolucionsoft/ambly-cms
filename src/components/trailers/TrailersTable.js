@@ -51,20 +51,20 @@ const TrailersTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, g
     <div>
       <div className={styles.tHeader}>{/* <GButton text={"Agregar Instructor"} /> */}</div>
 
-      <div className={styles.TrailersContainer}>
+      <div className={`${styles.tableContainer} tableOverflow `}>
         <table className={styles.table}>
           <thead>
             <tr>
               <th>Trailers</th>
-              <th>Descripcion</th>
+              <th className="descriptionModifier" >Descripcion</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {itemsTrailers.map((item) => (
-              <tr className={styles.categoryInfo} key={item.id}>
+              <tr className={styles.trailerInfo} key={item.id}>
                 <td>
-                  <div className={styles.categoryName}>
+                  <div className={styles.trailerName}>
                     <div>
                       <Player playsInline src={item.video} co />
                     </div>
@@ -73,7 +73,7 @@ const TrailersTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, g
                   </div>
                 </td>
 
-                <td>
+                <td className="descriptionModifier" >
                   <div className={styles.description}>{item.instructor}</div>
                 </td>
 

@@ -58,12 +58,12 @@ const InstructorsTable = (props) => {
         {/* <GButton text={"Agregar Instructor"} /> */}
       </div>
 
-      <div className={styles.tableContainer}>
+      <div className={`${styles.tableContainer} tableOverflow `}>
         <table className={styles.table}>
           <thead>
             <tr>
               <th>Nombre del instructor</th>
-              <th>Descripcion</th>
+              <th className="descriptionModifier">Descripcion</th>
 
               <th>Acciones</th>
             </tr>
@@ -76,7 +76,7 @@ const InstructorsTable = (props) => {
                     <div className={styles.imgContainer}>
                       <Image
                         objectFit="cover"
-                        objectPosition="-25px"
+                        objectPosition="-15px"
                         layout="fill"
                         alt="Picture of the author"
                         src={item.image_instructor}
@@ -87,7 +87,7 @@ const InstructorsTable = (props) => {
                   </div>
                 </td>
 
-                <td>
+                <td className="descriptionModifier">
                   <div className={styles.description}>{item.description_instructor}</div>
                 </td>
 

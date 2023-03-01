@@ -10,7 +10,7 @@
   margin-bottom: 25px;
 }
 
-.TrailersContainer {
+.tableContainer {
   border-radius: 10px;
   overflow: hidden;
 
@@ -39,8 +39,8 @@
         }
       }
 
-      .categoryInfo {
-        .categoryName {
+      .trailerInfo {
+        .trailerName {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
           width: 225px;
