@@ -50,7 +50,7 @@ const InfluencerTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers,
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Agencia</th>
+            <th>Nombre</th>
             <th className={styles.ThDescription}>Descripcion</th>
             <th>Acciones</th>
           </tr>
