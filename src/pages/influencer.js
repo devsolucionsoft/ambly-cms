@@ -89,10 +89,6 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="table-header-container" style={{ margin: "2em 0" }}>
-        <div style={{ display: "flex", alignItems: "center" }}></div>
-      </div>
-
       <Box
         component="main"
         sx={{
