@@ -5,6 +5,7 @@ import GButton from "../components/buttons/GButton";
 import { AnimatePresence, motion } from "framer-motion";
 import Modal from "../components/modal/Modal";
 import InfluencerEditFrom from "../components/influencers/InfluencerEditFrom";
+import VentasTable from "../components/influencers/VentaTable";
 
 import Head from "next/head";
 // Api
@@ -106,6 +107,21 @@ const Page = () => {
             </Grid>
           </Grid>
         </Container>
+      </Box>
+      <Box
+        sx={{
+          py: "3em",
+        }}
+      >
+        <h2 style={{ marginBottom: "1rem" }}>Listado de ventas</h2>
+        <VentasTable
+          editingTrailers={editingTrailers}
+          modalOpen={modalOpen}
+          closeModal={closeModal}
+          openModal={openModal}
+          itemsTrailers={itemsTrailers}
+          getTrailers={getTrailers}
+        />
       </Box>
 
       <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
