@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { dividerClasses } from "@mui/material";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { AnimatePresence, motion } from "framer-motion";
 import GButton from "../components/buttons/GButton";
 import Modal from "../components/modal/Modal";
-import TrailersTable from "../components/trailers/TrailersTable";
-import TrailersForm from "../components/trailers/TrailersForm";
-import TrailersEditForm from "../components/trailers/TrailersEditForm";
+import AgenciasTable from "../components/agencias/AgenciasTable";
+import AgenciaForm from "../components/agencias/AgenciaForm";
+import AgenciaEditFrom from "../components/agencias/AgenciaEditFrom";
 import Head from "next/head";
 // Api
 import { TrailersApi } from "../api/TrailersApi";
@@ -47,20 +46,20 @@ const Page = () => {
   return (
     <div className={`container`}>
       <Head>
-        <title>Ambly CMS - Trailers</title>
+        <title>Ambly CMS - Agencias</title>
       </Head>
 
       <div className="table-header-container">
-        <h1 className="">Trailers</h1>
+        <h1 className="">Agencias</h1>
         <GButton
-          text={"Agregar Trailer"}
+          text={"Agregar Agencia"}
           onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingTrailers())}
         >
           {" "}
           Abrir
         </GButton>
       </div>
-      <TrailersTable
+      <AgenciasTable
         editingTrailers={editingTrailers}
         modalOpen={modalOpen}
         closeModal={closeModal}
@@ -72,7 +71,7 @@ const Page = () => {
         {modalOpen &&
           (isEditing.active ? (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <TrailersEditForm
+              <AgenciaEditFrom
                 getTrailers={getTrailers}
                 closeModal={closeModal}
                 isEditing={isEditing.id}
@@ -81,7 +80,7 @@ const Page = () => {
             </Modal>
           ) : (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <TrailersForm closeModal={closeModal} getTrailers={getTrailers} />
+              <AgenciaForm closeModal={closeModal} getTrailers={getTrailers} />
             </Modal>
           ))}
       </AnimatePresence>

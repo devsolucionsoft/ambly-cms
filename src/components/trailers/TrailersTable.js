@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "./TrailersTable.module.scss";
-import Image from "next/image";
 // Api
-import { CategoriesApi } from "../../api/CategoriesApi";
 import Swal from "sweetalert2";
 import { Player } from "video-react";
 import "/node_modules/video-react/dist/video-react.css";
@@ -56,7 +54,7 @@ const TrailersTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, g
           <thead>
             <tr>
               <th>Trailers</th>
-              <th className="descriptionModifier" >Descripcion</th>
+              <th className="descriptionModifier">Descripcion</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -73,7 +71,7 @@ const TrailersTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, g
                   </div>
                 </td>
 
-                <td className="descriptionModifier" >
+                <td className="descriptionModifier">
                   <div className={styles.description}>{item.instructor}</div>
                 </td>
 

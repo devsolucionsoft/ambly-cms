@@ -1,0 +1,86 @@
+.tHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tableHeading {
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.TdTableImage {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  align-items: center;
+  .Image {
+    position: relative;
+    width: 80px;
+    border-radius: 100%;
+    overflow: hidden;
+    height: 80px;
+    margin-right: 1rem;
+  }
+  span {
+    font-weight: bold;
+  }
+}
+
+.ThDescription {
+}
+
+.TdDescription {
+  width: 80%;
+  overflow-y: auto;
+  font-size: 14px;
+  text-align: justify;
+  line-height: 1.2;
+}
+
+.TdActionIcons {
+  display: flex;
+  justify-content: space-between;
+
+  svg {
+    width: 30px;
+
+    &:hover {
+      color: #d41f22;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+  }
+}
+
+.tableContainer {
+  border-radius: 10px;
+  overflow: hidden;
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    thead {
+      background-color: #181812;
+      th {
+        padding: 15px 0px;
+        color: white;
+        text-align: left;
+        &:first-child {
+          padding-left: 30px;
+        }
+      }
+    }
+    tbody {
+      max-height: 400px;
+      overflow-y: scroll;
+      tr {
+        td {
+          padding: 10px;
+          text-align: left;
+          border-bottom: 1px solid rgb(185, 185, 185);
+        }
+      }
+    }
+  }
+}

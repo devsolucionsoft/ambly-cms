@@ -1,21 +1,19 @@
-
-
 .btnContainer {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 
-    .gButton {
-        display: block;
-        background-color: #FF3437;
-        font-weight: 600;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        font-size: 14px;
-        border-radius: 5px;
-        max-width: 100%;
-        margin-top: 16px;
-        max-height: 40px;
-        cursor: pointer;
-    }
+  .gButton {
+    display: block;
+    background-color: #181812;
+    font-weight: 600;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    max-width: 100%;
+    margin-top: 16px;
+    max-height: 40px;
+    cursor: pointer;
+  }
 }

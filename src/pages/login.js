@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import Head from "next/head";
-import NextLink from "next/link";
 import Router from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Box, Button, Container, Grid, Link, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import Swal from "sweetalert2";
+import backgroundLogin from "../images/background-login.jpg";
+import iconAmbly from "../../public/static/images/icon-ambly.png";
+import Image from "next/image";
 // API
 import { AuthApi } from "../api/AutApi";
 
@@ -34,7 +36,7 @@ const Login = () => {
               token: response.data.token,
             })
           );
-          Router.push("/").catch(console.error)
+          Router.push("/").catch(console.error);
           break;
         case 403:
           Swal.fire({
@@ -55,10 +57,10 @@ const Login = () => {
   });
 
   useEffect(() => {
-    const session = JSON.parse(localStorage.getItem("token_session"))
+    const session = JSON.parse(localStorage.getItem("token_session"));
 
-    if(session?.token) {
-      Router.push("/").catch(console.error)
+    if (session?.token) {
+      Router.push("/").catch(console.error);
     }
   }, []);
 
@@ -75,61 +77,81 @@ const Login = () => {
           flexGrow: 1,
           minHeight: "100%",
         }}
-        style={{}}
       >
-        <Container maxWidth="sm">
+        <div style={{ position: "absolute", height: "100%", width: "100%", overflow: "hidden" }}>
+          <Image
+            src={backgroundLogin}
+            layout="fill"
+            style={{ height: "100%", width: "100%", objectFit: "cover" }}
+          />
+        </div>
+        <Container
+          maxWidth="sm"
+          style={{
+            position: "relative",
+            zIndex: 2,
+          }}
+        >
           <form onSubmit={formik.handleSubmit}>
             <Box
               sx={{ my: 3 }}
               style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             >
-              <Typography
-                color="textPrimary"
-                variant="h3"
-                align="center"
-                style={{ marginBottom: "20px" }}
-              >
-                Inicia sesión Ambly
-              </Typography>
+              <Image
+                src={iconAmbly}
+                style={{ height: "100%", width: "100%", objectFit: "cover" }}
+              />
             </Box>
-            <TextField
-              error={Boolean(formik.touched.email && formik.errors.email)}
-              fullWidth
-              helperText={formik.touched.email && formik.errors.email}
-              label="Email"
-              margin="normal"
-              name="email"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="email"
-              value={formik.values.email}
-              variant="outlined"
-            />
-            <TextField
-              error={Boolean(formik.touched.password && formik.errors.password)}
-              fullWidth
-              helperText={formik.touched.password && formik.errors.password}
-              label="Contraseña"
-              margin="normal"
-              name="password"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="password"
-              value={formik.values.password}
-              variant="outlined"
-              color="info"
-            />
-            <Box sx={{ py: 2 }}>
-              <Button
-                color="primary"
-                disabled={formik.isSubmitting}
+
+            <Box
+              sx={{
+                my: 3,
+                py: 3,
+                px: 4,
+                borderRadius: 2,
+                backgroundColor: "rgba(255, 255, 255, .9)",
+              }}
+            >
+              <TextField
+                error={Boolean(formik.touched.email && formik.errors.email)}
                 fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-              >
-                Iniciar sesión
-              </Button>
+                helperText={formik.touched.email && formik.errors.email}
+                label="Email"
+                margin="normal"
+                name="email"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                type="email"
+                value={formik.values.email}
+                variant="standard"
+                color="primary"
+              />
+              <TextField
+                error={Boolean(formik.touched.password && formik.errors.password)}
+                fullWidth
+                helperText={formik.touched.password && formik.errors.password}
+                label="Contraseña"
+                margin="normal"
+                name="password"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                type="password"
+                value={formik.values.password}
+                variant="standard"
+                color="primary"
+              />
+              <Box sx={{ py: 2 }}>
+                <Button
+                  color="error"
+                  disabled={formik.isSubmitting}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                >
+                  Iniciar sesión
+                </Button>
+              </Box>
             </Box>
           </form>
         </Container>

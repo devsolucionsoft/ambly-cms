@@ -1,0 +1,41 @@
+.FormContainer {
+  width: 100%;
+  padding: 1em 0;
+
+  h1 {
+    margin-bottom: 15px;
+  }
+
+  .form {
+    display: flex;
+    gap: 5%;
+
+    .column {
+      width: 100%;
+    }
+
+    .labelError {
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      color: red !important;
+    }
+
+    .fieldContain {
+      margin-bottom: 1rem;
+    }
+
+    .fieldDescription {
+      height: 80px;
+    }
+
+    .fieldUpload {
+      border: 1px solid #8d8d8d;
+      border-radius: 6px;
+      padding: 10px;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+    }
+  }
+}

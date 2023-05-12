@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./splashForm.module.scss";
+import styles from "./SplashForm.module.scss";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import GButton from "../buttons/GButton";

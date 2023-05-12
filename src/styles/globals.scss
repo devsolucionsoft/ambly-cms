@@ -1,6 +1,5 @@
 html {
-    box-sizing: border-box;
-
+  box-sizing: border-box;
 }
 
 .no-scroll {
@@ -8,10 +7,9 @@ html {
 }
 
 .container {
-    max-width: 1200px;
-    width: 85%;
-    margin: 0 auto;
-
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .fieldErrors {
@@ -25,7 +23,6 @@ html {
   margin-top: 12px;
 }
 
-
 .backdrop {
   position: fixed;
   z-index: 1;
@@ -33,116 +30,109 @@ html {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
+.modal {
+  width: clamp(50%, 700px, 90%);
+  height: auto;
+  background-color: white;
+
+  margin: auto;
+  padding: 14px 40px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    height: calc(100vh - 200px);
+    overflow-y: scroll;
+    padding: 20px;
   }
 
-  .modal {
-    width: clamp(50%, 700px, 90%);
-    height: auto;
-    background-color: white;
-
-    
-
-    margin: auto;
-    padding: 14px 40px;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-  
-      @media (max-width: 768px) {
-        height: calc(100vh - 200px);
-        overflow-y: scroll;
-        padding: 20px;
-
-    }
-   
-
-
-
-    .modalExitBtn {
-      margin-top: 30px;
-      width: 45px;
-      border: none;
-      background-color: transparent;
-      color: #575757;
-      cursor: pointer;
-
-    }
-
-  }
-
-  
-
-  .table-header-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 90px;
-  }
-
-  .fieldShadow {
-    -webkit-box-shadow: 0px 5px 7px -4px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 5px 7px -4px rgba(0,0,0,0.75);
-    box-shadow: 0px 5px 7px -4px rgba(0,0,0,0.75);
-    border-radius: 6px;
-    border: none;
-    width: 100%;
-    height: 44px;
-    padding: 10px;
-  }
-
-  .uploadButton::file-selector-button {
-    background-color: #9d9d9d;
-    padding: 5px;
-    border-radius: 5px;
-    color: rgb(251, 251, 251);
-    border: none;
-  }
-
-  .pRelative {
-    position: relative;
-  }
-
-  .backButton {
+  .modalExitBtn {
     position: absolute;
-    top: 8px;
-    left: 34px;
+    top: 0.8rem;
+    right: 0.8rem;
+    width: 45px;
+    border: none;
+    background-color: transparent;
+    color: #575757;
+    cursor: pointer;
+  }
+}
 
-    @media (max-width:768px) {
+.table-header-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90px;
+}
+
+.swal2-confirm {
+  background-color: #181819 !important;
+}
+
+.fieldShadow {
+  // -webkit-box-shadow: 0px 5px 7px -4px rgba(0, 0, 0, 0.75);
+  // -moz-box-shadow: 0px 5px 7px -4px rgba(0, 0, 0, 0.75);
+  // box-shadow: 0px 5px 7px -4px rgba(0, 0, 0, 0.75);
+  border: 1px solid #8d8d8d;
+  border-radius: 6px;
+  width: 100%;
+  height: 44px;
+  padding: 10px;
+}
+
+.uploadButton::file-selector-button {
+  background-color: #9d9d9d;
+  padding: 5px;
+  border-radius: 5px;
+  color: rgb(251, 251, 251);
+  border: none;
+}
+
+.pRelative {
+  position: relative;
+}
+
+.backButton {
+  position: absolute;
+  top: 8px;
+  left: 34px;
+
+  @media (max-width: 768px) {
     top: 10px;
     left: 18px;
-    }
-
-    svg {
-      width: 40px;
-      color: #aa282a;
-
-      @media (max-width:768px) {
-        width: 30px;
-      }
-
-      &:hover {
-        color: #ff3437;
-        cursor: pointer;
-      }
-    }
   }
 
-  .tableOverflow {
-    overflow-x: auto !important;
-  }
+  svg {
+    width: 40px;
+    color: #aa282a;
 
-  .descriptionModifier {
     @media (max-width: 768px) {
-        display: none !important;
-      }
+      width: 30px;
+    }
 
+    &:hover {
+      color: #181812;
+      cursor: pointer;
+    }
   }
+}
+
+.tableOverflow {
+  overflow-x: auto !important;
+}
+
+.descriptionModifier {
+  @media (max-width: 768px) {
+    display: none !important;
+  }
+}
