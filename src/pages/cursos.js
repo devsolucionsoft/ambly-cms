@@ -1,4 +1,4 @@
-import CoursesTable from "../components/Courses/CoursesTable";
+import CoursesTable from "../components/courses/CoursesTable";
 import { DashboardLayout } from "../components/dashboard-layout";
 import GButton from "../components/buttons/GButton";
 import { useEffect, useState } from "react";
@@ -46,11 +46,8 @@ const Page = () => {
 
   return (
     <div className="container" style={{ paddingBottom: "2em" }}>
-
       <Head>
-        <title>
-          Ambly CMS - Cursos
-        </title>
+        <title>Ambly CMS - Cursos</title>
       </Head>
 
       <div className="table-header-container">
