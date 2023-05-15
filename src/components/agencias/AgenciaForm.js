@@ -13,15 +13,7 @@ import { margin } from "@mui/system";
 const SUPPORTED_FORMATS = ["video/mp4", "video/x-m4v"];
 
 const TrailersSchema = Yup.object().shape({
-  course_name: Yup.string().required("Nombre del curso requerido"),
-  instructor: Yup.string().required("Instructor requerida"),
-  video: Yup.mixed()
-    .required("La video es requerido")
-    .test(
-      "fileFormat",
-      "Formato no soportado, suba unicamente: .mp4 .x-m4v, o jpg",
-      (value) => value && SUPPORTED_FORMATS.includes(value.type)
-    ),
+  agency_name: Yup.string().required("Nombre del curso requerido"),
 });
 
 const AgenciaForm = (props) => {
@@ -46,9 +38,7 @@ const AgenciaForm = (props) => {
       <h1>Nueva Agencia</h1>
       <Formik
         initialValues={{
-          course_name: "",
-          instructor: "",
-          video: "",
+          agency_name: "",
         }}
         validationSchema={TrailersSchema}
         onSubmit={async (values) => {
@@ -66,7 +56,7 @@ const AgenciaForm = (props) => {
                 case 201:
                   getTrailers();
                   Swal.fire({
-                    course_name: "Trailer creado",
+                    agency_name: "Agencia creado",
                     icon: "success",
                   }).then(() => {
                     closeModal();
@@ -74,7 +64,7 @@ const AgenciaForm = (props) => {
                   break;
                 default:
                   Swal.fire({
-                    course_name: "Ha ocurrido un error",
+                    agency_name: "Ha ocurrido un error",
                     text: "Intentalo mas tarde",
                     icon: "error",
                   });
@@ -82,7 +72,7 @@ const AgenciaForm = (props) => {
               }
             } else {
               Swal.fire({
-                course_name: "Ha ocurrido un error",
+                agency_name: "Ha ocurrido un error",
                 text: "Intentalo mas tarde",
                 icon: "error",
               });
@@ -98,24 +88,11 @@ const AgenciaForm = (props) => {
                 <span>Nombre de la agencia</span>
                 <Field
                   className="fieldShadow"
-                  name="course_name"
+                  name="agency_name"
                   placeholder="Nombre de la agencia"
                 />
-                {errors.course_name && touched.course_name ? (
-                  <div className={styles.labelError}>{errors.course_name}</div>
-                ) : null}
-              </div>
-
-              <div className={styles.fieldContain}>
-                <span>Descripción de la agencia</span>
-                <Field
-                  className={`fieldShadow ${styles.fieldDescription}`}
-                  name="description"
-                  as="textarea"
-                  placeholder="Descripcion de la agencia"
-                />
-                {errors.description && touched.description ? (
-                  <div className={styles.labelError}>{errors.description}</div>
+                {errors.agency_name && touched.agency_name ? (
+                  <div className={styles.labelError}>{errors.agency_name}</div>
                 ) : null}
               </div>
 

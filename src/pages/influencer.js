@@ -6,6 +6,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import Modal from "../components/modal/Modal";
 import InfluencerEditFrom from "../components/influencers/InfluencerEditFrom";
 import VentasTable from "../components/influencers/VentaTable";
+import { Budget } from "../components/dashboard/budget";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import Head from "next/head";
 // Api
@@ -66,21 +70,8 @@ const Page = () => {
         />
 
         <div style={{}}>
+          <p style={{}}>mail@mail.com</p>
           <h1 style={{ marginBottom: "5px" }}>Nombre influencer</h1>
-
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-
-          <ul style={{ marginTop: "1rem " }}>
-            <li>
-              <b>Info</b>: Lorem Ipsum is simply
-            </li>
-            <li>
-              <b>Info</b>: Lorem Ipsum is simply
-            </li>
-            <li>
-              <b>Info</b>: Lorem Ipsum is simply
-            </li>
-          </ul>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <GButton text={"Editar datos"} onClick={openModal}>
               {" "}
@@ -98,22 +89,42 @@ const Page = () => {
       >
         <Container maxWidth={true}>
           <Grid container spacing={3}>
-            {/* <Grid item lg={6} sm={6} xs={12}>
-              <TotalCustomers title={"Total de influencers"} />
-            </Grid> */}
+            <Grid item lg={6} sm={6} xl={3} xs={12}>
+              <Budget title={"total de ventas"} />
+            </Grid>
 
             <Grid item lg={6} sm={6} xs={12}>
-              <TotalProfit title={"total de ventas"} />
+              <TotalProfit title={"total de ganancias"} />
             </Grid>
           </Grid>
         </Container>
+      </Box>
+
+      <Box sx={{ marginBottom: "0em", marginTop: "3em" }}>
+        <h2 style={{ marginBottom: "1em" }}>Regístro de ventas</h2>
+        <Box sx={{ display: "flex", alignItems: "flex-end " }}>
+          <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
+            <label>Desde:</label>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DatePicker />
+            </LocalizationProvider>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
+            <label>Hasta:</label>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DatePicker />
+            </LocalizationProvider>
+          </Box>
+          <Box sx={{ marginRight: "2em" }}>
+            <GButton text={"Generar regístro"} onClick={() => false} />
+          </Box>
+        </Box>
       </Box>
       <Box
         sx={{
           py: "3em",
         }}
       >
-        <h2 style={{ marginBottom: "1rem" }}>Listado de ventas</h2>
         <VentasTable
           editingTrailers={editingTrailers}
           modalOpen={modalOpen}

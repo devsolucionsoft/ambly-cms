@@ -51,7 +51,7 @@ const AgenciasTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, g
         <thead>
           <tr>
             <th>Agencia</th>
-            <th className={styles.ThDescription}>Descripcion</th>
+            <th></th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -74,9 +74,7 @@ const AgenciasTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, g
                 </div>
               </td>
 
-              <td className={styles.TdDescription}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.{" "}
-              </td>
+              <td className={styles.TdDescription}></td>
 
               <td>
                 <div className={styles.TdActionIcons}>

@@ -104,10 +104,24 @@ const InfluencerEditForm = (props) => {
               </div>
 
               <div className={styles.fieldContain}>
-                <span>Telefono</span>
+                <span>Porcentage (%) de pago</span>
                 <Field
                   className="fieldShadow"
                   name="course_name"
+                  type="number"
+                  placeholder="Porcentage (%) de pago"
+                />
+                {errors.course_name && touched.course_name ? (
+                  <div className={styles.labelError}>{errors.course_name}</div>
+                ) : null}
+              </div>
+
+              <div className={styles.fieldContain}>
+                <span>Email</span>
+                <Field
+                  className="fieldShadow"
+                  name="course_name"
+                  type="mail"
                   placeholder="Telefono influencer"
                 />
                 {errors.course_name && touched.course_name ? (
@@ -116,15 +130,15 @@ const InfluencerEditForm = (props) => {
               </div>
 
               <div className={styles.fieldContain}>
-                <span>Descripción de la influencer</span>
+                <span>Contraseña</span>
                 <Field
-                  className={`fieldShadow ${styles.fieldDescription}`}
-                  name="description"
-                  as="textarea"
-                  placeholder="Descripcion influencer"
+                  className="fieldShadow"
+                  name="course_name"
+                  type="password"
+                  placeholder="Telefono influencer"
                 />
-                {errors.description && touched.description ? (
-                  <div className={styles.labelError}>{errors.description}</div>
+                {errors.course_name && touched.course_name ? (
+                  <div className={styles.labelError}>{errors.course_name}</div>
                 ) : null}
               </div>
 

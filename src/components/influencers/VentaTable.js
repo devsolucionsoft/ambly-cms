@@ -50,22 +50,21 @@ const VentasTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, get
       <table className={styles.table}>
         <thead>
           <tr>
+            <th>N°</th>
             <th>Fecha</th>
             <th>Curso "Nombre del curso"</th>
-            <th>Valor</th>
           </tr>
         </thead>
         <tbody>
-          {[0, 1, 2, 3].map((item) => (
+          {[0, 1, 2, 3].map((item, index) => (
             <tr key={item.id}>
+              <td>{index + 1}</td>
               <td>12/05/2023</td>
               <td>
                 <div className={styles.TdTableImage}>
                   <span>{"Nombre del curso"}</span>
                 </div>
               </td>
-
-              <td>$30.000</td>
             </tr>
           ))}
         </tbody>

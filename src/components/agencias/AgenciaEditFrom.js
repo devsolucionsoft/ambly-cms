@@ -107,19 +107,6 @@ const TrailersEditForm = (props) => {
                 ) : null}
               </div>
 
-              <div className={styles.fieldContain}>
-                <span>Descripción de la agencia</span>
-                <Field
-                  className={`fieldShadow ${styles.fieldDescription}`}
-                  name="description"
-                  as="textarea"
-                  placeholder="Descripcion de la agencia"
-                />
-                {errors.description && touched.description ? (
-                  <div className={styles.labelError}>{errors.description}</div>
-                ) : null}
-              </div>
-
               <GButton type="submit" text={loader ? "cargando..." : "Aceptar"}>
                 Submit
               </GButton>

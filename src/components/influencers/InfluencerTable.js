@@ -51,7 +51,7 @@ const InfluencerTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers,
         <thead>
           <tr>
             <th>Nombre</th>
-            <th className={styles.ThDescription}>Descripcion</th>
+            <th className={styles.ThDescription}>Email</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -74,9 +74,7 @@ const InfluencerTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers,
                 </div>
               </td>
 
-              <td className={styles.TdDescription}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.{" "}
-              </td>
+              <td className={styles.TdDescription}>mail@mail.com</td>
 
               <td>
                 <div className={styles.TdActionIcons}>
