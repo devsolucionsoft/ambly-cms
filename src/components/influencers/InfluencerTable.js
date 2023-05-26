@@ -6,15 +6,17 @@ import Link from "next/link";
 import Image from "next/image";
 
 // Api
-import { TrailersApi } from "../../api/TrailersApi";
+import { InfluencersApi } from "../../api/InfluencersApi";
 
-const InfluencerTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, getTrailers }) => {
-  const TrailersApiModel = new TrailersApi();
+const InfluencerTable = ({ editingTrailers, modalOpen, openModal, items, getInfo }) => {
+  const InfluencersApiModel = new InfluencersApi();
+
+  console.log(items);
 
   const removeTask = (id) => {
     Swal.fire({
       title: "¿Estas seguro?",
-      text: "¡Una vez eliminado, no podrá recuperar este trailer!",
+      text: "¡Una vez eliminado, no podrá recuperar este influencer!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Eliminar",
@@ -29,20 +31,20 @@ const InfluencerTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers,
 
   // DELETE ITEM
   const handleDelete = async (id) => {
-    // const response = await TrailersApiModel.deleteTrailers(id);
-    // switch (response.status) {
-    //   case 201:
-    //     getTrailers();
-    //     Swal.fire("¡Eliminado!", "Su categoría ha sido eliminado.", "success");
-    //     break;
-    //   default:
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Oops...",
-    //       text: "Ha ocurrido un problema, intentalo mas tarde",
-    //     });
-    //     break;
-    // }
+    const response = await InfluencersApiModel.deleteInfluencer(id);
+    switch (response.status) {
+      case 201:
+        getInfo();
+        Swal.fire("¡Eliminado!", "Su influencer ha sido eliminado.", "success");
+        break;
+      default:
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ha ocurrido un problema, intentalo mas tarde",
+        });
+        break;
+    }
   };
 
   return (
@@ -56,7 +58,7 @@ const InfluencerTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers,
           </tr>
         </thead>
         <tbody>
-          {[0, 1, 2, 3].map((item) => (
+          {items.map((item) => (
             <tr key={item.id}>
               <td>
                 <div className={styles.TdTableImage}>
@@ -70,11 +72,11 @@ const InfluencerTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers,
                       }
                     />
                   </div>
-                  <span>{"Nombre influencer"}</span>
+                  <span>{item.name_influencer}</span>
                 </div>
               </td>
 
-              <td className={styles.TdDescription}>mail@mail.com</td>
+              <td className={styles.TdDescription}>{item.email}</td>
 
               <td>
                 <div className={styles.TdActionIcons}>

@@ -5,69 +5,53 @@ import * as Yup from "yup";
 import GButton from "../buttons/GButton";
 import Swal from "sweetalert2";
 // Api
-import { SettingApi } from "../../api/SettingApi";
-import { TrailersApi } from "../../api/TrailersApi";
-import { InstructorsApi } from "../../api/InstructorsApi";
+import { AgenciaApi } from "../../api/AgenciasApi";
 
-const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
+const input_required = "Este campo es requerido";
 
-const TrailersSchema = Yup.object().shape({
-  course_name: Yup.string().required("Nombre del trailer requerido"),
-  instructor: Yup.string().required("Descripcion requerida"),
-  video: Yup.mixed().test(
-    "fileFormat",
-    "Formato no soportado, suba unicamente: .png .jpeg, o jpg",
-    (value) => (value ? SUPPORTED_FORMATS.includes(value.type) : true)
-  ),
+const formSchema = Yup.object().shape({
+  name_agency: Yup.string().required(input_required),
+  email: Yup.string().email("Email invalido").required(input_required),
+  password: Yup.string().min(4, "Debe contener mas de 3 caracteres"),
+  porcentaje_agency: Yup.number().required(input_required),
 });
 
-const TrailersEditForm = (props) => {
-  const { isEditing, itemsTrailers, getTrailers, closeModal } = props;
+const AgenciaEditForm = (props) => {
+  const AgenciaApiModel = new AgenciaApi();
+
+  const { isEditing, items, getAgencias, closeModal } = props;
   const [loader, setLoader] = useState(false);
 
-  const SettingApiModel = new SettingApi();
-  const TrailersApiModel = new TrailersApi();
+  //const AgenciasApiModel = new AgenciasApi();
   const [formvalues, setFromValues] = useState(false);
-  const InstructorsApiModel = new InstructorsApi();
-  const [instructors, setInstructors] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      const response = await InstructorsApiModel.GetInstructors();
-      response.status === 200 && setInstructors(response.data);
-    })();
-  }, []);
-
-  useEffect(() => {
-    setFromValues(itemsTrailers.find((item) => item.id === isEditing));
+    setFromValues(items.find((item) => item.id === isEditing));
   }, [isEditing]);
 
   return (
     <div className={styles.FormContainer}>
       <h1>Editar Agencia</h1>
-      <Formik
-        initialValues={{
-          course_name: "",
-          instructor: "",
-          video: "",
-        }}
-        validationSchema={TrailersSchema}
-        onSubmit={async (values) => {
-          if (!loader) {
-            setLoader(true);
-            const responseImage = await SettingApiModel.uploadImage(values.video);
+      {formvalues && (
+        <Formik
+          initialValues={{
+            name_agency: formvalues.name_agency,
+            email: formvalues.email,
+            password: "",
+            porcentaje_agency: formvalues.porcentaje_agency,
+          }}
+          validationSchema={formSchema}
+          onSubmit={async (values) => {
+            if (!loader) {
+              setLoader(true);
 
-            if (responseImage.status === 201) {
-              const response = await TrailersApiModel.CreateTrailers({
-                ...values,
-                video: responseImage.data.imageUrl,
-              });
+              const response = await AgenciaApiModel.EditeAgencia(values, isEditing);
 
               switch (response.status) {
                 case 201:
-                  getTrailers();
+                  getAgencias();
                   Swal.fire({
-                    course_name: "Trailer creado",
+                    title: "Agencia editada",
                     icon: "success",
                   }).then(() => {
                     closeModal();
@@ -75,47 +59,71 @@ const TrailersEditForm = (props) => {
                   break;
                 default:
                   Swal.fire({
-                    course_name: "Ha ocurrido un error",
+                    title: "Ha ocurrido un error",
                     text: "Intentalo mas tarde",
                     icon: "error",
                   });
                   break;
               }
-            } else {
-              Swal.fire({
-                course_name: "Ha ocurrido un error",
-                text: "Intentalo mas tarde",
-                icon: "error",
-              });
+              setLoader(false);
             }
-            setLoader(false);
-          }
-        }}
-      >
-        {({ errors, touched, setFieldValue }) => (
-          <Form className={styles.form}>
-            <div className={styles.column}>
-              <div className={styles.fieldContain}>
-                <span>Nombre de la agencia</span>
-                <Field
-                  className="fieldShadow"
-                  name="course_name"
-                  placeholder="Nombre de la agencia"
-                />
-                {errors.course_name && touched.course_name ? (
-                  <div className={styles.labelError}>{errors.course_name}</div>
-                ) : null}
-              </div>
+          }}
+        >
+          {({ errors, touched, setFieldValue }) => (
+            <Form className={styles.form}>
+              <div className={styles.column}>
+                <div className={styles.fieldContain}>
+                  <span>Nombre</span>
+                  <Field className="fieldShadow" name="name_agency" placeholder="Nombre" />
+                  {errors.name_agency && touched.name_agency ? (
+                    <div className={styles.labelError}>{errors.name_agency}</div>
+                  ) : null}
+                </div>
 
-              <GButton type="submit" text={loader ? "cargando..." : "Aceptar"}>
-                Submit
-              </GButton>
-            </div>
-          </Form>
-        )}
-      </Formik>
+                <div className={styles.fieldContain}>
+                  <span>Email</span>
+                  <Field className="fieldShadow" name="email" type="mail" placeholder="Email" />
+                  {errors.email && touched.email ? (
+                    <div className={styles.labelError}>{errors.email}</div>
+                  ) : null}
+                </div>
+
+                <div className={styles.fieldContain}>
+                  <span>Contraseña</span>
+                  <Field
+                    className="fieldShadow"
+                    name="password"
+                    type="password"
+                    placeholder="Contraseña"
+                  />
+                  {errors.password && touched.password ? (
+                    <div className={styles.labelError}>{errors.password}</div>
+                  ) : null}
+                </div>
+
+                <div className={styles.fieldContain}>
+                  <span>Porcentaje</span>
+                  <Field
+                    className="fieldShadow"
+                    name="porcentaje_agency"
+                    type="number"
+                    placeholder="Porcentaje"
+                  />
+                  {errors.porcentaje_agency && touched.porcentaje_agency ? (
+                    <div className={styles.labelError}>{errors.porcentaje_agency}</div>
+                  ) : null}
+                </div>
+
+                <GButton type="submit" text={loader ? "cargando..." : "Aceptar"}>
+                  Submit
+                </GButton>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      )}
     </div>
   );
 };
 
-export default TrailersEditForm;
+export default AgenciaEditForm;

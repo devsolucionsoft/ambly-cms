@@ -11,7 +11,7 @@ export const TotalCustomers = (props) => (
             {props.title}
           </Typography>
           <Typography color="textPrimary" variant="h4">
-            18
+            {props.value}
           </Typography>
         </Grid>
         <Grid item>

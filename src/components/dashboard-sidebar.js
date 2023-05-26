@@ -80,6 +80,8 @@ export const DashboardSidebar = (props) => {
     [router.asPath]
   );
 
+  const session = JSON.parse(localStorage.getItem("token_session"));
+
   const content = (
     <>
       <Box
@@ -110,9 +112,11 @@ export const DashboardSidebar = (props) => {
           }}
         />
         <Box sx={{ flexGrow: 1 }}>
-          {items.map((item) => (
-            <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-          ))}
+          {/* {items.map((item) => (
+            ))} */}
+          {session?.role === "admin" && (
+            <NavItem icon={<StoreIcon fontSize="small" />} href={"/agencias"} title={"Agencias"} />
+          )}
           <div onClick={handleSignOut}>
             <NavItem
               key={"closeSesion"}

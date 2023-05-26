@@ -1,101 +1,111 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "../styles/Form.module.scss";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import GButton from "../buttons/GButton";
 import Swal from "sweetalert2";
 // Api
-import { SettingApi } from "../../api/SettingApi";
-import { TrailersApi } from "../../api/TrailersApi";
-import { InstructorsApi } from "../../api/InstructorsApi";
-import { margin } from "@mui/system";
+import { AgenciaApi } from "../../api/AgenciasApi";
 
-const SUPPORTED_FORMATS = ["video/mp4", "video/x-m4v"];
+const input_required = "Este campo es requerido";
 
-const TrailersSchema = Yup.object().shape({
-  agency_name: Yup.string().required("Nombre del curso requerido"),
+const formSchema = Yup.object().shape({
+  name_agency: Yup.string().required(input_required),
+  email: Yup.string().email("Email invalido").required(input_required),
+  password: Yup.string().required(input_required).min(4, "Debe contener mas de 3 caracteres"),
+  porcentaje_agency: Yup.number().required(input_required),
 });
 
 const AgenciaForm = (props) => {
-  const { getTrailers, closeModal } = props;
-  const SettingApiModel = new SettingApi();
-  const TrailersApiModel = new TrailersApi();
+  const AgenciaApiModel = new AgenciaApi();
+
+  const { getAgencias, closeModal } = props;
+
   const [loader, setLoader] = useState(false);
-
-  const InstructorsApiModel = new InstructorsApi();
-
-  const [instructors, setInstructors] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const response = await InstructorsApiModel.GetInstructors();
-      response.status === 200 && setInstructors(response.data);
-    })();
-  }, []);
 
   return (
     <div className={styles.FormContainer}>
       <h1>Nueva Agencia</h1>
       <Formik
         initialValues={{
-          agency_name: "",
+          name_agency: "",
+          email: "",
+          password: "",
+          porcentaje_agency: "",
         }}
-        validationSchema={TrailersSchema}
+        validationSchema={formSchema}
         onSubmit={async (values) => {
           if (!loader) {
             setLoader(true);
-            const responseImage = await SettingApiModel.uploadImage(values.video);
+            const response = await AgenciaApiModel.CreateAgencia(values);
 
-            if (responseImage.status === 201) {
-              const response = await TrailersApiModel.CreateTrailers({
-                ...values,
-                video: responseImage.data.imageUrl,
-              });
-
-              switch (response.status) {
-                case 201:
-                  getTrailers();
-                  Swal.fire({
-                    agency_name: "Agencia creado",
-                    icon: "success",
-                  }).then(() => {
-                    closeModal();
-                  });
-                  break;
-                default:
-                  Swal.fire({
-                    agency_name: "Ha ocurrido un error",
-                    text: "Intentalo mas tarde",
-                    icon: "error",
-                  });
-                  break;
-              }
-            } else {
-              Swal.fire({
-                agency_name: "Ha ocurrido un error",
-                text: "Intentalo mas tarde",
-                icon: "error",
-              });
+            switch (response.status) {
+              case 201:
+                getAgencias();
+                Swal.fire({
+                  title: "Agencia creada",
+                  icon: "success",
+                }).then(() => {
+                  closeModal();
+                });
+                break;
+              default:
+                Swal.fire({
+                  title: "Ha ocurrido un error",
+                  text: "Intentalo mas tarde",
+                  icon: "error",
+                });
+                break;
             }
+
             setLoader(false);
           }
         }}
       >
-        {({ errors, touched, setFieldValue }) => (
+        {({ errors, touched }) => (
           <Form className={styles.form}>
             <div className={styles.column}>
               <div className={styles.fieldContain}>
-                <span>Nombre de la agencia</span>
-                <Field
-                  className="fieldShadow"
-                  name="agency_name"
-                  placeholder="Nombre de la agencia"
-                />
-                {errors.agency_name && touched.agency_name ? (
-                  <div className={styles.labelError}>{errors.agency_name}</div>
+                <span>Nombre</span>
+                <Field className="fieldShadow" name="name_agency" placeholder="Nombre" />
+                {errors.name_agency && touched.name_agency ? (
+                  <div className={styles.labelError}>{errors.name_agency}</div>
                 ) : null}
               </div>
 
+              <div className={styles.fieldContain}>
+                <span>Email</span>
+                <Field className="fieldShadow" name="email" type="mail" placeholder="Email" />
+                {errors.email && touched.email ? (
+                  <div className={styles.labelError}>{errors.email}</div>
+                ) : null}
+              </div>
+
+              <div className={styles.fieldContain}>
+                <span>Contraseña</span>
+                <Field
+                  className="fieldShadow"
+                  name="password"
+                  type="password"
+                  placeholder="Contraseña"
+                />
+                {errors.password && touched.password ? (
+                  <div className={styles.labelError}>{errors.password}</div>
+                ) : null}
+              </div>
+
+              <div className={styles.fieldContain}>
+                <span>Porcentaje</span>
+                <Field
+                  className="fieldShadow"
+                  name="porcentaje_agency"
+                  type="number"
+                  placeholder="Porcentaje"
+                />
+                {errors.porcentaje_agency && touched.porcentaje_agency ? (
+                  <div className={styles.labelError}>{errors.porcentaje_agency}</div>
+                ) : null}
+              </div>
               <GButton type="submit" text={loader ? "cargando..." : "Agregar"}>
                 Submit
               </GButton>

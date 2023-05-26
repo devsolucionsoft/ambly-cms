@@ -1,5 +1,5 @@
 import axios from "axios";
-import { api_url, headers} from "./config";
+import { api_url, headers } from "./config";
 
 export class CategoriesApi {
   async GetCategories() {
@@ -17,7 +17,7 @@ export class CategoriesApi {
     try {
       const response = await axios({
         method: "post",
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data", token: "xxxxxx" },
         url: `${api_url}/category/upload/img`,
         data: imageForm,
       });
@@ -40,6 +40,7 @@ export class CategoriesApi {
         method: "post",
         url: `${api_url}/category/create`,
         data: data,
+        user: "....",
       });
       return response;
     } catch (error) {
@@ -48,7 +49,6 @@ export class CategoriesApi {
   }
 
   async EditeCategorie(data, id) {
-
     try {
       const response = await axios({
         method: "patch",
@@ -64,12 +64,12 @@ export class CategoriesApi {
   async deleteCategory(id) {
     try {
       const response = await axios({
-        method: 'delete',
-        url: `${api_url}/category/delete/${id}`
-      })
-      return response
+        method: "delete",
+        url: `${api_url}/category/delete/${id}`,
+      });
+      return response;
     } catch (error) {
-      return error.response
+      return error.response;
     }
   }
 }

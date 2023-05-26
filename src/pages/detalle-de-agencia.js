@@ -13,10 +13,11 @@ import { TotalCustomers } from "../components/dashboard/total-customers";
 import { TotalProfit } from "../components/dashboard/total-profit";
 import Image from "next/image";
 import VentasTable from "../components/influencers/VentaTable";
+import { useRouter } from "next/router";
 
 import { Budget } from "../components/dashboard/budget";
 // Api
-import { TrailersApi } from "../api/TrailersApi";
+import { AgenciaApi } from "../api/AgenciasApi";
 
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -24,18 +25,24 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Fragment } from "react";
 
 const Page = () => {
+  const router = useRouter();
+  const { id } = router.query;
+
   const [editAgencia, setEditAgencia] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [showSeccion, setShowSeccion] = useState("influencers");
   const closeModal = () => setModalOpen(false);
   const openModal = () => setModalOpen(true);
+
   const [isEditing, setIsEditing] = useState(false);
+
   const editingTrailers = (id) => {
     setIsEditing({
       active: true,
       id: id,
     });
   };
+
   const stopEditingTrailers = () => {
     setIsEditing({
       active: false,
@@ -43,24 +50,27 @@ const Page = () => {
     });
   };
 
-  const TrailersApiModel = new TrailersApi();
-  const [itemsTrailers, setItemsTrailers] = useState([]);
+  const AgenciaApiModel = new AgenciaApi();
+  const [items, setItem] = useState([]);
+  const [info, seInfo] = useState({});
 
-  const getTrailers = async () => {
-    const response = await TrailersApiModel.GetTrailers();
+  const getInfo = async () => {
+    const response = await AgenciaApiModel.GetAgencia(id);
     if (response.status === 200) {
-      setItemsTrailers(response.data);
+      seInfo(response.data);
+      console.log(response.data);
+      setItem(response.data.data.influencer);
     }
   };
 
   useEffect(() => {
-    getTrailers();
+    getInfo();
   }, []);
 
   return (
     <div className={`container`} style={{ marginBottom: "4em" }}>
       <Head>
-        <title>Ambly CMS - Nombre de agencia</title>
+        <title>Ambly CMS - {info?.data?.name_agency}</title>
       </Head>
 
       <div className="table-header-container" style={{ margin: "2em 0" }}>
@@ -85,7 +95,7 @@ const Page = () => {
             />
           </div>
 
-          <h1 className="">Nombre de agencia</h1>
+          <h1 className="">{info?.data?.name_agency}</h1>
         </div>
         <GButton text={"Editar agencia"} onClick={() => setEditAgencia(true)}>
           {" "}
@@ -100,10 +110,10 @@ const Page = () => {
           my: "2em",
         }}
       >
-        <Container maxWidth={true}>
+        <Container>
           <Grid container spacing={3}>
             <Grid item lg={4} sm={6} xs={12}>
-              <TotalCustomers title={"Total de influencers"} />
+              <TotalCustomers title={"Total de influencers"} value={info?.totalInfluencer} />
             </Grid>
 
             <Grid item lg={4} sm={6} xl={3} xs={12}>
@@ -111,7 +121,7 @@ const Page = () => {
             </Grid>
 
             <Grid item lg={4} sm={6} xs={12}>
-              <TotalProfit title={"total de ganancias"} />
+              <TotalProfit title={"total de ganancias"} value={info?.totalMoney} />
             </Grid>
           </Grid>
         </Container>
@@ -126,8 +136,19 @@ const Page = () => {
           gap: "2%",
         }}
       >
-        <GButton text={"VER INFLUENCERS"} secondary onClick={() => setShowSeccion("influencers")} />
-        <GButton text={"REGISTRO DE VENTAS"} secondary onClick={() => setShowSeccion("ventas")} />
+        {showSeccion === "influencers" ? (
+          <GButton
+            text={"VER REGISTRO DE VENTAS"}
+            secondary
+            onClick={() => setShowSeccion("ventas")}
+          />
+        ) : (
+          <GButton
+            text={"VER INFLUENCERS"}
+            secondary
+            onClick={() => setShowSeccion("influencers")}
+          />
+        )}
       </Box>
 
       {showSeccion === "ventas" && (
@@ -159,7 +180,7 @@ const Page = () => {
             modalOpen={modalOpen}
             closeModal={closeModal}
             openModal={openModal}
-            itemsTrailers={itemsTrailers}
+            itemsTrailers={items}
             getTrailers={getTrailers}
           />
           <h3 style={{ marginBottom: "1em", textAlign: "right", marginTop: "1em" }}>
@@ -180,14 +201,16 @@ const Page = () => {
               Abrir
             </GButton>
           </div>
-          <InfluencersTable
-            editingTrailers={editingTrailers}
-            modalOpen={modalOpen}
-            closeModal={closeModal}
-            openModal={openModal}
-            itemsTrailers={itemsTrailers}
-            getTrailers={getTrailers}
-          />
+          {
+            <InfluencersTable
+              editingTrailers={editingTrailers}
+              modalOpen={modalOpen}
+              closeModal={closeModal}
+              openModal={openModal}
+              items={items}
+              getInfo={getInfo}
+            />
+          }
         </Fragment>
       )}
       <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
@@ -195,15 +218,15 @@ const Page = () => {
           (isEditing.active ? (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
               <InfluencerEditFrom
-                getTrailers={getTrailers}
+                getInfo={getInfo}
                 closeModal={closeModal}
                 isEditing={isEditing.id}
-                itemsTrailers={itemsTrailers}
+                items={items}
               />
             </Modal>
           ) : (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <InfluencerForm closeModal={closeModal} getTrailers={getTrailers} />
+              <InfluencerForm closeModal={closeModal} getInfo={getInfo} />
             </Modal>
           ))}
       </AnimatePresence>
@@ -213,14 +236,14 @@ const Page = () => {
           <Modal
             modalOpen={editAgencia}
             text={""}
-            closeModal={closeModal}
+            closeModal={() => setEditAgencia(false)}
             handleClose={() => setEditAgencia(false)}
           >
             <AgenciaEditFrom
-              getTrailers={getTrailers}
-              closeModal={closeModal}
-              isEditing={isEditing.id}
-              itemsTrailers={itemsTrailers}
+              getAgencias={getInfo}
+              closeModal={() => setEditAgencia(false)}
+              isEditing={info.data.id}
+              items={[info.data]}
             />
           </Modal>
         )}

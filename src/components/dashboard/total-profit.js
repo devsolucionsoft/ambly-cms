@@ -10,7 +10,7 @@ export const TotalProfit = (props) => (
             {props.title}
           </Typography>
           <Typography color="textPrimary" variant="h4">
-            $23k
+            ${props.value}k
           </Typography>
         </Grid>
         <Grid item>

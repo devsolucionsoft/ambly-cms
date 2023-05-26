@@ -25,6 +25,8 @@ const Login = () => {
     }),
     onSubmit: async (values) => {
       const response = await AuthApiModel.UserLogin(values);
+      const responsUser = await AuthApiModel.GetUser(response.data.id);
+      console.log(responsUser);
 
       switch (response.status) {
         case 200:
@@ -34,9 +36,24 @@ const Login = () => {
               id: response.data.id,
               email: values.email,
               token: response.data.token,
+              role: responsUser.data.user.role,
             })
           );
-          Router.push("/").catch(console.error);
+
+          switch (responsUser.data.user.role) {
+            case "agency":
+              localStorage.setItem("agency_id", responsUser.data.agency.id);
+              Router.push(`/detalle-de-agencia/?id=${responsUser.data.agency.id}`).catch(
+                console.error
+              );
+              break;
+            case "admin":
+              Router.push(`/agencias/`).catch(console.error);
+              break;
+            default:
+              //Router.push(`/`).catch(console.error);
+              break;
+          }
           break;
         case 403:
           Swal.fire({

@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { AuthGuard } from "./auth-guard";
 import { DashboardNavbar } from "./dashboard-navbar";
 import { DashboardSidebar } from "./dashboard-sidebar";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 const DashboardLayoutRoot = styled("div")(({ theme }) => ({
   display: "flex",
@@ -17,33 +17,63 @@ const DashboardLayoutRoot = styled("div")(({ theme }) => ({
 }));
 
 export const DashboardLayout = (props) => {
+  const router = useRouter();
   const { children } = props;
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [validate, setValidate] = useState(false);
 
   useEffect(() => {
+    setValidate(false);
+
     const session = JSON.parse(localStorage.getItem("token_session"));
 
+    console.log(session.role, router.pathname);
+
     if (!session?.token) {
-      //Router.push("/login").catch(console.error);
+      Router.push("/login").catch(console.error);
+    } else {
+      if (session.role === "agency") {
+        const agency_id = localStorage.getItem("agency_id");
+        if (router.pathname !== "/detalle-de-agencia" && router.pathname !== "/influencer") {
+          Router.push(`/detalle-de-agencia/?id=${agency_id}`).catch(console.error);
+        }
+      }
+
+      if (session.role === "admin") {
+        if (
+          router.pathname !== "/agencias" &&
+          router.pathname !== "/detalle-de-agencia" &&
+          router.pathname !== "/influencer"
+        ) {
+          Router.push(`/agencias`).catch(console.error);
+        }
+      }
     }
-  }, []);
+    setTimeout(() => {
+      setValidate(true);
+    }, 200);
+  }, [router.pathname]);
 
   return (
     <AuthGuard>
-      <DashboardLayoutRoot>
-        <Box
-          sx={{
-            display: "flex",
-            flex: "1 1 auto",
-            flexDirection: "column",
-            width: "100%",
-          }}
-        >
-          {children}
-        </Box>
-      </DashboardLayoutRoot>
-      {/* <DashboardNavbar onSidebarOpen={() => setSidebarOpen(true)} /> */}
-      <DashboardSidebar onClose={() => setSidebarOpen(false)} open={isSidebarOpen} />
+      {validate && (
+        <Fragment>
+          <DashboardLayoutRoot>
+            <Box
+              sx={{
+                display: "flex",
+                flex: "1 1 auto",
+                flexDirection: "column",
+                width: "100%",
+              }}
+            >
+              {children}
+            </Box>
+          </DashboardLayoutRoot>
+          {/* <DashboardNavbar onSidebarOpen={() => setSidebarOpen(true)} /> */}
+          <DashboardSidebar onClose={() => setSidebarOpen(false)} open={isSidebarOpen} />
+        </Fragment>
+      )}
     </AuthGuard>
   );
 };

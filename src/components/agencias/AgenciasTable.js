@@ -6,15 +6,15 @@ import Link from "next/link";
 import Image from "next/image";
 
 // Api
-import { TrailersApi } from "../../api/TrailersApi";
+import { AgenciaApi } from "../../api/AgenciasApi";
 
-const AgenciasTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, getTrailers }) => {
-  const TrailersApiModel = new TrailersApi();
+const AgenciasTable = ({ editingAgency, modalOpen, openModal, agenciasItems, getAgencias }) => {
+  const AgenciasApiModel = new AgenciaApi();
 
   const removeTask = (id) => {
     Swal.fire({
       title: "¿Estas seguro?",
-      text: "¡Una vez eliminado, no podrá recuperar este trailer!",
+      text: "¡Una vez eliminado, no podrá recuperar esta agencia!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Eliminar",
@@ -29,20 +29,20 @@ const AgenciasTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, g
 
   // DELETE ITEM
   const handleDelete = async (id) => {
-    // const response = await TrailersApiModel.deleteTrailers(id);
-    // switch (response.status) {
-    //   case 201:
-    //     getTrailers();
-    //     Swal.fire("¡Eliminado!", "Su categoría ha sido eliminado.", "success");
-    //     break;
-    //   default:
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Oops...",
-    //       text: "Ha ocurrido un problema, intentalo mas tarde",
-    //     });
-    //     break;
-    // }
+    const response = await AgenciasApiModel.deleteAgencia(id);
+    switch (response.status) {
+      case 201:
+        getAgencias();
+        Swal.fire("¡Eliminado!", "Su agencia ha sido eliminado.", "success");
+        break;
+      default:
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ha ocurrido un problema, intentalo mas tarde",
+        });
+        break;
+    }
   };
 
   return (
@@ -56,21 +56,25 @@ const AgenciasTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, g
           </tr>
         </thead>
         <tbody>
-          {[0, 1, 2, 3, 4, 5].map((item) => (
+          {agenciasItems.map((item, index) => (
             <tr key={item.id}>
               <td>
                 <div className={styles.TdTableImage}>
+                  <h1>{index + 1}</h1>
                   <div className={styles.Image}>
-                    <Image
+                    {/* <Image
                       objectFit="cover"
                       alt="Picture of the author"
                       layout="fill"
                       src={
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2ThYqss0qn9ybB2R1JMG3GfiaMzIYilMVvg&usqp=CAU"
+                        "https://w7.pngwing.com/pngs/784/809/png-transparent-building-small-business-company-office-corporation-office-icon-insharepics-miscellaneous-blue-text.png"
                       }
-                    />
+                    /> */}
                   </div>
-                  <span>{"Nombre de la agencia"}</span>
+                  <div>
+                    <span>{item.name_agency}</span>
+                    <p>{item.email}</p>
+                  </div>
                 </div>
               </td>
 
@@ -106,9 +110,7 @@ const AgenciasTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, g
                     strokeWidth={1.5}
                     stroke="currentColor"
                     className="w-6 h-6"
-                    onClick={() => (
-                      modalOpen ? closeModal() : openModal(), editingTrailers(item.id)
-                    )}
+                    onClick={() => (modalOpen ? closeModal() : openModal(), editingAgency(item.id))}
                   >
                     <path
                       strokeLinecap="round"

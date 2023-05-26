@@ -8,39 +8,41 @@ import AgenciaForm from "../components/agencias/AgenciaForm";
 import AgenciaEditFrom from "../components/agencias/AgenciaEditFrom";
 import Head from "next/head";
 // Api
-import { TrailersApi } from "../api/TrailersApi";
+import { AgenciaApi } from "../api/AgenciasApi";
 
 const Page = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const closeModal = () => setModalOpen(false);
   const openModal = () => setModalOpen(true);
+
   const [isEditing, setIsEditing] = useState(false);
-  const editingTrailers = (id) => {
+  const editingAgency = (id) => {
     setIsEditing({
       active: true,
       id: id,
     });
   };
-  const stopEditingTrailers = () => {
+
+  const stopEditingAgency = () => {
     setIsEditing({
       active: false,
       id: 0,
     });
   };
 
-  const TrailersApiModel = new TrailersApi();
+  const AgenciaApiModel = new AgenciaApi();
+  const [agenciasItems, setAgencias] = useState([]);
 
-  const [itemsTrailers, setItemsTrailers] = useState([]);
-
-  const getTrailers = async () => {
-    const response = await TrailersApiModel.GetTrailers();
+  const getAgencias = async () => {
+    const response = await AgenciaApiModel.GetAgencias();
     if (response.status === 200) {
-      setItemsTrailers(response.data);
+      console.log(response.data);
+      setAgencias(response.data);
     }
   };
 
   useEffect(() => {
-    getTrailers();
+    getAgencias();
   }, []);
 
   return (
@@ -53,34 +55,34 @@ const Page = () => {
         <h1 className="">Agencias</h1>
         <GButton
           text={"Agregar Agencia"}
-          onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingTrailers())}
+          onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingAgency())}
         >
           {" "}
           Abrir
         </GButton>
       </div>
       <AgenciasTable
-        editingTrailers={editingTrailers}
+        editingAgency={editingAgency}
         modalOpen={modalOpen}
         closeModal={closeModal}
         openModal={openModal}
-        itemsTrailers={itemsTrailers}
-        getTrailers={getTrailers}
+        agenciasItems={agenciasItems}
+        getAgencias={getAgencias}
       />
       <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
         {modalOpen &&
           (isEditing.active ? (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
               <AgenciaEditFrom
-                getTrailers={getTrailers}
+                getAgencias={getAgencias}
                 closeModal={closeModal}
                 isEditing={isEditing.id}
-                itemsTrailers={itemsTrailers}
+                agenciasItems={agenciasItems}
               />
             </Modal>
           ) : (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-              <AgenciaForm closeModal={closeModal} getTrailers={getTrailers} />
+              <AgenciaForm closeModal={closeModal} getAgencias={getAgencias} />
             </Modal>
           ))}
       </AnimatePresence>
