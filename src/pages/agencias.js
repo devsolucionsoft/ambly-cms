@@ -77,7 +77,7 @@ const Page = () => {
                 getAgencias={getAgencias}
                 closeModal={closeModal}
                 isEditing={isEditing.id}
-                agenciasItems={agenciasItems}
+                items={agenciasItems}
               />
             </Modal>
           ) : (
