@@ -1,4 +1,4 @@
-export const api_url = "http://45.79.219.139:8075";
+export const api_url = "https://apiambly.solucionsoft.com/";
 console.log(process.env.API_URL);
 
 export const headers = {
