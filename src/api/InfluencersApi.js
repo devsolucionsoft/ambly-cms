@@ -6,9 +6,23 @@ export class InfluencersApi {
     this.token_session = JSON.parse(localStorage.getItem("token_session"));
   }
 
-  async GetAgencias() {
+  async GetInfluencer(id) {
     try {
-      return await axios.get(`${api_url}/agency`);
+      return await axios.get(`${api_url}/influencer/${id}`);
+    } catch (error) {
+      return error.response;
+    }
+  }
+
+  async GetVentas(id, params) {
+    try {
+      return await axios.get(`${api_url}/influencer/searchdate/${id}`, {
+        params,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
+      });
     } catch (error) {
       return error.response;
     }

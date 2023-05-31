@@ -22,6 +22,19 @@ export class AgenciaApi {
     }
   }
 
+  async GetVentas(id, params) {
+    try {
+      return await axios.get(`${api_url}/agency/searchdate/${id}`, {
+        params,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
+      });
+    } catch (error) {
+      return error.response;
+    }
+  }
   async CreateAgencia(inputs) {
     const data = {
       name_agency: inputs.name_agency,

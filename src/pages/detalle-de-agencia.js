@@ -14,11 +14,9 @@ import { TotalProfit } from "../components/dashboard/total-profit";
 import Image from "next/image";
 import VentasTable from "../components/influencers/VentaTable";
 import { useRouter } from "next/router";
-
 import { Budget } from "../components/dashboard/budget";
 // Api
 import { AgenciaApi } from "../api/AgenciasApi";
-
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -53,12 +51,15 @@ const Page = () => {
   const AgenciaApiModel = new AgenciaApi();
   const [items, setItem] = useState([]);
   const [info, seInfo] = useState({});
+  const [ventas, setVentas] = useState([]);
+  const [startDate, setStartDate] = useState(false);
+  const [endDate, setEndDate] = useState(false);
 
   const getInfo = async () => {
     const response = await AgenciaApiModel.GetAgencia(id);
     if (response.status === 200) {
       seInfo(response.data);
-      console.log(response.data);
+      console.log(response.data.data.influencer);
       setItem(response.data.data.influencer);
     }
   };
@@ -66,6 +67,33 @@ const Page = () => {
   useEffect(() => {
     getInfo();
   }, []);
+
+  const selectDate = (value, name) => {
+    const date = new Date(value._d);
+    const parseDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+    if (name === "start") {
+      setStartDate(parseDate);
+    } else {
+      setEndDate(parseDate);
+    }
+  };
+
+  const generateVentas = async () => {
+    if (startDate && endDate) {
+      const response = await AgenciaApiModel.GetVentas(id, {
+        date_inicial: startDate,
+        date_final: endDate,
+      });
+      if (response.status === 200 && Array.isArray(response.data)) {
+        setVentas(response.data);
+      }
+    } else {
+      const response = await AgenciaApiModel.GetVentas(id);
+      if (response.status === 200 && Array.isArray(response.data)) {
+        setVentas(response.data);
+      }
+    }
+  };
 
   return (
     <div className={`container`} style={{ marginBottom: "4em" }}>
@@ -159,30 +187,23 @@ const Page = () => {
               <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
                 <label>Desde:</label>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePicker />
+                  <DatePicker onChange={(value) => selectDate(value, "start")} />
                 </LocalizationProvider>
               </Box>
               <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
                 <label>Hasta:</label>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePicker />
+                  <DatePicker onChange={(value) => selectDate(value, "end")} />
                 </LocalizationProvider>
               </Box>
               <Box sx={{ marginRight: "2em" }}>
-                <GButton text={"Generar regístro"} onClick={() => false} />
+                <GButton text={"Generar regístro"} onClick={() => generateVentas()} />
               </Box>
             </Box>
           </Box>
 
           <h2 style={{ marginBottom: "1rem" }}>Listado de ventas</h2>
-          <VentasTable
-            editingTrailers={editingTrailers}
-            modalOpen={modalOpen}
-            closeModal={closeModal}
-            openModal={openModal}
-            itemsTrailers={items}
-            getTrailers={getTrailers}
-          />
+          <VentasTable items={ventas} />
           <h3 style={{ marginBottom: "1em", textAlign: "right", marginTop: "1em" }}>
             Total: <span style={{ fontSize: "2.5rem", marginLeft: "1rem" }}> $100.000</span>
           </h3>

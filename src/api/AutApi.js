@@ -17,4 +17,12 @@ export class AuthApi {
       return error.response;
     }
   }
+
+  async GetInfluencerUser(id) {
+    try {
+      return await axios.get(`${api_url}/influencer/user/${id}`);
+    } catch (error) {
+      return error.response;
+    }
+  }
 }

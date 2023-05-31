@@ -8,43 +8,7 @@ import Image from "next/image";
 // Api
 import { TrailersApi } from "../../api/TrailersApi";
 
-const VentasTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, getTrailers }) => {
-  const TrailersApiModel = new TrailersApi();
-
-  const removeTask = (id) => {
-    Swal.fire({
-      title: "¿Estas seguro?",
-      text: "¡Una vez eliminado, no podrá recuperar este trailer!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Eliminar",
-      cancelButtonText: "cancel",
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.value) {
-        handleDelete(id);
-      }
-    });
-  };
-
-  // DELETE ITEM
-  const handleDelete = async (id) => {
-    // const response = await TrailersApiModel.deleteTrailers(id);
-    // switch (response.status) {
-    //   case 201:
-    //     getTrailers();
-    //     Swal.fire("¡Eliminado!", "Su categoría ha sido eliminado.", "success");
-    //     break;
-    //   default:
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Oops...",
-    //       text: "Ha ocurrido un problema, intentalo mas tarde",
-    //     });
-    //     break;
-    // }
-  };
-
+const VentasTable = ({ items }) => {
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -56,7 +20,7 @@ const VentasTable = ({ editingTrailers, modalOpen, openModal, itemsTrailers, get
           </tr>
         </thead>
         <tbody>
-          {[0, 1, 2, 3].map((item, index) => (
+          {items.map((item, index) => (
             <tr key={item.id}>
               <td>{index + 1}</td>
               <td>12/05/2023</td>

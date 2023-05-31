@@ -27,9 +27,17 @@ export const DashboardLayout = (props) => {
 
     const session = JSON.parse(localStorage.getItem("token_session"));
 
+    console.log(session);
+
     if (!session?.token) {
       Router.push("/login").catch(console.error);
     } else {
+      if (session.role === "influencer") {
+        if (router.pathname !== "/influencer") {
+          Router.push(`/influencer/?id=${session.id}`).catch(console.error);
+        }
+      }
+
       if (session.role === "agency") {
         const agency_id = localStorage.getItem("agency_id");
         if (router.pathname !== "/detalle-de-agencia" && router.pathname !== "/influencer") {
@@ -37,13 +45,23 @@ export const DashboardLayout = (props) => {
         }
       }
 
-      if (session.role === "admin") {
+      if (session.role === "ambly") {
         if (
           router.pathname !== "/agencias" &&
           router.pathname !== "/detalle-de-agencia" &&
           router.pathname !== "/influencer"
         ) {
           Router.push(`/agencias`).catch(console.error);
+        }
+      }
+
+      if (session.role === "admin") {
+        if (
+          router.pathname === "/agencias" ||
+          router.pathname === "/detalle-de-agencia" ||
+          router.pathname === "/influencer"
+        ) {
+          Router.push(`/`).catch(console.error);
         }
       }
     }

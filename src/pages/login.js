@@ -3,7 +3,7 @@ import Head from "next/head";
 import Router from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, TextField } from "@mui/material";
 import Swal from "sweetalert2";
 import backgroundLogin from "../images/background-login.jpg";
 import iconAmbly from "../../public/static/images/icon-ambly.png";
@@ -26,7 +26,7 @@ const Login = () => {
     onSubmit: async (values) => {
       const response = await AuthApiModel.UserLogin(values);
       const responsUser = await AuthApiModel.GetUser(response.data.id);
-      console.log(responsUser);
+      const responsInfluencer = await AuthApiModel.GetInfluencerUser(response.data.id);
 
       switch (response.status) {
         case 200:
@@ -41,17 +41,20 @@ const Login = () => {
           );
 
           switch (responsUser.data.user.role) {
+            case "influencer":
+              Router.push(`/influencer?id=${responsInfluencer.data.data.id}`).catch(console.error);
+              break;
             case "agency":
               localStorage.setItem("agency_id", responsUser.data.agency.id);
               Router.push(`/detalle-de-agencia/?id=${responsUser.data.agency.id}`).catch(
                 console.error
               );
               break;
-            case "admin":
+            case "ambly":
               Router.push(`/agencias/`).catch(console.error);
               break;
-            default:
-              //Router.push(`/`).catch(console.error);
+            case "admin":
+              Router.push(`/`).catch(console.error);
               break;
           }
           break;

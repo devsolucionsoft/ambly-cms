@@ -36,7 +36,6 @@ const Page = () => {
   const getAgencias = async () => {
     const response = await AgenciaApiModel.GetAgencias();
     if (response.status === 200) {
-      console.log(response.data);
       setAgencias(response.data);
     }
   };

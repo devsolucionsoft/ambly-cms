@@ -18,27 +18,23 @@ const formSchema = Yup.object().shape({
 });
 
 const InfluencerEditForm = (props) => {
-  const { isEditing, items, getInfo, closeModal } = props;
+  const { isEditing, info, getInfluencer, closeModal } = props;
   const [loader, setLoader] = useState(false);
 
   const InfluencersApiModel = new InfluencersApi();
   const [formvalues, setFromValues] = useState(false);
 
-  useEffect(() => {
-    setFromValues(items.find((item) => item.id === isEditing));
-  }, [isEditing]);
-
   return (
     <div className={styles.FormContainer}>
       <h1>Editar Perfil</h1>
-      {formvalues && (
+      {info && (
         <Formik
           initialValues={{
-            name_influencer: formvalues.name_influencer,
-            email: formvalues.email,
+            name_influencer: info.name_influencer,
+            email: info.email,
             password: "",
-            code_influencer: formvalues.code_influencer,
-            porcentaje_influencer: formvalues.porcentaje_influencer,
+            code_influencer: info.code_influencer,
+            porcentaje_influencer: info.porcentaje_influencer,
           }}
           validationSchema={formSchema}
           onSubmit={async (values) => {
@@ -48,7 +44,7 @@ const InfluencerEditForm = (props) => {
 
               switch (response.status) {
                 case 201:
-                  getInfo();
+                  getInfluencer();
                   Swal.fire({
                     title: "Influencer editado",
                     icon: "success",
@@ -80,13 +76,13 @@ const InfluencerEditForm = (props) => {
                   ) : null}
                 </div>
 
-                <div className={styles.fieldContain}>
+                {/* <div className={styles.fieldContain}>
                   <span>Email</span>
                   <Field className="fieldShadow" name="email" type="mail" placeholder="Email" />
                   {errors.email && touched.email ? (
                     <div className={styles.labelError}>{errors.email}</div>
                   ) : null}
-                </div>
+                </div> */}
 
                 <div className={styles.fieldContain}>
                   <span>Contraseña</span>
@@ -101,7 +97,7 @@ const InfluencerEditForm = (props) => {
                   ) : null}
                 </div>
 
-                <div className={styles.fieldContain}>
+                {/* <div className={styles.fieldContain}>
                   <span>Porcentaje</span>
                   <Field
                     className="fieldShadow"
@@ -120,7 +116,7 @@ const InfluencerEditForm = (props) => {
                   {errors.code_influencer && touched.code_influencer ? (
                     <div className={styles.labelError}>{errors.code_influencer}</div>
                   ) : null}
-                </div>
+                </div> */}
 
                 <GButton type="submit" text={loader ? "cargando..." : "Aceptar"}>
                   Submit

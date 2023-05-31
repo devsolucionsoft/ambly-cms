@@ -21,40 +21,47 @@ const handleSignOut = () => {
   return;
 };
 const items = [
-  // {
-  //   href: "/",
-  //   icon: <ChartBarIcon fontSize="small" />,
-  //   title: "Dashboard",
-  // },
-  // {
-  //   href: "/instructores",
-  //   icon: <UsersIcon fontSize="small" />,
-  //   title: "Instructores",
-  // },
-  // {
-  //   href: "/categorias",
-  //   icon: <CategoryIcon fontSize="small" />,
-  //   title: "Categorias",
-  // },
-  // {
-  //   href: "/cursos",
-  //   icon: <SchoolIcon fontSize="small" />,
-  //   title: "Cursos",
-  // },
-  // {
-  //   href: "/splash",
-  //   icon: <AddToHomeScreenIcon fontSize="small" />,
-  //   title: "Splash",
-  // },
-  // {
-  //   href: "/trailers",
-  //   icon: <OndemandVideoIcon fontSize="small" />,
-  //   title: "Trailers",
-  // },
+  {
+    href: "/",
+    icon: <ChartBarIcon fontSize="small" />,
+    title: "Dashboard",
+    role: "admin",
+  },
+  {
+    href: "/instructores",
+    icon: <UsersIcon fontSize="small" />,
+    title: "Instructores",
+    role: "admin",
+  },
+  {
+    href: "/categorias",
+    icon: <CategoryIcon fontSize="small" />,
+    title: "Categorias",
+    role: "admin",
+  },
+  {
+    href: "/cursos",
+    icon: <SchoolIcon fontSize="small" />,
+    title: "Cursos",
+    role: "admin",
+  },
+  {
+    href: "/splash",
+    icon: <AddToHomeScreenIcon fontSize="small" />,
+    title: "Splash",
+    role: "admin",
+  },
+  {
+    href: "/trailers",
+    icon: <OndemandVideoIcon fontSize="small" />,
+    title: "Trailers",
+    role: "admin",
+  },
   {
     href: "/agencias",
     icon: <StoreIcon fontSize="small" />,
     title: "Agencias",
+    role: "ambly",
   },
 ];
 
@@ -66,19 +73,14 @@ export const DashboardSidebar = (props) => {
     noSsr: false,
   });
 
-  useEffect(
-    () => {
-      if (!router.isReady) {
-        return;
-      }
-
-      if (open) {
-        onClose?.();
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [router.asPath]
-  );
+  useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
+    if (open) {
+      onClose?.();
+    }
+  }, [router.asPath]);
 
   const session = JSON.parse(localStorage.getItem("token_session"));
 
@@ -112,11 +114,12 @@ export const DashboardSidebar = (props) => {
           }}
         />
         <Box sx={{ flexGrow: 1 }}>
-          {/* {items.map((item) => (
-            ))} */}
-          {session?.role === "admin" && (
-            <NavItem icon={<StoreIcon fontSize="small" />} href={"/agencias"} title={"Agencias"} />
-          )}
+          {items
+            .filter((item) => session.role == item.role)
+            .map((item) => (
+              <NavItem icon={item.icon} href={item.href} title={item.title} />
+            ))}
+
           <div onClick={handleSignOut}>
             <NavItem
               key={"closeSesion"}
