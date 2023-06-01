@@ -12,7 +12,7 @@ const input_required = "Este campo es requerido";
 const formSchema = Yup.object().shape({
   name_agency: Yup.string().required(input_required),
   email: Yup.string().email("Email invalido").required(input_required),
-  password: Yup.string().min(4, "Debe contener mas de 3 caracteres"),
+  password: Yup.string().min(6, "Debe contener mas de  caracteres"),
   porcentaje_agency: Yup.number().required(input_required),
 });
 
@@ -88,7 +88,7 @@ const AgenciaEditForm = (props) => {
                   ) : null}
                 </div>
 
-                <div className={styles.fieldContain}>
+                {/* <div className={styles.fieldContain}>
                   <span>Contraseña</span>
                   <Field
                     className="fieldShadow"
@@ -99,7 +99,7 @@ const AgenciaEditForm = (props) => {
                   {errors.password && touched.password ? (
                     <div className={styles.labelError}>{errors.password}</div>
                   ) : null}
-                </div>
+                </div> */}
 
                 <div className={styles.fieldContain}>
                   <span>Porcentaje</span>

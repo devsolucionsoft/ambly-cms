@@ -12,7 +12,7 @@ const input_required = "Este campo es requerido";
 const formSchema = Yup.object().shape({
   name_influencer: Yup.string().required(input_required),
   email: Yup.string().email("Email invalido").required(input_required),
-  password: Yup.string().required(input_required).min(6, "Debe contener mas de 3 caracteres"),
+  password: Yup.string().required(input_required).min(6, "Debe contener mas de  caracteres"),
   code_influencer: Yup.string().required(input_required),
   porcentaje_influencer: Yup.number().required(input_required),
 });
