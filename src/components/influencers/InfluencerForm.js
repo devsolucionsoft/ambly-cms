@@ -37,7 +37,6 @@ const InfluencerForm = (props) => {
         onSubmit={async (values) => {
           if (!loader) {
             setLoader(true);
-            console.log("InfluencersApiModel");
             const response = await InfluencersApiModel.CreateInfluencer(values);
             switch (response.status) {
               case 201:
@@ -50,9 +49,13 @@ const InfluencerForm = (props) => {
                 });
                 break;
               default:
+                const textSwal =
+                  response.data.message == "Email is already in use."
+                    ? "Este email ya esta regítrado"
+                    : "Intentalo mas tarde";
                 Swal.fire({
                   title: "Ha ocurrido un error",
-                  text: "Intentalo mas tarde",
+                  text: textSwal,
                   icon: "error",
                 });
                 break;

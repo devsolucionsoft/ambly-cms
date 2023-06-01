@@ -11,8 +11,6 @@ import { InfluencersApi } from "../../api/InfluencersApi";
 const InfluencerTable = ({ editingTrailers, modalOpen, openModal, items, getInfo }) => {
   const InfluencersApiModel = new InfluencersApi();
 
-  console.log(items);
-
   const removeTask = (id) => {
     Swal.fire({
       title: "¿Estas seguro?",

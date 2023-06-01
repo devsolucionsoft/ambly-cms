@@ -59,7 +59,6 @@ const Page = () => {
     const response = await AgenciaApiModel.GetAgencia(id);
     if (response.status === 200) {
       seInfo(response.data);
-      console.log(response.data.data.influencer);
       setItem(response.data.data.influencer);
     }
   };

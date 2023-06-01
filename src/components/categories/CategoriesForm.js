@@ -49,15 +49,12 @@ const CategoriesForm = (props) => {
             const responseImage = await CategoriesApiModel.uploadImage(values.image);
             const responseImage2 = await CategoriesApiModel.uploadImage(values.image_banner);
 
-
             if (responseImage.status === 201 && responseImage2.status === 201) {
               const response = await CategoriesApiModel.CreateCategorie({
                 ...values,
                 image: responseImage.data.imageUrl,
                 image_banner: responseImage2.data.imageUrl,
               });
-
-              console.log(response);
 
               switch (response.status) {
                 case 201:

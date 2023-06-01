@@ -35,7 +35,6 @@ const Page = () => {
 
   const getSplash = async () => {
     const response = await SplashApiModel.GetSplash();
-    console.log(response.status);
     if (response.status === 200) {
       setItemsSplash(response.data);
     }

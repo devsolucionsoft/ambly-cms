@@ -50,9 +50,13 @@ const AgenciaForm = (props) => {
                 });
                 break;
               default:
+                const textSwal =
+                  response.data.message == "Email is already in use."
+                    ? "Este email ya esta regítrado"
+                    : "Intentalo mas tarde";
                 Swal.fire({
                   title: "Ha ocurrido un error",
-                  text: "Intentalo mas tarde",
+                  text: textSwal,
                   icon: "error",
                 });
                 break;

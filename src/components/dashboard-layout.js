@@ -27,8 +27,6 @@ export const DashboardLayout = (props) => {
 
     const session = JSON.parse(localStorage.getItem("token_session"));
 
-    console.log(session);
-
     if (!session?.token) {
       Router.push("/login").catch(console.error);
     } else {

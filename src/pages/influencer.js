@@ -32,7 +32,6 @@ const Page = () => {
   const [endDate, setEndDate] = useState(false);
 
   const getInfluencer = async () => {
-    console.log(id);
     const response = await InfluencersApiModel.GetInfluencer(id);
     generateVentas();
     if (response.status === 200) {
