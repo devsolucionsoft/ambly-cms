@@ -77,11 +77,17 @@ const Login = () => {
   });
 
   useEffect(() => {
-    const session = JSON.parse(localStorage.getItem("token_session"));
-
-    if (session?.token) {
-      Router.push("/").catch(console.error);
-    }
+    (async () => {
+      const session = JSON.parse(localStorage.getItem("token_session"));
+      if (session?.token) {
+        const response = await AuthApiModel.RefreshToken(session?.token);
+        localStorage.setItem(
+          "token_session",
+          JSON.stringify({ ...session, token: response.data.token })
+        );
+        //Router.push("/").catch(console.error);
+      }
+    })();
   }, []);
 
   return (

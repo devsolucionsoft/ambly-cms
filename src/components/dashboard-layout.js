@@ -5,7 +5,7 @@ import { AuthGuard } from "./auth-guard";
 import { DashboardNavbar } from "./dashboard-navbar";
 import { DashboardSidebar } from "./dashboard-sidebar";
 import Router, { useRouter } from "next/router";
-
+import { AuthApi } from "../api/AutApi";
 const DashboardLayoutRoot = styled("div")(({ theme }) => ({
   display: "flex",
   flex: "1 1 auto",
@@ -21,6 +21,19 @@ export const DashboardLayout = (props) => {
   const { children } = props;
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [validate, setValidate] = useState(false);
+  const AuthApiModel = new AuthApi();
+  useEffect(() => {
+    (async () => {
+      const session = JSON.parse(localStorage.getItem("token_session"));
+      if (session?.token) {
+        const response = await AuthApiModel.RefreshToken(session?.token);
+        localStorage.setItem(
+          "token_session",
+          JSON.stringify({ ...session, token: response.data.token })
+        );
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     setValidate(false);
@@ -44,11 +57,7 @@ export const DashboardLayout = (props) => {
       }
 
       if (session.role === "ambly") {
-        if (
-          router.pathname !== "/agencias" &&
-          router.pathname !== "/detalle-de-agencia" &&
-          router.pathname !== "/influencer"
-        ) {
+        if (router.pathname !== "/agencias") {
           Router.push(`/agencias`).catch(console.error);
         }
       }
