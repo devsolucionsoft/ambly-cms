@@ -11,6 +11,8 @@ import { AgenciaApi } from "../../api/AgenciasApi";
 const AgenciasTable = ({ editingAgency, modalOpen, openModal, agenciasItems, getAgencias }) => {
   const AgenciasApiModel = new AgenciaApi();
 
+  const session = JSON.parse(localStorage.getItem("token_session"));
+
   const removeTask = (id) => {
     Swal.fire({
       title: "¿Estas seguro?",
@@ -82,7 +84,7 @@ const AgenciasTable = ({ editingAgency, modalOpen, openModal, agenciasItems, get
 
               <td>
                 <div className={styles.TdActionIcons}>
-                  <Link href={`/detalle-de-agencia?id=${item.id}`}>
+                  {/* <Link href={`/detalle-de-agencia?id=${item.id}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -102,7 +104,7 @@ const AgenciasTable = ({ editingAgency, modalOpen, openModal, agenciasItems, get
                         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                       />
                     </svg>
-                  </Link>
+                  </Link> */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
