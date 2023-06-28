@@ -15,6 +15,8 @@ export class InstructorsApi {
   }
 
   async CreateInstructor(inputs) {
+    console.log(inputs);
+
     const data = {
       name_instructor: inputs?.name_instructor,
       image_instructor: inputs?.image_instructor,
