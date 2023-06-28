@@ -1,7 +1,11 @@
 import axios from "axios";
-import { api_url, headers} from "./config";
+import { api_url, headers } from "./config";
 
 export class CoursesApi {
+  constructor() {
+    this.token_session = JSON.parse(localStorage.getItem("token_session"));
+  }
+
   async GetCourses() {
     try {
       return await axios.get(`${api_url}/course`);
@@ -26,6 +30,10 @@ export class CoursesApi {
         method: "post",
         url: `${api_url}/course/create`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -39,6 +47,10 @@ export class CoursesApi {
         method: "patch",
         url: `${api_url}/course/edite/${id}`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -51,6 +63,10 @@ export class CoursesApi {
       const response = await axios({
         method: "delete",
         url: `${api_url}/course/delete/${id}`,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -71,6 +87,10 @@ export class CoursesApi {
         method: "post",
         url: `${api_url}/modules/create`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -90,6 +110,10 @@ export class CoursesApi {
         method: "patch",
         url: `${api_url}/modules/edit/${module}`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -102,6 +126,10 @@ export class CoursesApi {
       const response = await axios({
         method: "delete",
         url: `${api_url}/modules/delete/${id}`,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -122,6 +150,10 @@ export class CoursesApi {
         method: "post",
         url: `${api_url}/videos`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -135,6 +167,10 @@ export class CoursesApi {
         method: "patch",
         url: `${api_url}/videos/edit/${video} `,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -147,6 +183,10 @@ export class CoursesApi {
       const response = await axios({
         method: "delete",
         url: `${api_url}/videos/delete/${id}`,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -164,6 +204,10 @@ export class CoursesApi {
         headers: { "Content-Type": "multipart/form-data" },
         url: `${api_url}/files/upload/pdf`,
         data: form,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -175,7 +219,7 @@ export class CoursesApi {
     const data = {
       name_file: inputs.name,
       link_file: inputs.file,
-      modules: module
+      modules: module,
     };
 
     try {
@@ -183,6 +227,10 @@ export class CoursesApi {
         method: "post",
         url: `${api_url}/files`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -196,6 +244,10 @@ export class CoursesApi {
         method: "patch",
         url: `${api_url}/files/${video} `,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -208,6 +260,10 @@ export class CoursesApi {
       const response = await axios({
         method: "delete",
         url: `${api_url}/files/remove/${id}`,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {

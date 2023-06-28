@@ -2,6 +2,10 @@ import axios from "axios";
 import { api_url, headers } from "./config";
 
 export class CategoriesApi {
+  constructor() {
+    this.token_session = JSON.parse(localStorage.getItem("token_session"));
+  }
+
   async GetCategories() {
     try {
       return await axios.get(`${api_url}/category/all`);
@@ -20,6 +24,10 @@ export class CategoriesApi {
         headers: { "Content-Type": "multipart/form-data", token: "xxxxxx" },
         url: `${api_url}/category/upload/img`,
         data: imageForm,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -41,6 +49,10 @@ export class CategoriesApi {
         url: `${api_url}/category/create`,
         data: data,
         user: "....",
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -54,6 +66,10 @@ export class CategoriesApi {
         method: "patch",
         url: `${api_url}/category/edit/${id}`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -66,6 +82,10 @@ export class CategoriesApi {
       const response = await axios({
         method: "delete",
         url: `${api_url}/category/delete/${id}`,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {

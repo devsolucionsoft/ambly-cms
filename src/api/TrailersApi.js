@@ -1,7 +1,11 @@
 import axios from "axios";
-import { api_url, headers} from "./config";
+import { api_url, headers } from "./config";
 
 export class TrailersApi {
+  constructor() {
+    this.token_session = JSON.parse(localStorage.getItem("token_session"));
+  }
+
   async GetTrailers() {
     try {
       return await axios.get(`${api_url}/trailer`);
@@ -22,6 +26,10 @@ export class TrailersApi {
         method: "post",
         url: `${api_url}/trailer`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -35,6 +43,10 @@ export class TrailersApi {
         method: "patch",
         url: `${api_url}/trailer/${id}`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -45,12 +57,16 @@ export class TrailersApi {
   async deleteTrailers(id) {
     try {
       const response = await axios({
-        method: 'delete',
-        url: `${api_url}/trailer/${id}`
-      })
-      return response
+        method: "delete",
+        url: `${api_url}/trailer/${id}`,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
+      });
+      return response;
     } catch (error) {
-      return error.response
+      return error.response;
     }
   }
 }
