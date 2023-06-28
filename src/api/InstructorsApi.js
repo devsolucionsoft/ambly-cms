@@ -1,7 +1,11 @@
 import axios from "axios";
-import { api_url, headers} from "./config";
+import { api_url, headers } from "./config";
 
 export class InstructorsApi {
+  constructor() {
+    this.token_session = JSON.parse(localStorage.getItem("token_session"));
+  }
+
   async GetInstructors() {
     try {
       return await axios.get(`${api_url}/instructor`);
@@ -26,6 +30,10 @@ export class InstructorsApi {
         method: "post",
         url: `${api_url}/instructor/create`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -49,6 +57,10 @@ export class InstructorsApi {
         method: "patch",
         url: `${api_url}/instructor/update/${id}`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -68,6 +80,10 @@ export class InstructorsApi {
         method: "post",
         url: `${api_url}/instructor/review`,
         data: data,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -80,6 +96,10 @@ export class InstructorsApi {
       const response = await axios({
         method: "delete",
         url: `${api_url}/instructor/delete/${id}`,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
@@ -92,6 +112,10 @@ export class InstructorsApi {
       const response = await axios({
         method: "delete",
         url: `${api_url}/instructor/review/delete/${id}`,
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
       });
       return response;
     } catch (error) {
