@@ -238,7 +238,7 @@ const Page = () => {
           (isEditing.active ? (
             <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
               <InfluencerEditFrom
-                getInfo={getInfo}
+                getInfluencer={getInfo}
                 closeModal={closeModal}
                 isEditing={isEditing.id}
                 items={items}

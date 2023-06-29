@@ -52,13 +52,14 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
       "Formato no soportado, suba unicamente: .png .jpeg, o jpg",
       (value) => (value ? SUPPORTED_FORMATS.includes(value.type) : true)
     ),
-    time_course: Yup.string().required("La duracion del curso es requerida"),
-    price: Yup.string().required("El precio es requerido"),
+    time_course: Yup.number().required("La duracion del curso es requerida"),
+    price: Yup.number().required("El precio es requerido"),
     instructor: Yup.string().required("Seleccione un instrcutor"),
     category: Yup.string().required("Seleccione una categoria"),
     characteristic2: Yup.string().required("Este campo es requerido"),
     characteristic4: Yup.string().required("Este campo es requerido"),
   });
+  console.log(formvalues);
 
   return (
     <div className={`${styles.courseFormContainer} ${styles.formContainer}`}>
@@ -194,16 +195,10 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
 
                   <div className={styles.checkBoxGroup}>
                     <label>
-                      <Field
-                        name="popular_course"
-                        type="checkbox"
-                      /> Marcar como popular
+                      <Field name="popular_course" type="checkbox" /> Marcar como popular
                     </label>
                     <label>
-                      <Field
-                        name="next_course"
-                        type="checkbox"
-                      /> Marcar como proximo
+                      <Field name="next_course" type="checkbox" /> Marcar como proximo
                     </label>
                   </div>
                 </div>

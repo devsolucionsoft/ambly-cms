@@ -50,8 +50,8 @@ const CoursesForm = ({ getCourses, closeModal }) => {
         "Formato no soportado, suba unicamente: .png .jpeg, o jpg",
         (value) => value && SUPPORTED_FORMATS.includes(value.type)
       ),
-    time_course: Yup.string().required("La duracion del curso es requerida"),
-    price: Yup.string().required("El precio es requerido"),
+    time_course: Yup.number().required("La duracion del curso es requerida"),
+    price: Yup.number().required("El precio es requerido"),
     instructor: Yup.string().required("Seleccione un instrcutor"),
     category: Yup.string().required("Seleccione una categoria"),
     characteristic2: Yup.string().required("Este campo es requerido"),
@@ -212,6 +212,7 @@ const CoursesForm = ({ getCourses, closeModal }) => {
                   <Field
                     className={`fieldShadow ${styles.field}`}
                     name="price"
+                    type="number"
                     placeholder="Precio"
                   />
                   {errors.price && touched.price ? (
@@ -222,6 +223,7 @@ const CoursesForm = ({ getCourses, closeModal }) => {
                 <div>
                   <Field
                     className={`fieldShadow ${styles.field}`}
+                    type="number"
                     name="time_course"
                     placeholder="Duración"
                   />

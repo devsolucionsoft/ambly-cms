@@ -6,6 +6,7 @@ import GButton from "../buttons/GButton";
 import Swal from "sweetalert2";
 // Api
 import { CategoriesApi } from "../../api/CategoriesApi";
+import { SettingApi } from "../../api/SettingApi";
 
 const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
 
@@ -31,6 +32,7 @@ const CategorySchema = Yup.object().shape({
 const CategoriesForm = (props) => {
   const CategoriesApiModel = new CategoriesApi();
   const { closeModal, getCategories } = props;
+  const SettingApiModel = new SettingApi();
 
   return (
     <div className={styles.categoryFormContainer}>
@@ -46,8 +48,9 @@ const CategoriesForm = (props) => {
           validationSchema={CategorySchema}
           onSubmit={async (values) => {
             // same shape as initial values
-            const responseImage = await CategoriesApiModel.uploadImage(values.image);
-            const responseImage2 = await CategoriesApiModel.uploadImage(values.image_banner);
+            const responseImage = await SettingApiModel.uploadImage(values.image);
+            console.log(responseImage.data);
+            const responseImage2 = await SettingApiModel.uploadImage(values.image_banner);
 
             if (responseImage.status === 201 && responseImage2.status === 201) {
               const response = await CategoriesApiModel.CreateCategorie({

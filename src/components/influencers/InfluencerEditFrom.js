@@ -12,7 +12,7 @@ const input_required = "Este campo es requerido";
 const formSchema = Yup.object().shape({
   name_influencer: Yup.string().required(input_required),
   email: Yup.string().email("Email invalido").required(input_required),
-  password: Yup.string().min(6, "Debe contener mas de  caracteres"),
+  // password: Yup.string().min(6, "Debe contener mas de  caracteres"),
   code_influencer: Yup.string().required(input_required),
   porcentaje_influencer: Yup.number().required(input_required),
 });
@@ -24,17 +24,28 @@ const InfluencerEditForm = (props) => {
   const InfluencersApiModel = new InfluencersApi();
   const [formvalues, setFromValues] = useState(false);
 
+  useEffect(() => {
+    (async () => {
+      const response = await InfluencersApiModel.GetInfluencer(isEditing);
+      console.log(response.data.data);
+      if (response.status === 200) {
+        setFromValues(response.data.data);
+      }
+    })();
+  }, [isEditing]);
+
+  console.log(formvalues);
+
   return (
     <div className={styles.FormContainer}>
       <h1>Editar Perfil</h1>
-      {info && (
+      {formvalues && (
         <Formik
           initialValues={{
-            name_influencer: info.name_influencer,
-            email: info.email,
-            password: "",
-            code_influencer: info.code_influencer,
-            porcentaje_influencer: info.porcentaje_influencer,
+            name_influencer: formvalues.name_influencer,
+            code_influencer: formvalues.code_influencer,
+            porcentaje_influencer: formvalues.porcentaje_influencer,
+            email: formvalues.email,
           }}
           validationSchema={formSchema}
           onSubmit={async (values) => {
@@ -76,28 +87,7 @@ const InfluencerEditForm = (props) => {
                   ) : null}
                 </div>
 
-                {/* <div className={styles.fieldContain}>
-                  <span>Email</span>
-                  <Field className="fieldShadow" name="email" type="mail" placeholder="Email" />
-                  {errors.email && touched.email ? (
-                    <div className={styles.labelError}>{errors.email}</div>
-                  ) : null}
-                </div> */}
-
-                {/* <div className={styles.fieldContain}>
-                  <span>Contraseña</span>
-                  <Field
-                    className="fieldShadow"
-                    name="password"
-                    type="password"
-                    placeholder="Contraseña"
-                  />
-                  {errors.password && touched.password ? (
-                    <div className={styles.labelError}>{errors.password}</div>
-                  ) : null}
-                </div> */}
-
-                {/* <div className={styles.fieldContain}>
+                <div className={styles.fieldContain}>
                   <span>Porcentaje</span>
                   <Field
                     className="fieldShadow"
@@ -116,7 +106,7 @@ const InfluencerEditForm = (props) => {
                   {errors.code_influencer && touched.code_influencer ? (
                     <div className={styles.labelError}>{errors.code_influencer}</div>
                   ) : null}
-                </div> */}
+                </div>
 
                 <GButton type="submit" text={loader ? "cargando..." : "Aceptar"}>
                   Submit

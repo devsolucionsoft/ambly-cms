@@ -23,7 +23,11 @@ export class CoursesApi {
       characteristic3: 0,
       popular_course: [false],
       next_course: [false],
+      instructor: parseInt(inputs.instructor),
+      category: parseInt(inputs.category),
     };
+
+    console.log(data);
 
     try {
       const response = await axios({
