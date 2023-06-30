@@ -59,7 +59,6 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
     characteristic2: Yup.string().required("Este campo es requerido"),
     characteristic4: Yup.string().required("Este campo es requerido"),
   });
-  console.log(formvalues);
 
   return (
     <div className={`${styles.courseFormContainer} ${styles.formContainer}`}>

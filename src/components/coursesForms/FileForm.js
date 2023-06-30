@@ -111,6 +111,7 @@ const FileForm = ({ idModule, getCourses, closeModal }) => {
                     id="modules"
                     name="file"
                     type="file"
+                    accept = "application/pdf"
                     onChange={(event) => {
                       setFieldValue("file", event.currentTarget.files[0]);
                     }}

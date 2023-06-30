@@ -49,7 +49,6 @@ const CategoriesForm = (props) => {
           onSubmit={async (values) => {
             // same shape as initial values
             const responseImage = await SettingApiModel.uploadImage(values.image);
-            console.log(responseImage.data);
             const responseImage2 = await SettingApiModel.uploadImage(values.image_banner);
 
             if (responseImage.status === 201 && responseImage2.status === 201) {

@@ -43,8 +43,6 @@ export class CategoriesApi {
       description: inputs.description,
     };
 
-    console.log(data);
-
     try {
       const response = await axios({
         method: "post",

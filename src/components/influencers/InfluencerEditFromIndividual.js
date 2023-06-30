@@ -17,7 +17,7 @@ const formSchema = Yup.object().shape({
   porcentaje_influencer: Yup.number().required(input_required),
 });
 
-const InfluencerEditForm = (props) => {
+const InfluencerEditFromIndividual = (props) => {
   const { isEditing, info, getInfluencer, closeModal } = props;
   const [loader, setLoader] = useState(false);
 
@@ -32,6 +32,7 @@ const InfluencerEditForm = (props) => {
       }
     })();
   }, [isEditing]);
+
 
   return (
     <div className={styles.FormContainer}>
@@ -85,19 +86,6 @@ const InfluencerEditForm = (props) => {
                 </div>
 
                 <div className={styles.fieldContain}>
-                  <span>Porcentaje</span>
-                  <Field
-                    className="fieldShadow"
-                    name="porcentaje_influencer"
-                    type="number"
-                    placeholder="Porcentaje"
-                  />
-                  {errors.porcentaje_influencer && touched.porcentaje_influencer ? (
-                    <div className={styles.labelError}>{errors.porcentaje_influencer}</div>
-                  ) : null}
-                </div>
-
-                <div className={styles.fieldContain}>
                   <span>Código</span>
                   <Field className="fieldShadow" name="code_influencer" placeholder="Código" />
                   {errors.code_influencer && touched.code_influencer ? (
@@ -117,4 +105,4 @@ const InfluencerEditForm = (props) => {
   );
 };
 
-export default InfluencerEditForm;
+export default InfluencerEditFromIndividual;

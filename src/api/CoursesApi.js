@@ -27,8 +27,6 @@ export class CoursesApi {
       category: parseInt(inputs.category),
     };
 
-    console.log(data);
-
     try {
       const response = await axios({
         method: "post",

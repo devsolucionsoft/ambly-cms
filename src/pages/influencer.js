@@ -4,7 +4,7 @@ import Image from "next/image";
 import GButton from "../components/buttons/GButton";
 import { AnimatePresence, motion } from "framer-motion";
 import Modal from "../components/modal/Modal";
-import InfluencerEditFrom from "../components/influencers/InfluencerEditFrom";
+import InfluencerEditFromIndividual from "../components/influencers/InfluencerEditFromIndividual";
 import VentasTable from "../components/influencers/VentaTable";
 import { Budget } from "../components/dashboard/budget";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
@@ -148,7 +148,7 @@ const Page = () => {
       <AnimatePresence initial={false} mode={"wait"} onExitComplete={() => null}>
         {modalOpen && (
           <Modal modalOpen={modalOpen} text={""} closeModal={closeModal} handleClose={closeModal}>
-            <InfluencerEditFrom
+            <InfluencerEditFromIndividual
               getInfluencer={getInfluencer}
               closeModal={closeModal}
               isEditing={infoInfluencer.id}

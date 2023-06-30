@@ -6,7 +6,6 @@ export class SettingApi {
     this.token_session = JSON.parse(localStorage.getItem("token_session"));
   }
   async uploadImage(image) {
-    console.log("lksandvlksndvln");
     let imageForm = new FormData();
     imageForm.append("image", image);
 

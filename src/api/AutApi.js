@@ -27,13 +27,6 @@ export class AuthApi {
   }
 
   async RefreshToken(token) {
-    console.log({
-      url: `${api_url}/auth/refresh-token`,
-      headers: {
-        "Content-Type": "application/json",
-        refresh: token,
-      },
-    });
     try {
       return await axios.post(
         `${api_url}/auth/refresh-token`,
