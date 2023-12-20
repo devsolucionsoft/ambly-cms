@@ -4,6 +4,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import GButton from "../buttons/GButton";
 import Swal from "sweetalert2";
+import InfoIcon from "@mui/icons-material/Info";
 // Api
 import { InfluencersApi } from "../../api/InfluencersApi";
 
@@ -51,7 +52,7 @@ const InfluencerForm = (props) => {
                 });
                 break;
               default:
-                const textSwal = response.data.message 
+                const textSwal = response.data.message;
                 Swal.fire({
                   title: "Ha ocurrido un error",
                   text: textSwal,
@@ -96,7 +97,9 @@ const InfluencerForm = (props) => {
               </div>
 
               <div className={styles.fieldContain}>
-                <span>Porcentaje de ganancia</span>
+                <span title="Porcentaje de ganancia por valor del curso" style={{alignItems : 'center', display : 'flex', gap : 5}}>
+                  Porcentaje de ganancia <InfoIcon fontSize="10" />
+                </span>
                 <Field
                   className="fieldShadow"
                   name="porcentaje_ganancia"
@@ -108,7 +111,9 @@ const InfluencerForm = (props) => {
                 ) : null}
               </div>
               <div className={styles.fieldContain}>
-                <span>Porcentaje de descuento</span>
+                <span title="Porcentaje de descuento del código" style={{alignItems : 'center', display : 'flex', gap : 5}}>
+                  Porcentaje de descuento <InfoIcon fontSize="10" />
+                </span>
                 <Field
                   className="fieldShadow"
                   name="porcentaje_descuento"

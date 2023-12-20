@@ -36,7 +36,6 @@ const Page = () => {
   const [totalSales, setTotalSales] = useState(0);
   const [loader, setLoader] = useState(false);
 
-
   const getInfluencer = async () => {
     const response = await InfluencersApiModel.GetInfluencer(id);
     generateVentas();
@@ -65,7 +64,7 @@ const Page = () => {
   };
 
   const generateVentas = async () => {
-    setLoader(true)
+    setLoader(true);
     const startDateToSend = startDate ? startDate : defaultStartDate.format("YYYY-MM-DD");
     const endDateToSend = endDate ? endDate : defaultEndDate.format("YYYY-MM-DD");
 
@@ -80,7 +79,7 @@ const Page = () => {
       setTotalSales(response.data.data.sales.length);
       setTotalEarnings(response.data.data.total_commission);
     }
-    setLoader(false)
+    setLoader(false);
   };
 
   return (
@@ -104,9 +103,33 @@ const Page = () => {
               </GButton>
             </div> */}
           </div>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+            }}
+          >
+            <Container maxWidth={true}>
+              <Grid container spacing={3}>
+                <Grid item lg={6} sm={6} xl={3} xs={12}>
+                  <Budget title={"total de ventas"} value={totalSales} />
+                </Grid>
+
+                <Grid item lg={6} sm={6} xs={12}>
+                  <TotalProfit title={"total de ganancias"} value={totalEarnings} />
+                </Grid>
+              </Grid>
+            </Container>
+          </Box>
           <Box sx={{ marginBottom: "0em", marginTop: "3em" }}>
             <h2 style={{ marginBottom: "1em" }}>Regístro de ventas</h2>
-            <Box sx={{ display: "flex", alignItems: "center", flexWrap : 'wrap', justifyContent : 'center' }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+              }}
+            >
               <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
                 <label>Desde:</label>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -125,8 +148,11 @@ const Page = () => {
                   />
                 </LocalizationProvider>
               </Box>
-              <Box sx={{ marginRight: "2em", minWidth : 100 }}>
-                <GButton text={loader ? "Cargando..." : "Generar registro"} onClick={() => generateVentas()} />
+              <Box sx={{ marginRight: "2em", minWidth: 100 }}>
+                <GButton
+                  text={loader ? "Cargando..." : "Generar registro"}
+                  onClick={() => generateVentas()}
+                />
               </Box>
             </Box>
           </Box>
@@ -137,25 +163,6 @@ const Page = () => {
             }}
           >
             <VentasTable items={ventas} />
-          </Box>
-
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-            }}
-          >
-            <Container maxWidth={true}>
-              <Grid container spacing={3}>
-                <Grid item lg={6} sm={6} xl={3} xs={12}>
-                  <Budget title={"total de ventas"} value={totalSales} />
-                </Grid>
-
-                <Grid item lg={6} sm={6} xs={12}>
-                  <TotalProfit title={"total de ganancias"} value={totalEarnings} />
-                </Grid>
-              </Grid>
-            </Container>
           </Box>
         </Fragment>
       )}
