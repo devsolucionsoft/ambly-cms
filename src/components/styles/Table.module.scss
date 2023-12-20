@@ -15,6 +15,7 @@
   align-items: center;
   width: 300px;
   align-items: center;
+
   .Image {
     position: relative;
     width: 80px;
@@ -23,13 +24,13 @@
     height: 80px;
     margin-right: 1rem;
   }
+
   span {
     font-weight: bold;
   }
 }
 
-.ThDescription {
-}
+.ThDescription {}
 
 .TdDescription {
   width: 80%;
@@ -57,30 +58,38 @@
 .tableContainer {
   border-radius: 10px;
   overflow: hidden;
+
   .table {
     width: 100%;
     border-collapse: collapse;
+
     thead {
       background-color: #181812;
+
+      tr {
+        padding-inline: 30px;
+      }
+
       th {
         padding: 15px 0px;
         color: white;
-        text-align: left;
-        &:first-child {
-          padding-left: 30px;
-        }
+
       }
     }
+
     tbody {
       max-height: 400px;
       overflow-y: scroll;
+
       tr {
+
         td {
           padding: 10px;
-          text-align: left;
+          text-align: center;
           border-bottom: 1px solid rgb(185, 185, 185);
         }
       }
     }
   }
 }
+

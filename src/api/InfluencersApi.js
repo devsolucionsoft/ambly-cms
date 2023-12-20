@@ -14,10 +14,9 @@ export class InfluencersApi {
     }
   }
 
-  async GetVentas(id, params) {
+  async GetVentas(params) {
     try {
-      return await axios.get(`${api_url}/influencer/searchdate/${id}`, {
-        params,
+      return await axios.get(`${api_url}/influencer/sales?start_date=${params.date_inicial}&end_date=${params.date_final}`, {
         headers: {
           "Content-Type": "application/json",
           auth: this.token_session.token,
@@ -33,7 +32,8 @@ export class InfluencersApi {
       name_influencer: inputs.name_influencer,
       email: inputs.email,
       password: inputs.password,
-      porcentaje_influencer: inputs.porcentaje_influencer,
+      porcentaje_influencer: inputs.porcentaje_ganancia,
+      percentage_discount: inputs.porcentaje_descuento,
       code_influencer: inputs.code_influencer,
       dateTime: new Date(),
       agencyId: parseInt(localStorage.getItem("agency_id")),

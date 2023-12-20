@@ -9,6 +9,13 @@ import Image from "next/image";
 import { TrailersApi } from "../../api/TrailersApi";
 
 const VentasTable = ({ items }) => {
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+      minimumFractionDigits: 0, // Puedes ajustar la cantidad de decimales si es necesario
+    }).format(value);
+  };
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -16,23 +23,22 @@ const VentasTable = ({ items }) => {
           <tr>
             <th>N°</th>
             <th>Fecha</th>
-            <th>Curso "Nombre del curso"</th>
+            <th>Valor</th>
+            <th>Nombre del curso</th>
           </tr>
         </thead>
         <tbody>
-          {items.map((item, index) => (
-            <tr key={item.id}>
+          {items?.map((item, index) => (
+            <tr key={item.id} className="tableBody">
               <td>{index + 1}</td>
-              <td>12/05/2023</td>
-              <td>
-                <div className={styles.TdTableImage}>
-                  <span>{"Nombre del curso"}</span>
-                </div>
-              </td>
+              <td>{item.date}</td>
+              <td>{formatCurrency(item.value)}</td>
+              <td>{item.course}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      {!items.length && (<h3 style={{textAlign : 'center', padding : '40px'}}>No hubo ventas en las fechas establecidas</h3>)}
     </div>
   );
 };

@@ -2,6 +2,7 @@
   width: 100%;
   padding: 1em 0;
 
+
   h1 {
     margin-bottom: 15px;
   }
@@ -9,6 +10,7 @@
   .form {
     display: flex;
     gap: 5%;
+
 
     .column {
       width: 100%;
@@ -35,7 +37,6 @@
       width: 100%;
     }
 
-    @media (max-width: 768px) {
-    }
+    @media (max-width: 768px) {}
   }
 }

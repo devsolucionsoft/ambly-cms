@@ -16,6 +16,7 @@ import { InfluencersApi } from "../api/InfluencersApi";
 import { Box, Container, Grid } from "@mui/material";
 import { TotalProfit } from "../components/dashboard/total-profit";
 import { useRouter } from "next/router";
+import moment from "moment";
 
 const Page = () => {
   const router = useRouter();
@@ -24,32 +25,38 @@ const Page = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const closeModal = () => setModalOpen(false);
   const openModal = () => setModalOpen(true);
-
+  const [defaultStartDate, setDefaultStartDate] = useState(moment());
   const InfluencersApiModel = new InfluencersApi();
   const [infoInfluencer, setInfoInfluencer] = useState(false);
   const [ventas, setVentas] = useState([]);
   const [startDate, setStartDate] = useState(false);
   const [endDate, setEndDate] = useState(false);
+  const [defaultEndDate, setDefaultEndDate] = useState(moment());
+  const [totalEarnings, setTotalEarnings] = useState(0);
+  const [totalSales, setTotalSales] = useState(0);
+  const [loader, setLoader] = useState(false);
+
 
   const getInfluencer = async () => {
     const response = await InfluencersApiModel.GetInfluencer(id);
     generateVentas();
     if (response.status === 200) {
-      setInfoInfluencer({
-        ...response.data.data,
-        total_earnings: response.data.total_earnings,
-        total_sales: response.data.total_sales,
-      });
+      setInfoInfluencer(response.data.data);
+      setTotalEarnings(response.data.total_earnings);
+      setTotalSales(response.data.total_sales);
     }
   };
 
   useEffect(() => {
     getInfluencer();
+    const firstDayOfMonth = moment().startOf("month");
+    setDefaultStartDate(firstDayOfMonth);
+    setDefaultEndDate(moment());
   }, []);
 
   const selectDate = (value, name) => {
     const date = new Date(value._d);
-    const parseDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+    const parseDate = moment(date).format("YYYY-MM-DD");
     if (name === "start") {
       setStartDate(parseDate);
     } else {
@@ -58,20 +65,22 @@ const Page = () => {
   };
 
   const generateVentas = async () => {
-    if (startDate && endDate) {
-      const response = await InfluencersApiModel.GetVentas(id, {
-        date_inicial: startDate,
-        date_final: endDate,
-      });
-      if (response.status === 200 && Array.isArray(response.data)) {
-        setVentas(response.data);
-      }
-    } else {
-      const response = await InfluencersApiModel.GetVentas(id);
-      if (response.status === 200 && Array.isArray(response.data)) {
-        setVentas(response.data);
-      }
+    setLoader(true)
+    const startDateToSend = startDate ? startDate : defaultStartDate.format("YYYY-MM-DD");
+    const endDateToSend = endDate ? endDate : defaultEndDate.format("YYYY-MM-DD");
+
+    const response = await InfluencersApiModel.GetVentas({
+      date_inicial: startDateToSend,
+      date_final: endDateToSend,
+    });
+    console.log(response);
+
+    if (response.status === 200 && Array.isArray(response.data.data.sales)) {
+      setVentas(response.data.data.sales);
+      setTotalSales(response.data.data.sales.length);
+      setTotalEarnings(response.data.data.total_commission);
     }
+    setLoader(false)
   };
 
   return (
@@ -84,17 +93,51 @@ const Page = () => {
           <div style={{ display: "flex", gap: "5%", margin: "3em 0", alignItems: "center" }}>
             <div>
               <p style={{}}>
-                <b>{infoInfluencer.code_influencer}</b> - {infoInfluencer.email}
+                <b>{infoInfluencer.code_influencer}</b> - {infoInfluencer?.email}
               </p>
-              <h1 style={{ marginBottom: "5px" }}>{infoInfluencer.name_influencer}</h1>
+              <h1 style={{ marginBottom: "5px" }}>{infoInfluencer?.name_influencer}</h1>
             </div>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            {/* <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <GButton text={"Editar datos"} onClick={openModal}>
                 {" "}
                 Abrir
               </GButton>
-            </div>
+            </div> */}
           </div>
+          <Box sx={{ marginBottom: "0em", marginTop: "3em" }}>
+            <h2 style={{ marginBottom: "1em" }}>Regístro de ventas</h2>
+            <Box sx={{ display: "flex", alignItems: "center", flexWrap : 'wrap', justifyContent : 'center' }}>
+              <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
+                <label>Desde:</label>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                  <DatePicker
+                    value={defaultStartDate}
+                    onChange={(value) => selectDate(value, "start")}
+                  />
+                </LocalizationProvider>
+              </Box>
+              <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
+                <label>Hasta:</label>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                  <DatePicker
+                    value={defaultEndDate}
+                    onChange={(value) => selectDate(value, "end")}
+                  />
+                </LocalizationProvider>
+              </Box>
+              <Box sx={{ marginRight: "2em", minWidth : 100 }}>
+                <GButton text={loader ? "Cargando..." : "Generar registro"} onClick={() => generateVentas()} />
+              </Box>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              py: "3em",
+            }}
+          >
+            <VentasTable items={ventas} />
+          </Box>
 
           <Box
             component="main"
@@ -105,42 +148,14 @@ const Page = () => {
             <Container maxWidth={true}>
               <Grid container spacing={3}>
                 <Grid item lg={6} sm={6} xl={3} xs={12}>
-                  <Budget title={"total de ventas"} value={infoInfluencer.total_sales} />
+                  <Budget title={"total de ventas"} value={totalSales} />
                 </Grid>
 
                 <Grid item lg={6} sm={6} xs={12}>
-                  <TotalProfit title={"total de ganancias"} value={infoInfluencer.total_earnings} />
+                  <TotalProfit title={"total de ganancias"} value={totalEarnings} />
                 </Grid>
               </Grid>
             </Container>
-          </Box>
-
-          <Box sx={{ marginBottom: "0em", marginTop: "3em" }}>
-            <h2 style={{ marginBottom: "1em" }}>Regístro de ventas</h2>
-            <Box sx={{ display: "flex", alignItems: "flex-end " }}>
-              <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
-                <label>Desde:</label>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePicker onChange={(value) => selectDate(value, "start")} />
-                </LocalizationProvider>
-              </Box>
-              <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
-                <label>Hasta:</label>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePicker onChange={(value) => selectDate(value, "end")} />
-                </LocalizationProvider>
-              </Box>
-              <Box sx={{ marginRight: "2em" }}>
-                <GButton text={"Generar regístro"} onClick={() => generateVentas()} />
-              </Box>
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              py: "3em",
-            }}
-          >
-            <VentasTable items={ventas} />
           </Box>
         </Fragment>
       )}

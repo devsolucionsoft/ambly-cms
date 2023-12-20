@@ -14,7 +14,8 @@ const formSchema = Yup.object().shape({
   email: Yup.string().email("Email invalido").required(input_required),
   password: Yup.string().required(input_required).min(6, "Debe contener mas de  caracteres"),
   code_influencer: Yup.string().required(input_required),
-  porcentaje_influencer: Yup.number().required(input_required),
+  porcentaje_ganancia: Yup.number().required(input_required),
+  porcentaje_descuento: Yup.number().required(input_required),
 });
 
 const InfluencerForm = (props) => {
@@ -31,7 +32,8 @@ const InfluencerForm = (props) => {
           email: "",
           password: "",
           code_influencer: "",
-          porcentaje_influencer: "",
+          porcentaje_ganancia: "",
+          porcentaje_descuento: "",
         }}
         validationSchema={formSchema}
         onSubmit={async (values) => {
@@ -49,10 +51,7 @@ const InfluencerForm = (props) => {
                 });
                 break;
               default:
-                const textSwal =
-                  response.data.message == "Email is already in use."
-                    ? "Este email ya esta regítrado"
-                    : "Intentalo mas tarde";
+                const textSwal = response.data.message 
                 Swal.fire({
                   title: "Ha ocurrido un error",
                   text: textSwal,
@@ -97,15 +96,27 @@ const InfluencerForm = (props) => {
               </div>
 
               <div className={styles.fieldContain}>
-                <span>Porcentaje</span>
+                <span>Porcentaje de ganancia</span>
                 <Field
                   className="fieldShadow"
-                  name="porcentaje_influencer"
+                  name="porcentaje_ganancia"
                   type="number"
-                  placeholder="Porcentaje"
+                  placeholder="Porcentaje de ganancia"
                 />
-                {errors.porcentaje_influencer && touched.porcentaje_influencer ? (
-                  <div className={styles.labelError}>{errors.porcentaje_influencer}</div>
+                {errors.porcentaje_ganancia && touched.porcentaje_ganancia ? (
+                  <div className={styles.labelError}>{errors.porcentaje_ganancia}</div>
+                ) : null}
+              </div>
+              <div className={styles.fieldContain}>
+                <span>Porcentaje de descuento</span>
+                <Field
+                  className="fieldShadow"
+                  name="porcentaje_descuento"
+                  type="number"
+                  placeholder="Porcentaje de descuento"
+                />
+                {errors.porcentaje_descuento && touched.porcentaje_descuento ? (
+                  <div className={styles.labelError}>{errors.porcentaje_descuento}</div>
                 ) : null}
               </div>
 
