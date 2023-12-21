@@ -119,24 +119,6 @@ const Page = () => {
               </GButton>
             </div> */}
           </div>
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-            }}
-          >
-            <Container maxWidth={true}>
-              <Grid container spacing={3}>
-                <Grid item lg={6} sm={6} xl={3} xs={12}>
-                  <Budget title={"total de ventas"} value={totalSales} />
-                </Grid>
-
-                <Grid item lg={6} sm={6} xs={12}>
-                  <TotalProfit title={"total de ganancias"} value={totalEarnings} />
-                </Grid>
-              </Grid>
-            </Container>
-          </Box>
           <Box sx={{ marginBottom: "0em", marginTop: "3em" }}>
             <h2 style={{ marginBottom: "1em" }}>Regístro de ventas</h2>
             <Box
@@ -171,6 +153,25 @@ const Page = () => {
                 />
               </Box>
             </Box>
+          </Box>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              marginTop : 2
+            }}
+          >
+            <Container maxWidth={true}>
+              <Grid container spacing={3}>
+                <Grid item lg={6} sm={6} xl={3} xs={12}>
+                  <Budget title={"total de ventas"} value={totalSales} />
+                </Grid>
+
+                <Grid item lg={6} sm={6} xs={12}>
+                  <TotalProfit title={"total de ganancias"} value={totalEarnings} />
+                </Grid>
+              </Grid>
+            </Container>
           </Box>
 
           <Box
