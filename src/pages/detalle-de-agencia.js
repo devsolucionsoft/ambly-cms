@@ -21,6 +21,8 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Fragment } from "react";
+import moment from "moment";
+import { InfluencersApi } from "../api/InfluencersApi";
 
 const Page = () => {
   const router = useRouter();
@@ -28,6 +30,7 @@ const Page = () => {
   const [editAgencia, setEditAgencia] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [showSeccion, setShowSeccion] = useState("influencers");
+
   const closeModal = () => setModalOpen(false);
   const openModal = () => setModalOpen(true);
 
@@ -48,11 +51,17 @@ const Page = () => {
   };
 
   const AgenciaApiModel = new AgenciaApi();
+  const InfluencersApiModel = new InfluencersApi();
+
   const [items, setItem] = useState([]);
   const [info, seInfo] = useState({});
   const [ventas, setVentas] = useState([]);
   const [startDate, setStartDate] = useState(false);
   const [endDate, setEndDate] = useState(false);
+  const [defaultStartDate, setDefaultStartDate] = useState(moment());
+  const [defaultEndDate, setDefaultEndDate] = useState(moment());
+  const [total, setTotal] = useState(0);
+  const [loader, setLoader] = useState(false);
 
   const getInfo = async () => {
     const response = await AgenciaApiModel.GetAgencia(id);
@@ -61,36 +70,64 @@ const Page = () => {
       setItem(response.data.data.influencer);
     }
   };
-
+  console.log(info);
   useEffect(() => {
     getInfo();
+    const firstDayOfMonth = moment().startOf("month");
+    setDefaultStartDate(firstDayOfMonth);
+    setDefaultEndDate(moment());
   }, []);
+
+  useEffect(() => {
+    if (showSeccion === "ventas") {
+      generateVentas();
+    }
+  }, [showSeccion]);
 
   const selectDate = (value, name) => {
     const date = new Date(value._d);
-    const parseDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+    const parseDate = moment(date).format("YYYY-MM-DD");
     if (name === "start") {
       setStartDate(parseDate);
     } else {
       setEndDate(parseDate);
     }
   };
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+      minimumFractionDigits: 0, // Puedes ajustar la cantidad de decimales si es necesario
+    }).format(value);
+  };
 
   const generateVentas = async () => {
-    if (startDate && endDate) {
-      const response = await AgenciaApiModel.GetVentas(id, {
-        date_inicial: startDate,
-        date_final: endDate,
+    setLoader(true);
+    const startDateToSend = startDate ? startDate : defaultStartDate.format("YYYY-MM-DD");
+    const endDateToSend = endDate ? endDate : defaultEndDate.format("YYYY-MM-DD");
+    let data = [];
+    let amount = 0;
+
+    const promises = info?.data?.influencer.map(async (influ) => {
+      const response = await InfluencersApiModel.GetVentas({
+        date_inicial: startDateToSend,
+        date_final: endDateToSend,
+        id: influ.id,
       });
-      if (response.status === 200 && Array.isArray(response.data)) {
-        setVentas(response.data);
-      }
-    } else {
-      const response = await AgenciaApiModel.GetVentas(id);
-      if (response.status === 200 && Array.isArray(response.data)) {
-        setVentas(response.data);
-      }
-    }
+      const salesData = response.data.data.sales;
+      data = data.concat(salesData);
+
+      return salesData;
+    });
+
+    await Promise.all(promises);
+    data?.forEach((e) => {
+      amount += e.value;
+    });
+
+    setVentas(data);
+    setTotal(amount);
+    setLoader(false);
   };
 
   return (
@@ -99,7 +136,7 @@ const Page = () => {
         <title>Ambly CMS - {info?.data?.name_agency}</title>
       </Head>
 
-      <div className="table-header-container" style={{ margin: "2em 0" }}>
+      <div className="table-header-container" style={{ margin: "2em 0", display : 'flex', flexWrap : 'wrap' }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div
             style={{
@@ -137,16 +174,17 @@ const Page = () => {
         }}
       >
         <Container>
-          <Grid container spacing={3}>
-            <Grid item lg={4} sm={6} xs={12}>
-              <TotalCustomers title={"Total de influencers"} value={info?.totalInfluencer} />
-            </Grid>
-
-            <Grid item lg={4} sm={6} xl={3} xs={12}>
-              <Budget title={"total de ventas"} />
-            </Grid>
-
-            <Grid item lg={4} sm={6} xs={12}>
+          <Grid container spacing={3} style={{marginTop : 20}}>
+            {showSeccion === "influencers" ? (
+              <Grid item lg={6} sm={6} xs={12}>
+                <TotalCustomers title={"Total de influencers"} value={info?.totalInfluencer} />
+              </Grid>
+            ) : (
+              <Grid item lg={6} sm={6} xl={3} xs={12}>
+                <Budget title={"total de ventas"} value={ventas?.length} />
+              </Grid>
+            )}
+            <Grid item lg={6} sm={6} xs={12}>
               <TotalProfit title={"total de ganancias"} value={info?.totalMoney} />
             </Grid>
           </Grid>
@@ -181,21 +219,30 @@ const Page = () => {
         <Fragment>
           <Box sx={{ marginBottom: "3em", marginTop: "3em" }}>
             <h2 style={{ marginBottom: "1em" }}>Regístro de ventas</h2>
-            <Box sx={{ display: "flex", alignItems: "flex-end " }}>
+            <Box sx={{ display: "flex", alignItems: "center", flexWrap : 'wrap' }}>
               <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
                 <label>Desde:</label>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePicker onChange={(value) => selectDate(value, "start")} />
+                  <DatePicker
+                    value={defaultStartDate}
+                    onChange={(value) => selectDate(value, "start")}
+                  />
                 </LocalizationProvider>
               </Box>
               <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
                 <label>Hasta:</label>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePicker onChange={(value) => selectDate(value, "end")} />
+                  <DatePicker
+                    value={defaultEndDate}
+                    onChange={(value) => selectDate(value, "end")}
+                  />
                 </LocalizationProvider>
               </Box>
               <Box sx={{ marginRight: "2em" }}>
-                <GButton text={"Generar regístro"} onClick={() => generateVentas()} />
+                <GButton
+                  text={loader ? "Cargando..." : "Generar registro"}
+                  onClick={() => generateVentas()}
+                />
               </Box>
             </Box>
           </Box>
@@ -203,15 +250,15 @@ const Page = () => {
           <h2 style={{ marginBottom: "1rem" }}>Listado de ventas</h2>
           <VentasTable items={ventas} />
           <h3 style={{ marginBottom: "1em", textAlign: "right", marginTop: "1em" }}>
-            Total: <span style={{ fontSize: "2.5rem", marginLeft: "1rem" }}> $100.000</span>
+            Total:{" "}
+            <span style={{ fontSize: "2.5rem", marginLeft: "1rem" }}>{formatCurrency(total)}</span>
           </h3>
         </Fragment>
       )}
       {showSeccion === "influencers" && (
         <Fragment>
           <div className="table-header-container">
-            <h2 style={{ marginBottom: "1em" }}>Influencers</h2>
-            <div></div>
+            <h2>Influencers</h2>
             <GButton
               text={"Agregar Influencer"}
               onClick={() => (modalOpen ? closeModal() : openModal(), stopEditingTrailers())}

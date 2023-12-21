@@ -13,9 +13,13 @@ const VentasTable = ({ items }) => {
     return new Intl.NumberFormat("es-CO", {
       style: "currency",
       currency: "COP",
-      minimumFractionDigits: 0, // Puedes ajustar la cantidad de decimales si es necesario
+      minimumFractionDigits: 0,
     }).format(value);
   };
+
+  // Ordena los elementos por fecha del más nuevo al más viejo
+  const sortedItems = items?.sort((a, b) => new Date(b.date) - new Date(a.date));
+
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -28,7 +32,7 @@ const VentasTable = ({ items }) => {
           </tr>
         </thead>
         <tbody>
-          {items?.map((item, index) => (
+          {sortedItems?.map((item, index) => (
             <tr key={item.id} className="tableBody">
               <td>{index + 1}</td>
               <td>{item.date}</td>
@@ -38,9 +42,12 @@ const VentasTable = ({ items }) => {
           ))}
         </tbody>
       </table>
-      {!items.length && (<h3 style={{textAlign : 'center', padding : '40px'}}>No hubo ventas en las fechas establecidas</h3>)}
+      {!items.length && (
+        <h3 style={{ textAlign: 'center', padding: '40px' }}>No hubo ventas en las fechas establecidas</h3>
+      )}
     </div>
   );
 };
+
 
 export default VentasTable;
