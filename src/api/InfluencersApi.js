@@ -15,8 +15,10 @@ export class InfluencersApi {
   }
 
   async GetVentas(params) {
+    const urlVentas = `sales?start_date=${params.date_inicial}&end_date=${params.date_final}`
+    const url = params.id ? `/agency/influencer/${params.id}/${urlVentas}` : `/influencer/${urlVentas}`
     try {
-      return await axios.get(`${api_url}/influencer/sales?start_date=${params.date_inicial}&end_date=${params.date_final}`, {
+      return await axios.get(`${api_url}${url}`, {
         headers: {
           "Content-Type": "application/json",
           auth: this.token_session.token,

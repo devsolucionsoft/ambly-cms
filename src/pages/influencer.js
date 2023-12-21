@@ -38,13 +38,13 @@ const Page = () => {
 
   const getInfluencer = async () => {
     const response = await InfluencersApiModel.GetInfluencer(id);
-    generateVentas();
     if (response.status === 200) {
       setInfoInfluencer(response.data.data);
       setTotalEarnings(response.data.total_earnings);
       setTotalSales(response.data.total_sales);
     }
   };
+  console.log(ventas);
 
   useEffect(() => {
     getInfluencer();
@@ -52,6 +52,10 @@ const Page = () => {
     setDefaultStartDate(firstDayOfMonth);
     setDefaultEndDate(moment());
   }, []);
+
+  useEffect(() => {
+    generateVentas();
+  }, [infoInfluencer]);
 
   const selectDate = (value, name) => {
     const date = new Date(value._d);
@@ -67,17 +71,29 @@ const Page = () => {
     setLoader(true);
     const startDateToSend = startDate ? startDate : defaultStartDate.format("YYYY-MM-DD");
     const endDateToSend = endDate ? endDate : defaultEndDate.format("YYYY-MM-DD");
+    const roles = JSON.parse(localStorage.getItem("token_session"));
 
-    const response = await InfluencersApiModel.GetVentas({
-      date_inicial: startDateToSend,
-      date_final: endDateToSend,
-    });
-    console.log(response);
-
-    if (response.status === 200 && Array.isArray(response.data.data.sales)) {
-      setVentas(response.data.data.sales);
-      setTotalSales(response.data.data.sales.length);
-      setTotalEarnings(response.data.data.total_commission);
+    if (roles.role === "agency") {
+      const response = await InfluencersApiModel.GetVentas({
+        date_inicial: startDateToSend,
+        date_final: endDateToSend,
+        id: id,
+      });
+      if (response.status === 200 && Array.isArray(response.data.data.sales)) {
+        setVentas(response.data.data.sales);
+        setTotalSales(response.data.data.sales.length);
+        setTotalEarnings(response.data.data.total_commission);
+      }
+    } else {
+      const response = await InfluencersApiModel.GetVentas({
+        date_inicial: startDateToSend,
+        date_final: endDateToSend,
+      });
+      if (response.status === 200 && Array.isArray(response.data.data.sales)) {
+        setVentas(response.data.data.sales);
+        setTotalSales(response.data.data.sales.length);
+        setTotalEarnings(response.data.data.total_commission);
+      }
     }
     setLoader(false);
   };

@@ -26,6 +26,8 @@ const Page = () => {
   const router = useRouter();
   const { id } = router.query;
 
+  console.log(id);
+
   const [editAgencia, setEditAgencia] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [showSeccion, setShowSeccion] = useState("influencers");
