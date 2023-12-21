@@ -17,7 +17,7 @@ import { Box, Container, Grid } from "@mui/material";
 import { TotalProfit } from "../components/dashboard/total-profit";
 import { useRouter } from "next/router";
 import moment from "moment";
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const Page = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -35,6 +35,8 @@ const Page = () => {
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [totalSales, setTotalSales] = useState(0);
   const [loader, setLoader] = useState(false);
+  const roleUser = JSON.parse(localStorage.getItem("token_session"));
+
 
   const getInfluencer = async () => {
     const response = await InfluencersApiModel.GetInfluencer(id);
@@ -44,7 +46,7 @@ const Page = () => {
       setTotalSales(response.data.total_sales);
     }
   };
-  console.log(ventas);
+
 
   useEffect(() => {
     getInfluencer();
@@ -66,6 +68,9 @@ const Page = () => {
       setEndDate(parseDate);
     }
   };
+  const handleBack = () => {
+    window.history.back()
+  }
 
   const generateVentas = async () => {
     setLoader(true);
@@ -107,6 +112,9 @@ const Page = () => {
         <Fragment>
           <div style={{ display: "flex", gap: "5%", margin: "3em 0", alignItems: "center" }}>
             <div>
+              {roleUser.role === "agency" && (
+              <ArrowBackIcon  style={{fontSize : 40, cursor : "pointer"}} onClick={() => handleBack()}/>
+              )}
               <p style={{}}>
                 <b>{infoInfluencer.code_influencer}</b> - {infoInfluencer?.email}
               </p>

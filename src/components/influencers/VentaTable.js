@@ -16,7 +16,6 @@ const VentasTable = ({ items }) => {
       minimumFractionDigits: 0, // Puedes ajustar la cantidad de decimales si es necesario
     }).format(value);
   };
-  console.log(items);
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
