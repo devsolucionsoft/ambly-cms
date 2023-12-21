@@ -3,6 +3,21 @@
   padding: 1em 0;
 
 
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(144, 150, 144);
+    border-radius: 8px;
+  }
+
+
+
   h1 {
     margin-bottom: 15px;
   }
@@ -14,6 +29,10 @@
 
     .column {
       width: 100%;
+      overflow-y: scroll;
+      height: 500px;
+      overflow-x: hidden;
+      padding-inline: 10px;
     }
 
     .labelError {

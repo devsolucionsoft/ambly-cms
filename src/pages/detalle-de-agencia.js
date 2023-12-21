@@ -135,7 +135,10 @@ const Page = () => {
         <title>Ambly CMS - {info?.data?.name_agency}</title>
       </Head>
 
-      <div className="table-header-container" style={{ margin: "2em 0", display : 'flex', flexWrap : 'wrap' }}>
+      <div
+        className="table-header-container"
+        style={{ margin: "2em 0", display: "flex", flexWrap: "wrap", gap: "10px" }}
+      >
         <div style={{ display: "flex", alignItems: "center" }}>
           <div
             style={{
@@ -173,7 +176,7 @@ const Page = () => {
         }}
       >
         <Container>
-          <Grid container spacing={3} style={{marginTop : 20}}>
+          <Grid container spacing={3} style={{ marginTop: 20 }}>
             {showSeccion === "influencers" ? (
               <Grid item lg={6} sm={6} xs={12}>
                 <TotalCustomers title={"Total de influencers"} value={info?.totalInfluencer} />
@@ -218,7 +221,7 @@ const Page = () => {
         <Fragment>
           <Box sx={{ marginBottom: "3em", marginTop: "3em" }}>
             <h2 style={{ marginBottom: "1em" }}>Regístro de ventas</h2>
-            <Box sx={{ display: "flex", alignItems: "center", flexWrap : 'wrap' }}>
+            <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
               <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
                 <label>Desde:</label>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
