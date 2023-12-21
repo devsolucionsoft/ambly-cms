@@ -70,7 +70,6 @@ const Page = () => {
       setItem(response.data.data.influencer);
     }
   };
-  console.log(info);
   useEffect(() => {
     getInfo();
     const firstDayOfMonth = moment().startOf("month");
