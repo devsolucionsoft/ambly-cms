@@ -52,7 +52,7 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
       "Formato no soportado, suba unicamente: .png .jpeg, o jpg",
       (value) => (value ? SUPPORTED_FORMATS.includes(value.type) : true)
     ),
-    time_course: Yup.number().required("La duracion del curso es requerida"),
+    time_course: Yup.string().required("La duracion del curso es requerida"),
     price: Yup.number().required("El precio es requerido"),
     instructor: Yup.string().required("Seleccione un instrcutor"),
     category: Yup.string().required("Seleccione una categoria"),
