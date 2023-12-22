@@ -11,7 +11,7 @@ const ModuleForm = ({ id, closeModal, getCourses }) => {
   const newCourseSchema = Yup.object().shape({
     name_module: Yup.string().required("Required"),
     description: Yup.string().required("Required"),
-    time_module: Yup.number().required("Required"),
+    time_module: Yup.string().required("Required"),
   });
 
   const CoursesApiModel = new CoursesApi();
@@ -69,8 +69,7 @@ const ModuleForm = ({ id, closeModal, getCourses }) => {
                 <Field
                   className={`fieldShadow ${styles.field}`}
                   name="time_module"
-                  type="number"
-                  placeholder="Duracion del modulo"
+                  placeholder="Duración del modulo"
                 />
                 {errors.time_module && touched.time_module ? (
                   <div className={"fieldErrors"}>{errors.time_module}</div>

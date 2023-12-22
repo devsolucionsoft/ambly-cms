@@ -92,7 +92,7 @@ const CoursesForm = ({ getCourses, closeModal }) => {
               case 201:
                 getCourses();
                 Swal.fire({
-                  title: "Intructor creado",
+                  title: "Curso creado",
                   icon: "success",
                 }).then(() => {
                   closeModal();
