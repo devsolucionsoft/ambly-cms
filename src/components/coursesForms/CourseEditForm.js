@@ -85,7 +85,7 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
             let data = {
               name_course: values.name_course,
               instructor: values.instructor,
-              categories: values.category,
+              categoriesId: values.category,
               description: values.description,
               price_course: values.price,
               time_course: values.time_course,
@@ -110,7 +110,6 @@ const CoursesEditForm = ({ itemsCourses, isEditing, getCourses, closeModal }) =>
                 data = { ...data, image_name: responseImg2.data.imageUrl };
               }
             }
-
             const response = await CoursesApiModel.EditeCourse(data, isEditing);
 
             switch (response.status) {
