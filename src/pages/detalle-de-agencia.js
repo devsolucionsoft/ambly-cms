@@ -49,6 +49,7 @@ const Page = () => {
       id: 0,
     });
   };
+  console.log(id);
 
   const AgenciaApiModel = new AgenciaApi();
   const InfluencersApiModel = new InfluencersApi();
@@ -107,7 +108,7 @@ const Page = () => {
     const response = await AgenciaApiModel.GetAllVentas({
       date_inicial: startDateToSend,
       date_final: endDateToSend,
-      id: 1,
+      id: id,
     });
     setVentas(response.data.data.sales);
     setTotal(response.data.data.total);
