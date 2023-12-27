@@ -86,25 +86,12 @@ const InfluencerEditForm = (props) => {
 
                 <div className={styles.fieldContain}>
                   <span>Porcentaje</span>
-                  <Field
-                    className="fieldShadow"
-                    name="porcentaje_influencer"
-                    type="number"
-                    placeholder="Porcentaje"
-                  />
-                  {errors.porcentaje_influencer && touched.porcentaje_influencer ? (
-                    <div className={styles.labelError}>{errors.porcentaje_influencer}</div>
-                  ) : null}
+                  <small className="fieldShadow">{formvalues?.porcentaje_influencer}</small>
                 </div>
-
                 <div className={styles.fieldContain}>
                   <span>Código</span>
-                  <Field className="fieldShadow" name="code_influencer" placeholder="Código" />
-                  {errors.code_influencer && touched.code_influencer ? (
-                    <div className={styles.labelError}>{errors.code_influencer}</div>
-                  ) : null}
+                  <small className="fieldShadow">{formvalues?.code_influencer}</small>
                 </div>
-
                 <GButton type="submit" text={loader ? "cargando..." : "Aceptar"}>
                   Submit
                 </GButton>

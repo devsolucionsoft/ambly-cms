@@ -128,6 +128,7 @@ const Page = () => {
     setTotal(amount);
     setLoader(false);
   };
+  console.log(info);
 
   return (
     <div className={`container`} style={{ marginBottom: "4em" }}>
@@ -179,7 +180,7 @@ const Page = () => {
           <Grid container spacing={3} style={{ marginTop: 20 }}>
             {showSeccion === "influencers" ? (
               <Grid item lg={6} sm={6} xs={12}>
-                <TotalCustomers title={"Total de influencers"} value={info?.totalInfluencer} />
+                <TotalCustomers title={"Total de influencers"} value={info?.data?.totalInfluencer} />
               </Grid>
             ) : (
               <Grid item lg={6} sm={6} xl={3} xs={12}>
@@ -187,7 +188,7 @@ const Page = () => {
               </Grid>
             )}
             <Grid item lg={6} sm={6} xs={12}>
-              <TotalProfit title={"total de ganancias"} value={info?.totalMoney} />
+              <TotalProfit title={"total de ganancias"} value={info?.data?.totalMoney} />
             </Grid>
           </Grid>
         </Container>

@@ -51,6 +51,7 @@ const InfluencerTable = ({ editingTrailers, modalOpen, openModal, items, getInfo
         <thead>
           <tr>
             <th>Nombre</th>
+            <th>Código</th>
             <th className={styles.ThDescription}>Email</th>
             <th>Acciones</th>
           </tr>
@@ -73,6 +74,7 @@ const InfluencerTable = ({ editingTrailers, modalOpen, openModal, items, getInfo
                   <span>{item.name_influencer}</span>
                 </div>
               </td>
+              <td>{item.code_influencer}</td>
 
               <td className={styles.TdDescription}>{item.email}</td>
 
