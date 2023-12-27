@@ -104,31 +104,15 @@ const Page = () => {
     setLoader(true);
     const startDateToSend = startDate ? startDate : defaultStartDate.format("YYYY-MM-DD");
     const endDateToSend = endDate ? endDate : defaultEndDate.format("YYYY-MM-DD");
-    let data = [];
-    let amount = 0;
-
-    const promises = info?.data?.influencer.map(async (influ) => {
-      const response = await InfluencersApiModel.GetVentas({
-        date_inicial: startDateToSend,
-        date_final: endDateToSend,
-        id: influ.id,
-      });
-      const salesData = response.data.data.sales;
-      data = data.concat(salesData);
-
-      return salesData;
+    const response = await AgenciaApiModel.GetAllVentas({
+      date_inicial: startDateToSend,
+      date_final: endDateToSend,
+      id: 1,
     });
-
-    await Promise.all(promises);
-    data?.forEach((e) => {
-      amount += e.value;
-    });
-
-    setVentas(data);
-    setTotal(amount);
+    setVentas(response.data.data.sales);
+    setTotal(response.data.data.total);
     setLoader(false);
   };
-  console.log(info);
 
   return (
     <div className={`container`} style={{ marginBottom: "4em" }}>
@@ -168,32 +152,6 @@ const Page = () => {
           Abrir
         </GButton>
       </div>
-
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          my: "2em",
-        }}
-      >
-        <Container>
-          <Grid container spacing={3} style={{ marginTop: 20 }}>
-            {showSeccion === "influencers" ? (
-              <Grid item lg={6} sm={6} xs={12}>
-                <TotalCustomers title={"Total de influencers"} value={info?.data?.totalInfluencer} />
-              </Grid>
-            ) : (
-              <Grid item lg={6} sm={6} xl={3} xs={12}>
-                <Budget title={"total de ventas"} value={ventas?.length} />
-              </Grid>
-            )}
-            <Grid item lg={6} sm={6} xs={12}>
-              <TotalProfit title={"total de ganancias"} value={info?.data?.totalMoney} />
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-
       <Box
         sx={{
           marginBottom: "2em",
@@ -217,39 +175,72 @@ const Page = () => {
           />
         )}
       </Box>
+      {showSeccion === "ventas" && (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "10px",
+            paddingInline: "20px",
+          }}
+        >
+          <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
+            <label>Desde:</label>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DatePicker
+                value={defaultStartDate}
+                onChange={(value) => selectDate(value, "start")}
+              />
+            </LocalizationProvider>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
+            <label>Hasta:</label>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DatePicker value={defaultEndDate} onChange={(value) => selectDate(value, "end")} />
+            </LocalizationProvider>
+          </Box>
+          <Box sx={{ marginRight: "2em" }}>
+            <GButton
+              text={loader ? "Cargando..." : "Generar registro"}
+              onClick={() => generateVentas()}
+            />
+          </Box>
+        </Box>
+      )}
 
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          my: "2em",
+        }}
+      >
+        <Container>
+          <Grid container spacing={3} style={{ marginTop: 20 }}>
+            {showSeccion === "influencers" ? (
+              <Grid item lg={6} sm={6} xs={12}>
+                <TotalCustomers
+                  title={"Total de influencers"}
+                  value={info?.data?.totalInfluencer}
+                />
+              </Grid>
+            ) : (
+              <Grid item lg={6} sm={6} xl={3} xs={12}>
+                <Budget title={"total de ventas"} value={ventas?.length} />
+              </Grid>
+            )}
+            <Grid item lg={6} sm={6} xs={12}>
+              <TotalProfit
+                title={"total de ganancias"}
+                value={showSeccion === "influencers" ? info?.data?.totalMoney : total}
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
       {showSeccion === "ventas" && (
         <Fragment>
-          <Box sx={{ marginBottom: "3em", marginTop: "3em" }}>
-            <h2 style={{ marginBottom: "1em" }}>Regístro de ventas</h2>
-            <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
-              <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
-                <label>Desde:</label>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePicker
-                    value={defaultStartDate}
-                    onChange={(value) => selectDate(value, "start")}
-                  />
-                </LocalizationProvider>
-              </Box>
-              <Box sx={{ display: "flex", flexDirection: "column", marginRight: "2em" }}>
-                <label>Hasta:</label>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePicker
-                    value={defaultEndDate}
-                    onChange={(value) => selectDate(value, "end")}
-                  />
-                </LocalizationProvider>
-              </Box>
-              <Box sx={{ marginRight: "2em" }}>
-                <GButton
-                  text={loader ? "Cargando..." : "Generar registro"}
-                  onClick={() => generateVentas()}
-                />
-              </Box>
-            </Box>
-          </Box>
-
           <h2 style={{ marginBottom: "1rem" }}>Listado de ventas</h2>
           <VentasTable items={ventas} />
           <h3 style={{ marginBottom: "1em", textAlign: "right", marginTop: "1em" }}>

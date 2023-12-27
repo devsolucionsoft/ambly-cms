@@ -35,6 +35,19 @@ export class AgenciaApi {
       return error.response;
     }
   }
+  async GetAllVentas(params) {
+    const urlVentas = `sales?start_date=${params.date_inicial}&end_date=${params.date_final}`
+    try {
+      return await axios.get(`${api_url}/agency/${params.id}/${urlVentas}`, {
+        headers: {
+          "Content-Type": "application/json",
+          auth: this.token_session.token,
+        },
+      });
+    } catch (error) {
+      return error.response;
+    }
+  }
   async CreateAgencia(inputs) {
     const data = {
       name_agency: inputs.name_agency,

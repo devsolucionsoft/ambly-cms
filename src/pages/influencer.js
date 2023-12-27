@@ -128,7 +128,7 @@ const Page = () => {
             </div> */}
           </div>
           <Box sx={{ marginBottom: "0em", marginTop: "3em" }}>
-            <h2 style={{ marginBottom: "1em" }}>Regístro de ventas</h2>
+            <h2 style={{ marginBottom: "1em" }}>Registro de ventas</h2>
             <Box
               sx={{
                 display: "flex",
